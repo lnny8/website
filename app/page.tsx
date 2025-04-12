@@ -5,8 +5,8 @@ import Image from "next/image"
 const page = () => {
   return (
     <main className="max-h-screen overflow-hidden bg-[#180c6c]">
-    <div className="absolute w-full h-[10vh] bg-white" />
       <MobileMenu />
+    <div className="absolute w-full h-[10vh] bg-white" />
       <div className="w-[30vw] h-[10vw] top-5 left-5 z-1000 absolute">
       <Image src="/crossbaseLogo.png" alt="Crossbase Logo" fill objectFit="contain" />
       </div>
