@@ -1,6 +1,12 @@
+import React from 'react'
+import MobileMenu from './MobileMenu'
 
-export default function Home() {
+const page = () => {
   return (
-   
-  );
+    <main>
+      <MobileMenu />
+    </main>
+  )
 }
+
+export default page
