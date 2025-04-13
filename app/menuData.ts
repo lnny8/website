@@ -1,8 +1,6 @@
 const menuData = [
     {
       name: "Anforderungen",
-      path: "/anforderungen",
-      directLink: true,
       subPages: [
         {name: "Management", path: "/anforderungen/management"},
         {name: "Marketing", path: "/anforderungen/marketing"},
@@ -14,7 +12,6 @@ const menuData = [
     },
     {
       name: "Produkte",
-      path: "/produkte",
       subPages: [
         {name: "Vorteile", path: "/produkte/produkt-1"},
         {name: "Editionen", path: "/produkte/produkt-2"},
@@ -22,7 +19,6 @@ const menuData = [
         {name: "Anwendungsmodule", path: "/produkte/produkt-4"},
         {
           name: "Basismodule",
-          path: "/produkte/produkt-5",
           subsubPages: [
             {name: "Datenbank-Basismodul", path: "/test"},
             {name: "Mehrsprachige Oberfläche", path: "/test"},
@@ -32,7 +28,6 @@ const menuData = [
         },
         {
           name: "Datenimport",
-          path: "/produkte/produkt-5",
           subsubPages: [
             {name: "ERP-Schnittstelle", path: "/test"},
             {name: "Datenimport-Konfigurator", path: "/test"},
@@ -40,7 +35,6 @@ const menuData = [
         },
         {
           name: "PIM und MAM",
-          path: "/produkte/produkt-5",
           subsubPages: [
             {name: "Produktdatenbank", path: "/test"},
             {name: "Media Asset Manager", path: "/test"},
@@ -51,7 +45,6 @@ const menuData = [
         },
         {
           name: "Übersetzung",
-          path: "/produkte/produkt-5",
           subsubPages: [
             {name: "Übersetzungsmanagement", path: "/test"},
             {name: "Onlineübersetzung", path: "/test"},
@@ -59,7 +52,6 @@ const menuData = [
         },
         {
           name: "Datenbereitstellung",
-          path: "/produkte/produkt-5",
           subsubPages: [
             {name: "Datenexport E-Kataloge", path: "/test"},
             {name: "API-Server", path: "/test"},
@@ -68,7 +60,6 @@ const menuData = [
         },
         {
           name: "Online",
-          path: "/produkte/produkt-5",
           subsubPages: [
             {name: "Headless CMS", path: "/test"},
             {name: "Onlinekatalog", path: "/test"},
@@ -78,7 +69,6 @@ const menuData = [
         },
         {
           name: "Print",
-          path: "/produkte/produkt-5",
           subsubPages: [
             {name: "Print Publishing", path: "/test"},
             {name: "Office-Anbindung", path: "/test"},
@@ -88,7 +78,6 @@ const menuData = [
     },
     {
       name: "Service",
-      path: "/service",
       subPages: [
         {name: "Umsetzung", path: "/service/umsetzung"},
         {name: "Beratung & Support", path: "/service/beratung-support"},
@@ -98,7 +87,6 @@ const menuData = [
     },
     {
       name: "Kunden",
-      path: "/kunden",
       subPages: [
         {name: "Kundenübersicht", path: "/kunden/kundenuebersicht"},
         {name: "Maschinenbau und Elektronik", path: "/kunden/maschinenbau-elektronik"},
@@ -109,7 +97,6 @@ const menuData = [
     },
     {
       name: "Wissen",
-      path: "/wissen",
       subPages: [
         {name: "Blog", path: "/wissen/blog"},
         {name: "PIM-Leitfaden", path: "/wissen/pim-leitfaden"},
@@ -126,7 +113,6 @@ const menuData = [
         },
         {
           name: "Case Studies",
-          path: "/wissen/case-studies",
           subsubPages: [
             {name: "Case Studies E-Commerce", path: "/test"},
             {name: "Case Studies Print", path: "/test"},
@@ -137,13 +123,11 @@ const menuData = [
     },
     {
       name: "Unternehmen",
-      path: "/unternehmen",
       subPages: [
         {name: "Über uns", path: "/unternehmen/ueber-uns"},
         {name: "Neuigkeiten", path: "/unternehmen/neuigkeiten"},
         {
           name: "Karriere",
-          path: "/unternehmen/karriere",
           subsubPages: [
             {name: "Offene Stellen", path: "/test"},
             {name: "Arbeiten bei crossbase", path: "/test"},

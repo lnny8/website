@@ -25,5 +25,15 @@
           menuTimeline.current?.timeScale(1.5).reverse()
         })
       }
-    //   Otherwise just close the main menu
-      else {
+    //   Otherwise just close the main 
+    
+    {/* Sub-page title */}
+    {activeTabIndex !== null && <h2 className="text-4xl font-bold text-[#180c6c] mb-6">{menuData[activeTabIndex].name}</h2>}
+
+      {/* Sub-sub-page title */}
+      {activeTabIndex !== null && activeSubTabIndex !== null && "subsubPages" in menuData[activeTabIndex].subPages[activeSubTabIndex] && (
+        <>
+          <h2 className="text-4xl font-bold text-[#180c6c] mb-2">{menuData[activeTabIndex].name}</h2>
+          <h3 className="text-3xl font-semibold text-[#180c6c] mb-6">{menuData[activeTabIndex].subPages[activeSubTabIndex].name}</h3>
+        </>
+      )}
