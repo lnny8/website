@@ -15,7 +15,7 @@ const menuData = [
       subPages: [
         {name: "Vorteile", path: "/produkte/produkt-1"},
         {name: "Editionen", path: "/produkte/produkt-2"},
-        {name: "KI", path: "/produkte/produkt-3"},
+        {name: "KI", path: "/produkte/ki"},
         {name: "Anwendungsmodule", path: "/produkte/produkt-4"},
         {
           name: "Basismodule",
@@ -36,7 +36,7 @@ const menuData = [
         {
           name: "PIM und MAM",
           subsubPages: [
-            {name: "Produktdatenbank", path: "/test"},
+            {name: "Produktdatenbank", path: "/produkte/pim/produktdatenbank"},
             {name: "Media Asset Manager", path: "/test"},
             {name: "Textverwaltung", path: "/test"},
             {name: "Channel Output Manager", path: "/test"},

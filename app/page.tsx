@@ -7,7 +7,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col overflow-hidden">
       <Navbar />
       <MobileMenu />
-
+      <div className="h-18" /> {/*Platzhalter für Navbar / MobileMenu */}
       <main className="flex-1">
         <section className="relative">
           <div className="grid grid-cols-1 md:grid-cols-2">

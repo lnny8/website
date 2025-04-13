@@ -39,7 +39,7 @@ function NavItem({ href, label, hasDropdown = false }: NavItemProps) {
 
 export function Navbar() {
   return (
-    <header className="hidden md:block fixed backdrop-blur-2xl bg-white/80 z-20 w-full">
+    <header className="hidden md:block fixed backdrop-blur-2xl bg-white/80 z-20 w-full h-18">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
