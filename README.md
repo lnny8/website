@@ -1,5 +1,3 @@
-Hier ist das README im `.md` Format:
-
 ```markdown
 # Mobile Menu Component
 
