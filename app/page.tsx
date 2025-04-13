@@ -45,10 +45,10 @@ export default function Home() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#7a9ac7]/30"></div>
               </div>
-          <button className="absolute -left-4 top-1/2 -translate-y-1/2  p-2 rounded-full z-20">
+          <button className="absolute -left-4 top-1/2 -translate-y-1/2  p-2 rounded-full z-10">
             <ChevronLeft className="h-16 w-16 text-white" />
           </button>
-          <button className="absolute -right-4 top-1/2 -translate-y-1/2 p-2 rounded-full z-20">
+          <button className="absolute -right-4 top-1/2 -translate-y-1/2 p-2 rounded-full z-10">
             <ChevronRight className="h-16 w-16 text-white" />
           </button>
             </div>

@@ -19,7 +19,7 @@ const menuData = [
         {name: "Anwendungsmodule", path: "/produkte/produkt-4"},
         {
           name: "Basismodule",
-          subsubPages: [
+          deepPages: [
             {name: "Datenbank-Basismodul", path: "/test"},
             {name: "Mehrsprachige Oberfläche", path: "/test"},
             {name: "Web-Applikationsserver", path: "/test"},
@@ -28,14 +28,14 @@ const menuData = [
         },
         {
           name: "Datenimport",
-          subsubPages: [
+          deepPages: [
             {name: "ERP-Schnittstelle", path: "/test"},
             {name: "Datenimport-Konfigurator", path: "/test"},
           ],
         },
         {
           name: "PIM und MAM",
-          subsubPages: [
+          deepPages: [
             {name: "Produktdatenbank", path: "/produkte/pim/produktdatenbank"},
             {name: "Media Asset Manager", path: "/test"},
             {name: "Textverwaltung", path: "/test"},
@@ -45,14 +45,14 @@ const menuData = [
         },
         {
           name: "Übersetzung",
-          subsubPages: [
+          deepPages: [
             {name: "Übersetzungsmanagement", path: "/test"},
             {name: "Onlineübersetzung", path: "/test"},
           ],
         },
         {
           name: "Datenbereitstellung",
-          subsubPages: [
+          deepPages: [
             {name: "Datenexport E-Kataloge", path: "/test"},
             {name: "API-Server", path: "/test"},
             {name: "Sales Information Service", path: "/test"},
@@ -60,7 +60,7 @@ const menuData = [
         },
         {
           name: "Online",
-          subsubPages: [
+          deepPages: [
             {name: "Headless CMS", path: "/test"},
             {name: "Onlinekatalog", path: "/test"},
             {name: "Medienservice", path: "/test"},
@@ -69,7 +69,7 @@ const menuData = [
         },
         {
           name: "Print",
-          subsubPages: [
+          deepPages: [
             {name: "Print Publishing", path: "/test"},
             {name: "Office-Anbindung", path: "/test"},
           ],
@@ -104,7 +104,7 @@ const menuData = [
         {
           name: "Kundenprojekte",
           path: "/wissen/kundenprojekte",
-          subsubPages: [
+          deepPages: [
             {name: "E-Commerce", path: "/test"},
             {name: "Onlinekatalog", path: "/test"},
             {name: "Medienservice", path: "/test"},
@@ -113,7 +113,7 @@ const menuData = [
         },
         {
           name: "Case Studies",
-          subsubPages: [
+          deepPages: [
             {name: "Case Studies E-Commerce", path: "/test"},
             {name: "Case Studies Print", path: "/test"},
           ],
@@ -128,7 +128,7 @@ const menuData = [
         {name: "Neuigkeiten", path: "/unternehmen/neuigkeiten"},
         {
           name: "Karriere",
-          subsubPages: [
+          deepPages: [
             {name: "Offene Stellen", path: "/test"},
             {name: "Arbeiten bei crossbase", path: "/test"},
             {name: "Studierende", path: "/test"},

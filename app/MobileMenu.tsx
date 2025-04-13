@@ -4,41 +4,21 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import gsap from "gsap"
-import { ChevronLeft, ArrowRight, Globe, LogIn, Search } from "lucide-react"
+import { ChevronLeft, AlignLeft, Globe, LogIn, Search } from "lucide-react"
 import menuData from "./menuData"
 
 const MobileMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [submenuOpen, setSubmenuOpen] = useState(false)
   const [activeTabIndex, setActiveTabIndex] = useState<number | null>(null)
   const [activeSubTabIndex, setActiveSubTabIndex] = useState<number | null>(null)
 
   const menuTimeline = useRef<gsap.core.Timeline | null>(null)
   const buttonTimeline = useRef<gsap.core.Timeline | null>(null)
   const subMenuTimeline = useRef<gsap.core.Timeline | null>(null)
-  const subSubMenuTimeline = useRef<gsap.core.Timeline | null>(null)
+  const deepMenuTimeline = useRef<gsap.core.Timeline | null>(null)
 
-  // Pfeil Knopf Animation (links rechts Bewegung)
-  useEffect(() => {
-    const tl = gsap.timeline({ repeat: -1 });
-    tl.fromTo(["#arrow1", "#arrow2"], {
-      xPercent: 0,
-    }, {
-      xPercent: -100,
-      duration: 2,
-      ease: "back.inOut(0.5)",
-    })
-    tl.fromTo(["#arrow1", "#arrow2"], {
-      scale: 0.8
-    }, {
-      scale: 1,
-      duration: 0.5,
-      ease: "back.inOut",
-    }, 0)
-    .to({}, { duration: 2 })
-  }, [])
 
-  // Initial setup of elements
+  // Erstmalige Positionen bei erstem Rendern
   useLayoutEffect(() => {
     gsap.set(["#mainTab"], { yPercent: -100, opacity: 0 })
     gsap.set("#menuCover", { y: -window.innerHeight })
@@ -46,14 +26,14 @@ const MobileMenu = () => {
     gsap.set("#subMenuContainer", { xPercent: 5, opacity: 0 })
     gsap.set(["#subTab"], { xPercent: 100, opacity: 0 })
     gsap.set("#backButton", { opacity: 0 })
-    gsap.set("#subSubMenuContainer", { xPercent: 5, opacity: 0 })
-    gsap.set(["#subSubTab"], { xPercent: 100, opacity: 0 })
-    gsap.set("#backButtonSubSub", { opacity: 0, xPercent: -50 })
+    gsap.set("#deepMenuContainer", { xPercent: 5, opacity: 0 })
+    gsap.set(["#deepTab"], { xPercent: 100, opacity: 0 })
+    gsap.set("#backButtondeep", { opacity: 0, xPercent: -50 })
   }, [])
 
-  // Initialize animations
+  // Timelines erstellen
   useEffect(() => {
-    // Button animation
+    // Hamburger Knopf Animation
     const bt = gsap.timeline({ paused: true })
     bt.to("#topLine", { y: 7, duration: 0.3 }, 0)
       .to("#middleLine", { y: 0, duration: 0.3 }, 0)
@@ -62,14 +42,14 @@ const MobileMenu = () => {
       .to("#middleLine", { rotate: -45, duration: 0.3, delay: 0.3 }, 0)
       .to("#bottomLine", { rotate: -45, duration: 0.3, delay: 0.3 }, 0)
 
-    // Main menu animation
+    // Hauptmenü / 1. Layer
     const mt = gsap.timeline({ paused: true })
     mt.to("#menuCover", { y: 0, duration: 1, ease: "power2.inOut" }, 0)
       .to("#mainTab", { delay: 0.4, yPercent: 0, duration: 0.6, stagger: 0.02, ease: "back.inOut(0.5)" }, 0)
       .to("#mainTab", { delay: 0.4, opacity: 1, duration: 1, stagger: 0.02, ease: "power2.inOut" }, 0)
       .to("#icons > *", { opacity: 1, duration: 0.5, stagger: 0.2, xPercent: 0, ease: "power2.inOut" }, 1)
 
-    // Sub-menu animation
+    // Submenü / 2. Layer
     const st = gsap.timeline({ paused: true })
     st.to("#mainMenuContainer", { xPercent: -5, duration: 0.5, ease: "power2.inOut" }, 0)
     st.to("#mainMenuContainer", { opacity: 0, duration: 0.3, ease: "power2.inOut" }, 0)
@@ -78,19 +58,19 @@ const MobileMenu = () => {
       .to("#subTab", { xPercent: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: "back.out(1.7)" }, 0)
       .to("#backButton", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0)
 
-    // Sub-sub-menu animation
+    // Deep Menü / 3. Layer
     const sst = gsap.timeline({ paused: true })
     sst.to("#subMenuContainer", { xPercent: -5, duration: 0.5, ease: "power2.inOut" }, 0)
     sst.to("#subMenuContainer", { opacity: 0, duration: 0.3, ease: "power2.inOut" }, 0)
-      .to("#subSubMenuContainer", { xPercent: 0, duration: 0.5, ease: "power2.inOut" }, 0.2)
-      .to("#subSubMenuContainer", { opacity: 1, duration: 0.3, ease: "power2.inOut" }, 0.2)
-      .to("#subSubTab", { xPercent: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: "back.out(1.7)" }, 0.3)
-      .to("#backButtonSubSub", { opacity: 1, xPercent: 0, duration: 0.3, ease: "power2.out" }, 0.4)
+      .to("#deepMenuContainer", { xPercent: 0, duration: 0.5, ease: "power2.inOut" }, 0.2)
+      .to("#deepMenuContainer", { opacity: 1, duration: 0.3, ease: "power2.inOut" }, 0.2)
+      .to("#deepTab", { xPercent: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: "back.out(1.7)" }, 0.3)
+      .to("#backButtondeep", { opacity: 1, xPercent: 0, duration: 0.3, ease: "power2.out" }, 0.4)
 
     menuTimeline.current = mt
     buttonTimeline.current = bt
     subMenuTimeline.current = st
-    subSubMenuTimeline.current = sst
+    deepMenuTimeline.current = sst
 
     return () => {
       bt.kill()
@@ -100,7 +80,7 @@ const MobileMenu = () => {
     }
   }, [])
 
-  // Handle menu toggle
+  // Menü öffnen / schließen
   const handleMenuClick = () => {
     if (!buttonTimeline.current || !menuTimeline.current) return
 
@@ -113,15 +93,15 @@ const MobileMenu = () => {
     }
   }
 
-   // Close all menus in the correct order
+   // Alle Menüs schließen
  const closeAllMenus = () => {
   if (!buttonTimeline.current || !menuTimeline.current) return
 
-  // If sub-sub-menu is open, close it first
-  if (activeSubTabIndex !== null && subSubMenuTimeline.current) {
-    subSubMenuTimeline.current.reverse().then(() => {
+  // Wenn Deep Menü auf ist, zuerst das schließen
+  if (activeSubTabIndex !== null && deepMenuTimeline.current) {
+    deepMenuTimeline.current.reverse().then(() => {
       setActiveSubTabIndex(null)
-      // Then if sub-menu is open, close it
+      // Wenn das dann zu ist, Sub Menü schließen
       if (activeTabIndex !== null && subMenuTimeline.current) {
         subMenuTimeline.current.reverse().then(() => {
           setActiveTabIndex(null)
@@ -136,7 +116,7 @@ const MobileMenu = () => {
       }
     })
   }
-  // If only sub-menu is open, close it
+  // Wenn nur Sub Menü auf ist, nur das schließen
   else if (activeTabIndex !== null && subMenuTimeline.current) {
     subMenuTimeline.current.reverse().then(() => {
       setActiveTabIndex(null)
@@ -145,53 +125,49 @@ const MobileMenu = () => {
       setMenuOpen(false)
     })
   }
-  // Otherwise just close the main menu
+  // Sonst einfach Hauptmenü schließen
   else {
     buttonTimeline.current.reverse()
     menuTimeline.current.timeScale(1.5).reverse()
     setMenuOpen(false)
   }
 }
-  
 
-  // Handle main tab click
+  // Main Tab Funktion
   const handleTabClick = (index: number) => {
     if (!subMenuTimeline.current) return
-    setSubmenuOpen(true)
     setActiveTabIndex(index)
     subMenuTimeline.current.play()
   }
 
-  // Handle sub-tab click - either open sub-sub-menu or navigate to path
+  // Sub Tab Funktion - Entweder Deep Menü öffnen oder direkter Link
   const handleSubTabClick = (index: number) => {
     const subPage = menuData[activeTabIndex!].subPages[index]
 
-    // If it has sub-sub-pages, open them
-    if ("subsubPages" in subPage && subPage.subsubPages?.length) {
-      if (!subSubMenuTimeline.current) return
+    // Wenn es Deep Pages hat, diese öffnen
+    if ("deepPages" in subPage && subPage.deepPages?.length) {
+      if (!deepMenuTimeline.current) return
       setActiveSubTabIndex(index)
-      subSubMenuTimeline.current.play()
+      deepMenuTimeline.current.play()
     }
-    // If it has a path, navigate to it
+    // Wenn ein Pfad angegeben ist, zu diesem navigieren
     else if ("path" in subPage && subPage.path) {
       closeAllMenus()
     }
   }
 
-  // Handle back button click to return to main menu
-  const handleBackClick = () => {
-    if (!subMenuTimeline.current) return
-    subMenuTimeline.current.reverse().then(() => {
-      setActiveTabIndex(null)
-    })
-  }
-
-  // Handle back button click to return to sub-menu
-  const handleBackSubClick = () => {
-    if (!subSubMenuTimeline.current) return
-    subSubMenuTimeline.current.reverse().then(() => {
-      setActiveSubTabIndex(null)
-    })
+  //Funktion für den Back Knopf
+ const handleBackClick = (deep: boolean) => {
+    const bt = gsap.timeline();
+    bt.fromTo(["#arrow1", "#arrow2"], {xPercent: 0,}, {xPercent: -100, duration: 1, ease: "back.inOut(0.5)",})
+    bt.fromTo(["#arrow1", "#arrow2"], {scale: 0.8}, {scale: 1, duration: 0.5, ease: "back.inOut",}, 0)
+    if (!deep) { // Ist es das Sub Menu also 2. Layer oder nicht?
+         if (!subMenuTimeline.current) return
+         subMenuTimeline.current.reverse().then(() => {setActiveTabIndex(null)})} //Zu Main Menu zurückgehen
+    else {     
+         if (!deepMenuTimeline.current) return
+         deepMenuTimeline.current.reverse().then(() => {setActiveSubTabIndex(null)}) // Zu Sub Menu zurückgehen
+    }
   }
 
   return (
@@ -210,16 +186,17 @@ const MobileMenu = () => {
       </div>
 
           {/* Back Button */}
-          <div id="backButton" className="flex items-center absolute right-4 gap-5 text-white z-10 w-12 rounded-full h-12 justify-center cursor-pointer" onClick={activeSubTabIndex !== null ? handleBackSubClick : handleBackClick}>
+          <div id="backButton" className="flex items-center absolute right-4 gap-5 text-white z-10 w-12 rounded-full h-12 justify-center cursor-pointer" onClick={() => handleBackClick(activeSubTabIndex == null ? false : true)}>
             <div id="border" className="overflow-hidden absolute rounded-2xl w-12 h-12">
               <div className="flex flex-row w-24"><ChevronLeft size={42} id="arrow1" strokeWidth={2} className="text-[#180c6c]" /><ChevronLeft size={42} id="arrow2" strokeWidth={2} className="text-[#180c6c]" /></div></div>
           </div>
 
       {/* Aktionen */}
-      <div id="icons" className="flex flex-row absolute bottom-10 left-0 right-0 justify-center text-[#180c6c] gap-10 pt-20">
+      <div id="icons" className="flex flex-row absolute bottom-10 left-0 z-10 right-0 justify-center text-[#180c6c] gap-10 pt-20">
         <LogIn className="cursor-pointer" />
         <Globe className="cursor-pointer" />
         <Search className="cursor-pointer" />
+        <div className="w-60 -z-1 backdrop-blur-lg border-1 border-black/10 shadow-2xl h-16 rounded-2xl -bottom-5 absolute" />
       </div>
 
       {/* Menu Container */}
@@ -235,10 +212,10 @@ const MobileMenu = () => {
           
           {/* Sub-pages */}
           {activeTabIndex !== null && menuData[activeTabIndex].subPages.map((subPage, index) => {
-              const hasSubSubPages = "subsubPages" in subPage &&  subPage.subsubPages?.length !== null
+              const hasdeepPages = "deepPages" in subPage &&  subPage.deepPages?.length !== null
 
               // Keine Subpages + path => direkter Link :D
-              if ("path" in subPage && subPage.path && !hasSubSubPages) { 
+              if ("path" in subPage && subPage.path && !hasdeepPages) { 
                 return (
                   <Link href={subPage.path} key={subPage.name} id="subTab" className="text-3xl text-[#180c6c] font-semibold transition-colors cursor-pointer"onClick={closeAllMenus}>
                     {subPage.name}
@@ -248,21 +225,21 @@ const MobileMenu = () => {
               // Sonst einfach als Menü
               return (
                 <div key={subPage.name} id="subTab" className="text-3xl text-[#180c6c] font-semibold transition-colors cursor-pointer" onClick={() => handleSubTabClick(index)}>
-                  <span className="flex flex-row">{subPage.name}<ArrowRight className="translate-y-2 ml-2" /></span>
+                  <span className="flex flex-row">{subPage.name}<AlignLeft strokeWidth={2} size={30} className="translate-y-[6px] ml-2" /></span>
                 </div>)})}
         </div>
 
         {/* Letztes Menü */}
-        <div id="subSubMenuContainer" className={`absolute inset-0 flex-col pt-32 gap-5 pl-12 ${activeSubTabIndex !== null ? "flex" : "hidden"}`}>
+        <div id="deepMenuContainer" className={`absolute inset-0 flex-col pt-32 gap-5 pl-12 ${activeSubTabIndex !== null ? "flex" : "hidden"}`}>
 
           {/* Sub-sub-pages */}
           {activeTabIndex !== null &&
             activeSubTabIndex !== null &&
-            "subsubPages" in menuData[activeTabIndex].subPages[activeSubTabIndex] &&
-            menuData[activeTabIndex].subPages[activeSubTabIndex].subsubPages?.map((subSubPage) => (
+            "deepPages" in menuData[activeTabIndex].subPages[activeSubTabIndex] &&
+            menuData[activeTabIndex].subPages[activeSubTabIndex].deepPages?.map((deepPage) => (
 
-              <Link href={subSubPage.path} key={subSubPage.name} id="subSubTab" onClick={closeAllMenus} className="text-3xl text-[#180c6c] font-semibold hover:text-[#2d1eb3] transition-colors">
-                {subSubPage.name}
+              <Link href={deepPage.path} key={deepPage.name} id="deepTab" onClick={closeAllMenus} className="text-3xl text-[#180c6c] font-semibold hover:text-[#2d1eb3] transition-colors">
+                {deepPage.name}
               </Link>
             ))}
         </div>
