@@ -191,24 +191,26 @@ const MobileMenu = () => {
               <div className="flex flex-row w-24"><ChevronLeft size={42} id="arrow1" strokeWidth={2} className="text-[#180c6c]" /><ChevronLeft size={42} id="arrow2" strokeWidth={2} className="text-[#180c6c]" /></div></div>
           </div>
 
-      {/* Aktionen */}
-      <div id="icons" className="flex flex-row absolute bottom-10 left-0 z-10 right-0 justify-center text-[#180c6c] gap-10 pt-20">
-        <LogIn className="cursor-pointer" />
-        <Globe className="cursor-pointer" />
-        <Search className="cursor-pointer" />
-        <div className="w-60 -z-1 backdrop-blur-lg border-1 border-black/10 shadow-2xl h-16 rounded-2xl -bottom-5 absolute" />
-      </div>
 
       {/* Menu Container */}
       <div className={`h-[100dvh] absolute inset-0 top-0 overflow-hidden ${menuOpen ? "" : "pointer-events-none"}`}>
         
+    
+
         {/* Main Menu */}
-        <div id="mainMenuContainer" className="absolute inset-0 flex flex-col pt-32 gap-3 pl-12">
+        <div id="mainMenuContainer" className="absolute inset-0 flex flex-col pt-32 gap-3 px-12">
           {menuData.map((tab, index) => (<div key={tab.name} id="mainTab" className="cursor-pointer text-3xl text-[#180c6c] font-semibold" onClick={() => handleTabClick(index)}>{tab.name}</div>))}
+            
+            {/* Aktionen */}
+            <div id="icons" className="flex flex-row absolute bottom-10 left-0 z-10 right-0 justify-center text-[#180c6c] gap-10 pt-20">
+              <LogIn className="cursor-pointer" />
+              <Globe className="cursor-pointer" />
+              <Search className="cursor-pointer" />
+            </div>
         </div>
 
         {/* Sub Menu */}
-        <div id="subMenuContainer" className={`absolute inset-0 flex-col pt-32 gap-5 pl-12 ${activeTabIndex !== null ? "flex" : "hidden"}`}>
+        <div id="subMenuContainer" className={`absolute inset-0 flex-col pt-32 gap-5 px-12 ${activeTabIndex !== null ? "flex" : "hidden"}`}>
           
           {/* Sub-pages */}
           {activeTabIndex !== null && menuData[activeTabIndex].subPages.map((subPage, index) => {
@@ -230,7 +232,7 @@ const MobileMenu = () => {
         </div>
 
         {/* Letztes Menü */}
-        <div id="deepMenuContainer" className={`absolute inset-0 flex-col pt-32 gap-5 pl-12 ${activeSubTabIndex !== null ? "flex" : "hidden"}`}>
+        <div id="deepMenuContainer" className={`absolute inset-0 flex-col pt-32 gap-5 px-12 break-all ${activeSubTabIndex !== null ? "flex" : "hidden"}`}>
 
           {/* Sub-sub-pages */}
           {activeTabIndex !== null &&
