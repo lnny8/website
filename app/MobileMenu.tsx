@@ -2,168 +2,11 @@
 
 import {useEffect, useLayoutEffect, useRef, useState} from "react"
 import Link from "next/link"
+import Image from "next/image"
 import gsap from "gsap"
 import {ArrowLeft, Globe, LogIn, Search} from "lucide-react"
+import menuData from "./menuData"
 
-// Define the menu data structure with sub-pages and sub-sub-pages
-const menuData = [
-  {
-    name: "Anforderungen",
-    path: "/anforderungen",
-    directLink: true,
-    subPages: [
-      {name: "Management", path: "/anforderungen/management"},
-      {name: "Marketing", path: "/anforderungen/marketing"},
-      {name: "Produktdatenpflege", path: "/anforderungen/produktdatenpflege"},
-      {name: "Übersetzung / Lokalisierung", path: "/anforderungen/uebersetzung-lokalisierung"},
-      {name: "E-Commerce / Verkauf", path: "/anforderungen/e-commerce-verkauf"},
-      {name: "Engineering", path: "/anforderungen/engineering"},
-    ],
-  },
-  {
-    name: "Produkte",
-    path: "/produkte",
-    subPages: [
-      {name: "Vorteile", path: "/produkte/produkt-1"},
-      {name: "Editionen", path: "/produkte/produkt-2"},
-      {name: "KI", path: "/produkte/produkt-3"},
-      {name: "Anwendungsmodule", path: "/produkte/produkt-4"},
-      {
-        name: "Basismodule",
-        path: "/produkte/produkt-5",
-        subsubPages: [
-          {name: "Datenbank-Basismodul", path: "/test"},
-          {name: "Mehrsprachige Oberfläche", path: "/test"},
-          {name: "Web-Applikationsserver", path: "/test"},
-          {name: "Datenhub und Prozessmonitor", path: "/test"},
-        ],
-      },
-      {
-        name: "Datenimport",
-        path: "/produkte/produkt-5",
-        subsubPages: [
-          {name: "ERP-Schnittstelle", path: "/test"},
-          {name: "Datenimport-Konfigurator", path: "/test"},
-        ],
-      },
-      {
-        name: "PIM und MAM",
-        path: "/produkte/produkt-5",
-        subsubPages: [
-          {name: "Produktdatenbank", path: "/test"},
-          {name: "Media Asset Manager", path: "/test"},
-          {name: "Textverwaltung", path: "/test"},
-          {name: "Channel Output Manager", path: "/test"},
-          {name: "Workflowmanagement", path: "/test"},
-        ],
-      },
-      {
-        name: "Übersetzung",
-        path: "/produkte/produkt-5",
-        subsubPages: [
-          {name: "Übersetzungsmanagement", path: "/test"},
-          {name: "Onlineübersetzung", path: "/test"},
-        ],
-      },
-      {
-        name: "Datenbereitstellung",
-        path: "/produkte/produkt-5",
-        subsubPages: [
-          {name: "Datenexport E-Kataloge", path: "/test"},
-          {name: "API-Server", path: "/test"},
-          {name: "Sales Information Service", path: "/test"},
-        ],
-      },
-      {
-        name: "Online",
-        path: "/produkte/produkt-5",
-        subsubPages: [
-          {name: "Headless CMS", path: "/test"},
-          {name: "Onlinekatalog", path: "/test"},
-          {name: "Medienservice", path: "/test"},
-          {name: "Mobile Anwendungen", path: "/test"},
-        ],
-      },
-      {
-        name: "Print",
-        path: "/produkte/produkt-5",
-        subsubPages: [
-          {name: "Print Publishing", path: "/test"},
-          {name: "Office-Anbindung", path: "/test"},
-        ],
-      },
-    ],
-  },
-  {
-    name: "Service",
-    path: "/service",
-    subPages: [
-      {name: "Umsetzung", path: "/service/umsetzung"},
-      {name: "Beratung & Support", path: "/service/beratung-support"},
-      {name: "Schulungen", path: "/service/schulungen"},
-      {name: "IT-Systemanforderungen", path: "/service/it-systemanforderungen"},
-    ],
-  },
-  {
-    name: "Kunden",
-    path: "/kunden",
-    subPages: [
-      {name: "Kundenübersicht", path: "/kunden/kundenuebersicht"},
-      {name: "Maschinenbau und Elektronik", path: "/kunden/maschinenbau-elektronik"},
-      {name: "Bauelemente und Baustoffe", path: "/kunden/bauelemente-baustoffe"},
-      {name: "Medizintechnik", path: "/kunden/medizintechnik"},
-      {name: "Konsumgüter", path: "/kunden/konsumgueter"},
-    ],
-  },
-  {
-    name: "Wissen",
-    path: "/wissen",
-    subPages: [
-      {name: "Blog", path: "/wissen/blog"},
-      {name: "PIM-Leitfaden", path: "/wissen/pim-leitfaden"},
-      {name: "crossbase Lösungen", path: "/wissen/crossbase-loesungen"},
-      {
-        name: "Kundenprojekte",
-        path: "/wissen/kundenprojekte",
-        subsubPages: [
-          {name: "E-Commerce", path: "/test"},
-          {name: "Onlinekatalog", path: "/test"},
-          {name: "Medienservice", path: "/test"},
-          {name: "Print und PDF", path: "/test"},
-        ],
-      },
-      {
-        name: "Case Studies",
-        path: "/wissen/case-studies",
-        subsubPages: [
-          {name: "Case Studies E-Commerce", path: "/test"},
-          {name: "Case Studies Print", path: "/test"},
-        ],
-      },
-      {name: "Video", path: "/wissen/video"},
-    ],
-  },
-  {
-    name: "Unternehmen",
-    path: "/unternehmen",
-    subPages: [
-      {name: "Über uns", path: "/unternehmen/ueber-uns"},
-      {name: "Neuigkeiten", path: "/unternehmen/neuigkeiten"},
-      {
-        name: "Karriere",
-        path: "/unternehmen/karriere",
-        subsubPages: [
-          {name: "Offene Stellen", path: "/test"},
-          {name: "Arbeiten bei crossbase", path: "/test"},
-          {name: "Studierende", path: "/test"},
-          {name: "Absolventen", path: "/test"},
-        ],
-      },
-      {name: "Partner", path: "/unternehmen/partner"},
-      {name: "crossbase for kids", path: "/unternehmen/crossbase-for-kids"},
-    ],
-  },
-]
 
 const MobileMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -174,6 +17,17 @@ const MobileMenu = () => {
   const buttonTimeline = useRef<gsap.core.Timeline | null>(null)
   const subMenuTimeline = useRef<gsap.core.Timeline | null>(null)
   const subSubMenuTimeline = useRef<gsap.core.Timeline | null>(null)
+
+  useEffect(() => {
+    gsap.to("#backArrow", {
+      xPercent: 20,
+      duration: 1,
+      ease: "power1.inOut",
+      yoyo: true,
+      repeat: -1,
+    });
+  },[]);
+  
 
   // Initial setup of elements
   useLayoutEffect(() => {
@@ -346,7 +200,6 @@ const MobileMenu = () => {
     }
   }, [])
 
-  // Handle main menu toggle
   function handleMenuClick() {
     if (!buttonTimeline.current || !menuTimeline.current) return
 
@@ -465,9 +318,18 @@ const MobileMenu = () => {
   }
 
   return (
-    <div className="w-full h-full absolute z-[100]">
+    <div className="w-full h-full fixed z-20 md:hidden">
+      <header className="w-full h-16 bg-white">
+      <div className="flex items-center">
+            <Link href="/" className="flex items-center gap-2 z-20">
+              <div className="relative w-40 h-10 my-3">
+              <Image src="/crossbaseLogo.png" alt="crossbase Logo" fill objectFit="contain"/>
+              </div>
+            </Link>
+          </div>
+      </header>
       {/* Menu Button */}
-      <div id="menu" className="absolute top-[2.5vh] right-5 rounded-lg w-10 h-10 flex flex-col gap-1 justify-center items-center transition-colors duration-1000 z-[200]" onClick={handleMenuClick}>
+      <div id="menu" className="absolute top-4 right-5 rounded-lg w-10 h-10 flex flex-col gap-1 justify-center items-center transition-colors duration-1000 z-[200]" onClick={handleMenuClick}>
         <div id="topLine" className="bg-[#180c6c] rounded-full h-[3px] w-6 transition-colors duration-1000" />
         <div id="middleLine" className="bg-[#180c6c] rounded-full h-[3px] w-6 transition-colors duration-1000" />
         <div id="bottomLine" className="bg-[#180c6c] rounded-full h-[3px] w-6 transition-colors duration-1000" />
@@ -492,8 +354,8 @@ const MobileMenu = () => {
         {/* Sub Menu */}
         <div id="subMenuContainer" className="absolute inset-0 flex flex-col pt-32 gap-5 pl-12">
           {/* Back Button */}
-          <div id="backButton" className="flex items-center gap-2 text-[#180c6c] cursor-pointer mb-4" onClick={handleBackClick}>
-            <ArrowLeft size={24} />
+          <div id="backButton" className="flex items-center gap-5 text-white bg-[#180c6c] w-42 rounded-full h-12 justify-center cursor-pointer mb-4" onClick={handleBackClick}>
+            <ArrowLeft size={24} id="backArrow" />
             <span className="text-xl font-medium">Zurück</span>
           </div>
 
@@ -503,7 +365,8 @@ const MobileMenu = () => {
           {/* Sub-pages */}
           {activeTabIndex !== null &&
             menuData[activeTabIndex].subPages.map((subPage, index) => (
-              <div key={subPage.name} id="subTab" className="text-2xl text-[#180c6c] font-medium hover:text-[#2d1eb3] transition-colors cursor-pointer" onClick={() => handleSubTabClick(index)}>
+              <div key={subPage.name} id="subTab" className="text-2xl text-[#180c6c] font-medium transition-colors cursor-pointer"
+              onClick={() => activeTabIndex !== null && activeSubTabIndex !== null && "subsubPages" in menuData[activeTabIndex].subPages[activeSubTabIndex] ? handleSubTabClick(index) : <Link href={"/test"}>testlink</Link>}>
                 {subPage.name}
               </div>
             ))}
@@ -513,12 +376,12 @@ const MobileMenu = () => {
         <div id="subSubMenuContainer" className="absolute inset-0 flex flex-col pt-32 gap-5 pl-12">
           {/* Back Button */}
           <div id="backButtonSubSub" className="flex items-center gap-2 text-[#180c6c] cursor-pointer mb-4" onClick={handleBackSubSubClick}>
-            <ArrowLeft size={24} />
+            <ArrowLeft size={24} id="backArrow"  />
             <span className="text-xl font-medium">Zurück</span>
           </div>
 
           {/* Sub-sub-page title */}
-          {activeTabIndex !== null && activeSubTabIndex !== null && (
+          {activeTabIndex !== null && activeSubTabIndex !== null && "subsubPages" in menuData[activeTabIndex].subPages[activeSubTabIndex] && (
             <>
               <h2 className="text-4xl font-bold text-[#180c6c] mb-2">{menuData[activeTabIndex].name}</h2>
               <h3 className="text-3xl font-semibold text-[#180c6c] mb-6">{menuData[activeTabIndex].subPages[activeSubTabIndex].name}</h3>
@@ -528,7 +391,7 @@ const MobileMenu = () => {
           {/* Sub-sub-pages */}
           {activeTabIndex !== null &&
             activeSubTabIndex !== null &&
-            "subsubPages" in menuData[activeTabIndex].subPages[activeSubTabIndex] && // Prüfen, ob "more" überhaupt existiert
+            "subsubPages" in menuData[activeTabIndex].subPages[activeSubTabIndex] &&
             menuData[activeTabIndex].subPages[activeSubTabIndex].subsubPages?.map((subSubPage: any) => (
               <Link href={subSubPage.path} key={subSubPage.name} id="subSubTab" onClick={handleMenuLink} className="text-2xl text-[#180c6c] font-medium hover:text-[#2d1eb3] transition-colors">
                 {subSubPage.name}

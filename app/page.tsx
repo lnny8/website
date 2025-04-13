@@ -1,30 +1,119 @@
-import React from "react"
-import MobileMenu from "./MobileMenu"
 import Image from "next/image"
-
-const page = () => {
+import {ChevronLeft, ChevronRight} from "lucide-react"
+import {Navbar} from "./Navbar"
+import MobileMenu from "./MobileMenu"
+export default function Home() {
   return (
-    <main className="max-h-screen overflow-hidden bg-[#180c6c]">
+    <div className="min-h-screen flex flex-col overflow-hidden">
+      <Navbar />
       <MobileMenu />
-    <div className="absolute w-full h-[10vh] bg-white" />
-      <div className="w-[30vw] h-[10vw] top-5 left-5 z-1000 absolute">
-      <Image src="/crossbaseLogo.png" alt="Crossbase Logo" fill objectFit="contain" />
+
+      <main className="flex-1">
+        <section className="relative">
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            {/* Left Column - Dark Blue Background */}
+            <div className="bg-[#1a1060] text-white italic p-8 md:p-16 flex flex-col justify-center min-h-[500px]">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight mb-4">Erleben Sie</h2>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                Höchstleistung: Unsere PIM-Lösung für die Industrie
+              </h1>
+              <p className="not-italic text-lg md:text-xl mt-auto">
+                Alle Funktionen. Alle Kanäle.
+                <br />
+                Alle Plattformen. All unser Know-how.
+              </p>
+            </div>
+
+            {/* Right Column - Light Blue Background with Robot Hand */}
+            <div className="bg-[#7a9ac7] text-white p-8 md:p-16 flex flex-col justify-center relative min-h-[500px]">
+              <div className="relative z-10">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-light mb-6">KI-Module</h2>
+                <p className="text-lg md:text-xl mb-8">
+                  KI-basierte Texterstellung, Bilderstellung, Übersetzung und vieles mehr
+                </p>
+                <a href="#" className="text-white hover:underline">
+                  Mehr erfahren ...
+                </a>
+              </div>
+              <div className="absolute inset-0 z-0">
+                <Image
+                  src="/crossbaseAI.png"
+                  alt="Roboterhand und menschliche Hand"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#7a9ac7]/30"></div>
+              </div>
+          <button className="absolute -left-4 top-1/2 -translate-y-1/2  p-2 rounded-full z-20">
+            <ChevronLeft className="h-16 w-16 text-white" />
+          </button>
+          <button className="absolute -right-4 top-1/2 -translate-y-1/2 p-2 rounded-full z-20">
+            <ChevronRight className="h-16 w-16 text-white" />
+          </button>
+            </div>
+          </div>
+
+          {/* Carousel Navigation */}
+        </section>
+        <section className="py-16 px-4">
+  <div className="container mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      {/* Bild links */}
+      <div>
+        <div className="relative h-200 w-full">
+          <Image
+            src="/support.jpg"
+            alt="Support"
+            fill objectFit="contain"
+          />
+        </div>
       </div>
-      <div className="text-white text-4xl italic text-center w-[80vw] z-100 pt-[16vh]">
-        <h1 className="font-extralight">Erleben sie<br /></h1>
-        <h2 className="font-bold">Höchstleistung:<br />Unsere PIM-Lösung für die Industrie</h2>
-        <h3 className="not-italic text-2xl text-center w-[90vw] pt-13 pb-8">Alle Funktionen. Alle Kanäle. Alle Plattformen. All unser Know-how</h3>
+
+      {/* Texte rechts */}
+      <div className="space-y-16">
+        {/* Textblock: PIM-Software */}
+        <div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1060] font-light mb-2">Einzigartige</h2>
+          <h3 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1060] font-bold mb-8">PIM-Software.</h3>
+          <div className="space-y-6 text-gray-700">
+            <p>
+              Die crossbase-Softwarelösung für Produktinformationsmanagement beinhaltet alle Module, die Sie für
+              Management, Marketing, Produktdatenpflege, Übersetzung, Sales oder Engineering benötigen. crossbase
+              arbeitet mit einer einzigen Datenbank als Single Source of Truth und kommt ohne überflüssige
+              Schnittstellen zu Drittsystemen aus.
+            </p>
+            <p>
+              Dadurch werden potenzielle IT-Probleme vermieden, der Supportbedarf im laufenden Betrieb ist minimal
+              und die laufenden Kosten sind zuverlässig planbar. Mit ihrem modularen Aufbau, optionalen
+              Erweiterungen und zwei umfassenden Releases pro Jahr ist crossbase eine zukunftsfähige Lösung.
+            </p>
+          </div>
+        </div>
+
+        {/* Textblock: Service */}
+        <div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1060] font-light mb-2">Ausgezeichneter</h2>
+          <h3 className="text-4xl md:text-5xl lg:text-6xl text-[#1a1060] font-bold mb-8">Service.</h3>
+          <div className="space-y-6 text-gray-700 mb-8">
+            <p>
+              Mit garantierten Reaktions- und Lösungszeiten sorgen wir dafür, dass Sie selbstständig und
+              reibungslos arbeiten können. Individuelle Anpassungen realisieren wir schnell, unkompliziert und
+              zukunftsfähig. Und von Anfang an steht Ihnen Ihr persönlicher Ansprechpartner mit seinem ganzen
+              Know-how zur Seite – während der Einführung und auch im laufenden Betrieb.
+            </p>
+          </div>
+          <button className="bg-[#1a1060] hover:bg-[#2a1a80] text-white px-6 py-6 rounded-md text-lg">
+            Jetzt persönliche Beratung vereinbaren
+          </button>
+        </div>
       </div>
-      <div className="relative w-full pt-[70vh] h-[40vh] bg-[#6a81bc]">
-        <span className="text-white absolute z-10 top-[3vh]">
-          <h1 className="font-extralight pl-10 pt-50 text-5xl">KI-Module</h1>
-          <h2 className="text-2xl pl-10 pt-5">KI-basierte Texterstellung, Bilderstellung, Übersetzung und vieles mehr</h2>
-          <h3 className="text-1xl pl-10 pt-5">Mehr erfahren...</h3>
-        </span>
-        <Image src={"/crossbaseAI.png"} alt="Crossbase AI Picture" fill objectFit="cover" />
-      </div>
-    </main>
+    </div>
+  </div>
+</section>
+
+      
+      </main>
+    </div>
   )
 }
-
-export default page
