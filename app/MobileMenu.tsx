@@ -56,7 +56,7 @@ const MobileMenu = () => {
       .to("#subMenuContainer", { xPercent: 0,  duration: 0.5, ease: "power2.inOut" }, 0)
       .to("#subMenuContainer", { opacity: 1, duration: 0.3, ease: "power2.inOut" }, 0)
       .to("#subTab", { xPercent: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: "back.out(1.7)" }, 0)
-      .to("#backButton", { opacity: 1, duration: 1, ease: "power2.out" })
+      .to("#backButton", { opacity: 1, duration: 1, ease: "power2.out" }, 0)
 
     // Deep Menü / 3. Layer
     const sst = gsap.timeline({ paused: true })
@@ -93,44 +93,22 @@ const MobileMenu = () => {
   }
 
    // Alle Menüs schließen
- const closeAllMenus = () => {
-  if (!buttonTimeline.current || !menuTimeline.current) return
-
-  // Wenn Deep Menü auf ist, zuerst das schließen
-  if (activeSubTabIndex !== null && deepMenuTimeline.current) {
-    deepMenuTimeline.current.reverse().then(() => {
-      setActiveSubTabIndex(null)
-      // Wenn das dann zu ist, Sub Menü schließen
-      if (activeTabIndex !== null && subMenuTimeline.current) {
-        subMenuTimeline.current.reverse().then(() => {
-          setActiveTabIndex(null)
-          buttonTimeline.current?.reverse()
-          menuTimeline.current?.timeScale(1.5).reverse()
-          setMenuOpen(false)
-        })
-      } else {
-        buttonTimeline.current?.reverse()
-        menuTimeline.current?.timeScale(1.5).reverse()
-        setMenuOpen(false)
-      }
-    })
-  }
-  // Wenn nur Sub Menü auf ist, nur das schließen
-  else if (activeTabIndex !== null && subMenuTimeline.current) {
-    subMenuTimeline.current.reverse().then(() => {
-      setActiveTabIndex(null)
+   const closeAllMenus = () => {
+    if (!buttonTimeline.current || !menuTimeline.current) return
+  
+    // Alle Timelines sofort zurücksetzen
+    buttonTimeline.current?.reverse()
+    menuTimeline.current?.reverse()
+      deepMenuTimeline.current?.reverse()
+      subMenuTimeline.current?.reverse()
       buttonTimeline.current?.reverse()
-      menuTimeline.current?.timeScale(1.5).reverse()
-      setMenuOpen(false)
-    })
-  }
-  // Sonst einfach Hauptmenü schließen
-  else {
-    buttonTimeline.current.reverse()
-    menuTimeline.current.timeScale(1.5).reverse()
+    
+    // Alle States resetten
+    setActiveSubTabIndex(null)
+    setActiveTabIndex(null)
     setMenuOpen(false)
   }
-}
+  
 
   // Main Tab Funktion
   const handleTabClick = (index: number) => {
