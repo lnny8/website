@@ -37,6 +37,7 @@ export default function Home() {
   }
 
   async function sleep(ms: number = sleepTime) {
+    if(ms === 0) return
     return new Promise((resolve) => setTimeout(resolve, ms))
   }
 
@@ -49,6 +50,7 @@ export default function Home() {
     }
     await sleep(500)
     setFinishIndex(-1)
+    runningRef.current = false
   }
 
   async function bubbleSort() {
@@ -66,8 +68,7 @@ export default function Home() {
         }
       }
     }
-    runningRef.current = false
-    setCurrentIndex(-1)
+    await finish()
   }
 
   async function stop() {
@@ -94,8 +95,7 @@ export default function Home() {
         setArray([...array])
       }
     }
-    runningRef.current = false
-    setCurrentIndex(-1)
+    await finish()
   }
 
   async function radixSort() {
@@ -127,9 +127,7 @@ export default function Home() {
       await countingSort(exp)
     }
     setArray([...array])
-    setCurrentIndex(-1)
     await finish()
-    runningRef.current = false
   }
 
   // Kürzere Variante: wiederverwendeter AudioContext + Throttle + kurzer Envelope
