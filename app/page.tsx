@@ -3,34 +3,35 @@
 import {useState, useRef, useEffect} from "react"
 
 export default function Home() {
-  // Deterministic initial array to avoid SSR/client hydration mismatch (was using Math.random())
-  const [array, setArray] = useState<number[]>([])
   const [currentIndex, setCurrentIndex] = useState<number>(-1)
   const [finishIndex, setFinishIndex] = useState<number>(-1)
   const [sleepTime, setSleepTime] = useState(10)
   const [arraySize, setArraySize] = useState(100)
   const [maxValue, setMaxValue] = useState(99)
   const runningRef = useRef(false)
+  const arrayRef = useRef<number[]>([-1])
+  const [prevChangeState, changeState] = useState(false)
 
   useEffect(() => {
     let newArray = []
     for (let i = 0; i < arraySize; i++) {
       newArray.push(Math.ceil(Math.random() * maxValue))
     }
-    setArray(newArray)
+    arrayRef.current = newArray
+    changeState(!prevChangeState)
   }, [])
 
   async function randomize() {
-    for (let i in array) {
+    for (let i in arrayRef.current) {
       if (!runningRef.current) return
       setCurrentIndex(Number(i))
-      let randomIndex = Math.floor(Math.random() * array.length)
-      let temp = array[i]
-      array[i] = array[randomIndex]
-      array[randomIndex] = temp
-      beep(200 + (array[i] ?? 0) * 10)
+      let randomIndex = Math.floor(Math.random() * arrayRef.current.length)
+      let temp = arrayRef.current[i]
+      arrayRef.current[i] = arrayRef.current[randomIndex]
+      arrayRef.current[randomIndex] = temp
+      beep(200 + (arrayRef.current[i] ?? 0) * 10)
       await sleep()
-      setArray([...array])
+      arrayRef.current = [...arrayRef.current]
     }
     setCurrentIndex(-1)
     runningRef.current = false
@@ -42,10 +43,11 @@ export default function Home() {
   }
 
   async function finish() {
-    for (let i = 0; i < array.length; i++) {
+    setCurrentIndex(-1)
+    for (let i = 0; i < arrayRef.current.length; i++) {
       if (!runningRef.current) return
       setFinishIndex(i)
-      beep(200 + (array[i] ?? 0) * 10)
+      beep(200 + (arrayRef.current[i] ?? 0) * 10)
       await sleep()
     }
     await sleep(500)
@@ -54,16 +56,16 @@ export default function Home() {
   }
 
   async function bubbleSort() {
-    for (let i = 0; i < array.length; i++) {
-      for (let j = 0; j < array.length - i - 1; j++) {
+    for (let i = 0; i < arrayRef.current.length; i++) {
+      for (let j = 0; j < arrayRef.current.length - i - 1; j++) {
         if (!runningRef.current) return
-        beep(200 + (array[j] ?? 0) * 10)
+        beep(200 + (arrayRef.current[j] ?? 0) * 10)
         setCurrentIndex(j)
-        if (array[j] > array[j + 1]) {
-          let temp = array[j]
-          array[j] = array[j + 1]
-          array[j + 1] = temp
-          setArray([...array])
+        if (arrayRef.current[j] > arrayRef.current[j + 1]) {
+          let temp = arrayRef.current[j]
+          arrayRef.current[j] = arrayRef.current[j + 1]
+          arrayRef.current[j + 1] = temp
+          arrayRef.current = [...arrayRef.current]
           await sleep()
         }
       }
@@ -77,57 +79,61 @@ export default function Home() {
   }
 
   async function selectionSort() {
-    for (let i = 0; i < array.length; i++) {
+    for (let i = 0; i < arrayRef.current.length; i++) {
       if (!runningRef.current) return
       let minIndex = i
-      for (let j = i + 1; j < array.length; j++) {
+      for (let j = i + 1; j < arrayRef.current.length; j++) {
         setCurrentIndex(j)
-        beep(200 + (array[j] ?? 0) * 10)
-        if (array[j] < array[minIndex]) {
+        beep(200 + (arrayRef.current[j] ?? 0) * 10)
+        if (arrayRef.current[j] < arrayRef.current[minIndex]) {
           minIndex = j
         }
         await sleep()
       }
       if (minIndex !== i) {
-        let temp = array[i]
-        array[i] = array[minIndex]
-        array[minIndex] = temp
-        setArray([...array])
+        let temp = arrayRef.current[i]
+        arrayRef.current[i] = arrayRef.current[minIndex]
+        arrayRef.current[minIndex] = temp
+        arrayRef.current = [...arrayRef.current]
+        await sleep()
       }
     }
     await finish()
   }
 
   async function radixSort() {
-    const getMax = (arr: number[]) => Math.max(...arr)
-    const countingSort = async (exp: number) => {
-      const output = Array(array.length).fill(0)
-      const count = Array(10).fill(0)
-      for (let i = 0; i < array.length; i++) {
-        count[Math.floor(array[i] / exp) % 10]++
-      }
-      for (let i = 1; i < 10; i++) {
-        count[i] += count[i - 1]
-      }
-      for (let i = array.length - 1; i >= 0; i--) {
-        if (!runningRef.current) return
-        setCurrentIndex(i)
-        beep(200 + (array[i] ?? 0) * 10)
-        output[count[Math.floor(array[i] / exp) % 10] - 1] = array[i]
-        count[Math.floor(array[i] / exp) % 10]--
-        setArray([...output])
-        await sleep()
-      }
-      for (let i = 0; i < array.length; i++) {
-        array[i] = output[i]
-      }
+    let max = 0;
+    let place = 1;
+    for (let i = 0; i < arrayRef.current.length; i++) {
+      if (arrayRef.current[i] > max) max = arrayRef.current[i];
     }
-    const max = getMax(array)
-    for (let exp = 1; Math.floor(max / exp) > 0; exp *= 10) {
-      await countingSort(exp)
+    while (Math.floor(max / place) >= 1) {
+      arrayRef.current = await countingSort(arrayRef.current, place);
+      place *= 10;
     }
-    setArray([...array])
     await finish()
+  }
+
+  async function countingSort(arr: number[], digitPlace: number) {
+    const output = Array(arr.length).fill(0)
+    const count = Array(10).fill(0)
+
+    for (let i = 0; i < arr.length; i++) {
+      const digit = Math.floor((arr[i] / digitPlace) % 10)
+      count[digit]++
+      await sleep()
+      beep(200 + (arr[i] ?? 0) * 10)
+      setCurrentIndex(i)
+    }
+    for (let i = 1; i < 10; i++) {
+      count[i] += count[i - 1]
+    }
+    for (let i = arr.length - 1; i >= 0; i--) {
+      const digit = Math.floor((arr[i] / digitPlace) % 10)
+      output[count[digit] - 1] = arr[i]
+      count[digit]--
+    }
+    return output
   }
 
   // Kürzere Variante: wiederverwendeter AudioContext + Throttle + kurzer Envelope
@@ -177,7 +183,7 @@ export default function Home() {
                 if (runningRef.current) return
                 const newSize = Number(e.target.value)
                 setArraySize(newSize)
-                setArray(Array.from({length: newSize}, () => Math.ceil(Math.random() * maxValue)))
+                arrayRef.current = Array.from({length: newSize}, () => Math.ceil(Math.random() * maxValue))
               }}
               className="ml-5 cursor-pointer"
             />
@@ -193,13 +199,13 @@ export default function Home() {
                 if (runningRef.current) return
                 const newMax = Number(e.target.value)
                 setMaxValue(newMax)
-                setArray(array.map(() => Math.ceil(Math.random() * newMax)))
+                arrayRef.current = arrayRef.current.map(() => Math.ceil(Math.random() * newMax))
               }}
               className="ml-5 cursor-pointer"
             />
           </div>
         </div>
-        {array.map((value, index) => (
+        {arrayRef.current.map((value, index) => (
           <div key={index} style={{background: finishIndex >= value ? "#00ff00" : currentIndex === index ? "red" : "white", height: `${value * 5}px`, width: "5px", marginLeft: "10px"}} />
         ))}
       </section>
