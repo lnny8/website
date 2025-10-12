@@ -5,6 +5,7 @@ import {bloom} from "three/examples/jsm/tsl/display/BloomNode.js"
 
 export default function Game() {
   const mouseRef = useRef({x: 0, y: 0})
+  const isMobile = typeof window !== "undefined" && /Mobi|Android/i.test(navigator.userAgent)
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -85,6 +86,7 @@ export default function Game() {
   }, [])
 
   function getMouseDistanceToCenter() {
+    if(isMobile) return 0
     const x = mouseRef.current.x
     const y = mouseRef.current.y
     const centerX = 0
