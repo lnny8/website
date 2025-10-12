@@ -1,6 +1,16 @@
-import Background from "@/lib/background"
+"use client"
+import gsap from "gsap"
+import {useGSAP} from "@gsap/react"
+import {ScrambleTextPlugin} from "gsap/ScrambleTextPlugin"
 
 export default function Page() {
+  gsap.registerPlugin(ScrambleTextPlugin)
+
+  useGSAP(() => {
+    gsap.to("#home-t1", {scrambleText: {text: "{original}", chars: "upperAndLowerCase", speed: 0.3}, duration: 3, ease: "power2.inOut"})
+    gsap.to("#home-t2", {scrambleText: {text: "{original}", chars: "lowerCase", speed: 0.3}, duration: 6, ease: "power2.inOut"})
+  }, [])
+
   const skills = {
     "🧠 Programming Languages": ["JavaScript", "TypeScript", "Python", "Java", "HTML", "GLSL"],
     "🔧 Development": ["n8n", "Git", "Docker", "Hetzner Cloud", "coolify", "replicate"],
@@ -14,8 +24,12 @@ export default function Page() {
     <main className="min-h-screen flex flex-col reflative">
       {/* Hero */}
       <div className="mx-auto max-w-7xl px-6 pt-42">
-        <h1 className="text-center text-5xl sm:text-7xl md:text-8xl font-extrabold tracking-tight">Lenny Muffler</h1>
-        <p className="text-center text-xl sm:text-2xl text-white/70 mt-4">software developer</p>
+        <h1 id="home-t1" className="text-center text-5xl sm:text-7xl md:text-8xl font-extrabold tracking-tight">
+          Lenny Muffler
+        </h1>
+        <p id="home-t2" className="text-center text-xl sm:text-2xl text-white/70 mt-4">
+          software developer
+        </p>
       </div>
 
       {/* Knowledge */}

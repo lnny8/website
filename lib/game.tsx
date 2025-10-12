@@ -40,6 +40,7 @@ export default function Game() {
     PostProcessing.outputNode = TSL.add(sceneColor, bloomPass)
 
     // Wichtig: WebGPURenderer async initialisieren!
+    let frameId: number | null = null
     renderer.init().then(() => {
       function animate() {
         // Map mouse [-1,1] -> [0,1]
@@ -52,7 +53,7 @@ export default function Game() {
         mesh.rotation.x += 0.01
         mesh.rotation.y += 0.01
         PostProcessing.renderAsync()
-        requestAnimationFrame(animate)
+        frameId = requestAnimationFrame(animate)
       }
       animate()
     })
@@ -69,9 +70,12 @@ export default function Game() {
 
     return () => {
       window.removeEventListener("resize", handleResize)
-      renderer.dispose()
-      geometry.dispose()
-      material.dispose()
+      if (frameId !== null) cancelAnimationFrame(frameId)
+      // Dispose in safe order: materials and geometries before renderer
+      try { (PostProcessing as any)?.dispose?.() } catch {}
+      try { material.dispose() } catch {}
+      try { geometry.dispose() } catch {}
+      try { renderer.dispose() } catch {}
     }
   }, [])
 
