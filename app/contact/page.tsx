@@ -1,18 +1,18 @@
 "use client"
 import Game from "@/lib/game"
 import {Github, Instagram, Linkedin} from "lucide-react"
-import React from "react"
+import React, { Suspense } from "react"
 
 export default function ContactPage() {
   return (
-    <main className="relative h-screen overflow-hidden bg-black text-white">
-      <section className="max-w-5xl mx-auto px-4 pt-20 pb-8">
+    <main className="relative flex flex-col">
+      <section className="max-w-5xl mx-auto px-4 pt-20 pb-8 w-full">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="text-center md:text-left">
             <h1 className="text-5xl md:text-7xl font-extrabold mb-8 tracking-tight">WORK WITH ME</h1>
           </div>
 
-          <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-8">
+          <div className="bg-zinc-900/50 border-1 border-white/10 rounded-3xl p-8 backdrop-blur-xl">
             <div className="space-y-8 text-center md:text-left">
               <div>
                 <p className="text-sm uppercase tracking-widest text-zinc-400">Email</p>
@@ -21,7 +21,7 @@ export default function ContactPage() {
                 </a>
               </div>
 
-              <div>
+              <div className="">
                 <p className="text-sm uppercase tracking-widest text-zinc-400">Social</p>
                 <nav aria-label="Social links" className="mt-3">
                   <ul className="flex items-center justify-center md:justify-start gap-6">
@@ -47,9 +47,11 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-      <section className="max-w-5xl mx-auto px-4 pb-8">
-        <Game />
-      </section>
+      <div className="w-full -z-10">
+        <Suspense fallback={<div>Loading...</div>}>
+          <Game />
+        </Suspense>
+      </div>
     </main>
   )
 }
