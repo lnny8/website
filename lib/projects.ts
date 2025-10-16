@@ -19,4 +19,9 @@ export const projects = [
     link: "/projects/number-font",
     picture: "/projects/number-font.png",
   },
+  {
+    name: "🎨 WebGPU Shader",
+    link: "/projects/webgpu-shader",
+    picture: "/projects/shader.png",
+  }
 ]
