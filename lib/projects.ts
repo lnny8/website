@@ -1,5 +1,10 @@
 export const projects = [
   {
+    name: "📝 Lonui AI Automation Website",
+    link: "https://lonui.de",
+    picture: "/projects/lonui.png",
+  },
+  {
     name: "⚙️ Logic Simulator (Flowline)",
     link: "https://flowline.app",
     picture: "/projects/flowline.png",
