@@ -28,7 +28,7 @@ export default function Game() {
     const distanceUniform = TSL.uniform(0)
     material.colorNode = colorUniform as any
     material.userData.distanceToCenter = distanceUniform as any
-    
+
     const mesh = new THREE.Mesh(geometry, material)
     scene.add(mesh)
 
@@ -45,9 +45,9 @@ export default function Game() {
       function animate() {
         // Map mouse [-1,1] -> [0,1]
         const nx = (mouseRef.current.x + 1) * 0.5
-        const ny = (mouseRef.current.y + 1) * 0.5;
-        const d = 1-getMouseDistanceToCenter()
-        colorUniform.value.set(nx*d, (0.2 + 0.8 * ny) * d, (1 - nx)*d)
+        const ny = (mouseRef.current.y + 1) * 0.5
+        const d = 1 - getMouseDistanceToCenter()
+        colorUniform.value.set(nx * d, (0.2 + 0.8 * ny) * d, (1 - nx) * d)
         distanceUniform.value = d
 
         mesh.rotation.x += 0.01
@@ -72,10 +72,18 @@ export default function Game() {
       window.removeEventListener("resize", handleResize)
       if (frameId !== null) cancelAnimationFrame(frameId)
       // Dispose in safe order: materials and geometries before renderer
-      try { (PostProcessing as any)?.dispose?.() } catch {}
-      try { material.dispose() } catch {}
-      try { geometry.dispose() } catch {}
-      try { renderer.dispose() } catch {}
+      try {
+        ;(PostProcessing as any)?.dispose?.()
+      } catch {}
+      try {
+        material.dispose()
+      } catch {}
+      try {
+        geometry.dispose()
+      } catch {}
+      try {
+        renderer.dispose()
+      } catch {}
     }
   }, [])
 
@@ -90,7 +98,7 @@ export default function Game() {
   }, [])
 
   function getMouseDistanceToCenter() {
-    if(isMobile) return 0
+    if (isMobile) return 0
     const x = mouseRef.current.x
     const y = mouseRef.current.y
     const centerX = 0

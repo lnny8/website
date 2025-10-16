@@ -18,11 +18,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`${outfit.className} bg-black text-white antialiased`}>
+    <html suppressHydrationWarning lang="en">
+      <body suppressHydrationWarning className={`${outfit.className} bg-black text-white antialiased`}>
         <Menu />
         {children}
-        </body>
+      </body>
     </html>
   )
 }

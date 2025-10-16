@@ -10,6 +10,8 @@ export default function Numbers() {
     if (typeof window === "undefined") return
 
     const canvas = document.getElementById("myCanvas") as HTMLCanvasElement
+    if (!canvas) return
+
     const renderer = new THREE.WebGPURenderer({canvas, antialias: true})
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -43,29 +45,41 @@ export default function Numbers() {
     const object = new THREE.Mesh(geometry, material)
 
     scene.add(object)
-    
-
     const adding = mx_noise_vec3(positionLocal.add(time.mul(0.2)))
-    function animate() {
-        material.needsUpdate = true
-        material.positionNode = positionLocal.xyz.add(adding.mul(0.7))
+    material.positionNode = positionLocal.xyz.add(adding.mul(0.7))
 
-        postProcessing.renderAsync()
-      requestAnimationFrame(animate)
+    let isRunning = true
+    let animationFrameId: number | null = null
+
+    const animate = async () => {
+      if (!isRunning) return
+      try {
+        await postProcessing.renderAsync()
+      } catch (error) {
+        console.error("WebGPU render error", error)
+        isRunning = false
+        return
+      }
+      if (!isRunning) return
+      animationFrameId = window.requestAnimationFrame(() => {
+        void animate()
+      })
     }
-    animate()
+    void animate()
 
     return () => {
+      isRunning = false
+      if (animationFrameId !== null) cancelAnimationFrame(animationFrameId)
       window.removeEventListener("resize", onResize)
       postProcessing.dispose()
       renderer.dispose()
     }
   }, [])
 
-    function getColor() {
-        const adding = mx_noise_vec3(positionLocal.add(time.mul(0.2)))
-        return vec3(abs(sin(adding.x)), abs(sin(adding.y)), abs(sin(adding.z)))
-    }
+  function getColor() {
+    const adding = mx_noise_vec3(positionLocal.add(time.mul(0.2)))
+    return vec3(abs(sin(adding.x)), abs(sin(adding.y)), abs(sin(adding.z)))
+  }
 
   return <canvas style={{width: "100vw", height: "100vh", touchAction: "none", display: "block", backgroundColor: "#000"}} id="myCanvas" />
 }
