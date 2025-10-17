@@ -14,6 +14,21 @@ import Image from "next/image"
 export default function Page() {
   gsap.registerPlugin(ScrambleTextPlugin, SplitText, ScrollSmoother, ScrollTrigger, DrawSVGPlugin, ScrollToPlugin)
 
+  function updateCardGradient(target: HTMLDivElement, e: React.PointerEvent<HTMLDivElement>, duration = 0.3) {
+    const rect = target.getBoundingClientRect()
+    const pointerX = e.clientX - rect.left
+    const pointerY = e.clientY - rect.top
+    const background = target.querySelector<HTMLElement>("#home-card-bg")
+    if (!background) return
+
+    gsap.to(background, {
+      backgroundImage: `radial-gradient(circle at ${pointerX}px ${pointerY}px, #22c55e 0%, #000 100%)`,
+      opacity: 1,
+      duration,
+      overwrite: "auto",
+    })
+  }
+
   useGSAP(() => {
     const t1 = new SplitText("#home-t1", {type: "words, chars", mask: "words"})
     const t2 = new SplitText("#home-t2", {type: "words, chars", mask: "chars"})
@@ -23,34 +38,37 @@ export default function Page() {
     tl.from(t2.chars, {yPercent: 100, opacity: 1, duration: 0.3, ease: "back.out", stagger: {amount: 0.4}, delay: 0.3}, 0)
     tl.from("#home-s1", {y: 0, opacity: 0, ease: "power2.inOut", duration: 2}, "-=1.4")
     tl.from("#home-skillblock", {y: 70, opacity: 0, ease: "back.inOut", duration: 1, stagger: 0.2}, "<0.6")
-    const pt = gsap.timeline()
+    const pt = gsap.timeline({repeat: -1, yoyo: true})
     pt.set("#home-path", {drawSVG: "0%"})
     pt.to("#home-path", {duration: 4, drawSVG: "100%", ease: "power2.inOut"})
-    pt.to("#home-path", {duration: 1, drawSVG: "10% 20%", ease: "power2.inOut"})
-    pt.to("#home-path", {duration: 1, drawSVG: "80% 90%", ease: "power2.inOut"})
-    pt.to("#home-path", {duration: 1, drawSVG: "0% 30%", ease: "power2.inOut"})
-    pt.to("#home-path", {duration: 1, drawSVG: "0% 70%", ease: "power2.inOut"})
+    pt.to("#home-path", {duration: 3, drawSVG: "10% 20%", ease: "power2.inOut"})
+    pt.to("#home-path", {duration: 3, drawSVG: "80% 90%", ease: "power2.inOut"})
+    pt.to("#home-path", {duration: 4, drawSVG: "0% 30%", ease: "power2.inOut"})
+    pt.to("#home-path", {duration: 2, drawSVG: "0% 70%", ease: "power2.inOut"})
     pt.to("#home-path", {duration: 1, drawSVG: "50% 90%", ease: "power2.inOut"})
-    pt.to("#home-path", {duration: 1, drawSVG: "40% 40%", ease: "power2.inOut"})
+    pt.to("#home-path", {duration: 2, drawSVG: "20% 20%", ease: "power2.inOut"})
 
     gsap.from(t3.chars, {yPercent: 100, opacity: 1, duration: 0.5, ease: "back.out", stagger: 0.05, scrollTrigger: {trigger: "#home-t3", start: "top 90%"}})
     gsap.from("#home-projectblock", {y: 70, opacity: 0, duration: 1, ease: "back.inOut", stagger: 0.2, scrollTrigger: {trigger: "#home-s2", start: "top 85%"}})
   }, [])
 
-  function handleCardEnter(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    const bgTween = gsap.getTweensOf(e.currentTarget.querySelector("#home-card-bg"))
-    if (bgTween.length === 0) {
-      gsap.to(e.currentTarget.querySelector("#home-card-bg"), {backgroundImage: "linear-gradient(180deg, #22c55e 100%, #000 100%)", opacity: 1, duration: 1})
-    }
+  function handleCardEnter(e: React.PointerEvent<HTMLDivElement>) {
+    updateCardGradient(e.currentTarget, e, 0.6)
 
-    const skillListTween = gsap.getTweensOf(e.currentTarget.querySelectorAll("#home-skillList-item"))
+    const skillItems = e.currentTarget.querySelectorAll("#home-skillList-item")
+    const skillListTween = gsap.getTweensOf(skillItems)
     if (skillListTween.length === 0) {
-      gsap.to(e.currentTarget.querySelectorAll("#home-skillList-item"), {scrambleText: {text: "{original}", chars: "lowerCase", revealDelay: 0, speed: 0.3}, duration: 1, ease: "power2.inOut", stagger: 0.1})
+      gsap.to(skillItems, {scrambleText: {text: "{original}", chars: "lowerCase", revealDelay: 0, speed: 0.3}, duration: 1, ease: "power2.inOut", stagger: 0.1})
     }
   }
-  function handleCardLeave(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    gsap.killTweensOf(e.currentTarget.querySelector("#home-card-bg"))
-    gsap.to(e.currentTarget.querySelector("#home-card-bg"), {backgroundImage: "linear-gradient(180deg, #22c55e 0%, #000 0%)", opacity: 0, duration: 0.5})
+  function handleCardMove(e: React.PointerEvent<HTMLDivElement>) {
+    updateCardGradient(e.currentTarget, e, 0.2)
+  }
+  function handleCardLeave(e: React.PointerEvent<HTMLDivElement>) {
+    const background = e.currentTarget.querySelector("#home-card-bg")
+    if (!background) return
+    gsap.killTweensOf(background)
+    gsap.to(background, {backgroundImage: "radial-gradient(circle at 0px 0px, #22c55e 0%, #000 100%)", opacity: 0, duration: 0.5})
   }
 
   const skills = {
@@ -58,8 +76,8 @@ export default function Page() {
     "🔧 Development": ["n8n", "Git", "Docker", "Hetzner Cloud", "coolify", "replicate", "Ubuntu"],
     "🔒 Security & Access": ["auth0", "HMAC", "JWT", "OAuth", "Stripe API", "Webhooks"],
     "🎨 Design": ["Webdesign", "Mobile Design", "Custom Tkinter", "Figma", "Blender"],
-    "🧩 Frameworks": ["React", "Next.js", "Expo", "OpenCV", "supabase"],
-    "📚 Libraries": ["Three.js", "GSAP", "Motion", "TailwindCSS", "Pytorch & PyBullet (learning)"],
+    "🧩 Frameworks": ["React", "Next.js", "Expo", "OpenCV", "Supabase"],
+    "📚 Libraries": ["Three.js", "GSAP", "Motion", "TailwindCSS", "Pytorch (learning)"],
   }
 
   return (
@@ -93,17 +111,15 @@ export default function Page() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {Object.entries(skills).map(([category, skillList]) => (
-              <div id="home-skillblock" key={category} className="group relative cursor-pointer border-neutral-800 border-1 rounded-[16px] p-5"
-              onPointerEnter={(e) => handleCardEnter(e)} onPointerLeave={(e) => handleCardLeave(e)}>
-                <div id="home-card-bg" style={{backgroundImage: "linear-gradient(180deg, #22c55e 0%, #000 0%)"}}
-                className="absolute -inset-[1px] rounded-[16px] -z-5 opacity-0 blur-sm" />
+              <div id="home-skillblock" key={category} className="group relative border-neutral-800 border-1 rounded-[16px] p-5" onPointerEnter={handleCardEnter} onPointerMove={handleCardMove} onPointerLeave={handleCardLeave}>
+                <div id="home-card-bg" style={{backgroundImage: "radial-gradient(circle at 0px 0px, #22c55e 0%, #000 100%)"}} className="absolute -inset-[1px] rounded-[16px] -z-5 opacity-0 blur-sm" />
                 <div className="absolute inset-0 bg-neutral-950 -z-4 rounded-[16px]" />
-                <h3 className="text-lg sm:text-xl font-semibold tracking-wide text-white/90">{category}</h3>
+                <h3 className="text-lg sm:text-xl font-semibold tracking-wide text-white/90 cursor-pointer">{category}</h3>
                 <div className="my-4 h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
 
                 <div className="flex flex-wrap gap-2">
                   {skillList.map((skill) => (
-                    <span id="home-skillList-item" className="bg-white/5 items-center rounded-xl px-3 py-1" key={skill}>
+                    <span id="home-skillList-item" className="cursor-pointer bg-white/5 items-center rounded-xl px-3 py-1" key={skill}>
                       {skill}
                     </span>
                   ))}
