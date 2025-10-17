@@ -37,6 +37,22 @@ export default function Page() {
     gsap.from("#home-projectblock", {y: 70, opacity: 0, duration: 1, ease: "back.inOut", stagger: 0.2, scrollTrigger: {trigger: "#home-s2", start: "top 85%"}})
   }, [])
 
+  function handleCardEnter(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    const bgTween = gsap.getTweensOf(e.currentTarget.querySelector("#home-card-bg"))
+    if (bgTween.length === 0) {
+      gsap.to(e.currentTarget.querySelector("#home-card-bg"), {backgroundImage: "linear-gradient(180deg, #22c55e 100%, #000 100%)", opacity: 1, duration: 1})
+    }
+
+    const skillListTween = gsap.getTweensOf(e.currentTarget.querySelectorAll("#home-skillList-item"))
+    if (skillListTween.length === 0) {
+      gsap.to(e.currentTarget.querySelectorAll("#home-skillList-item"), {scrambleText: {text: "{original}", chars: "lowerCase", revealDelay: 0, speed: 0.3}, duration: 1, ease: "power2.inOut", stagger: 0.1})
+    }
+  }
+  function handleCardLeave(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    gsap.killTweensOf(e.currentTarget.querySelector("#home-card-bg"))
+    gsap.to(e.currentTarget.querySelector("#home-card-bg"), {backgroundImage: "linear-gradient(180deg, #22c55e 0%, #000 0%)", opacity: 0, duration: 0.5})
+  }
+
   const skills = {
     "🧠 Programming Languages": ["JavaScript", "TypeScript", "Python", "Java", "HTML", "GLSL"],
     "🔧 Development": ["n8n", "Git", "Docker", "Hetzner Cloud", "coolify", "replicate", "Ubuntu"],
@@ -49,7 +65,8 @@ export default function Page() {
   return (
     <main id="home-m" className="min-h-screen flex flex-col relative">
       <svg className="w-full absolute h-screen mx-auto" width="4104" height="2061" viewBox="0 0 4104 2061">
-        <path id="home-path"
+        <path
+          id="home-path"
           d="M33.5 1419.5C17.3333 1663.67 104.2 2074.2 581 1763C1057.8 1451.8 894.5 1423 648 1258.5C401.5 1094 997.5 696 900.5 607.5C803.5 519 417 753.5 353 553C289 352.5 1304.5 8.49984 1453.5 32.9998C1602.5 57.4998 1697 294 1855 297.5C2013 301 2652 240 2630.5 334C2609 428 1754.5 589.499 1788 696C1821.5 802.5 2633.5 541 2752 571C2870.5 601 3436 1006 3567 945C3698 883.999 2995 495 3059 407C3123 319 3761.5 209.5 3834.5 297.5C3907.5 385.5 4102 1346.5 4068.5 1456C4035 1565.5 3275 1236.5 3317.5 1395C3360 1553.5 3423.5 1696.5 3509 1745C3594.5 1793.5 3737 1656.5 3798 1681C3859 1705.5 4114 1860.5 4035 1979C3956 2097.5 2916 1973 2837 1933.5C2758 1894 2530 1535 2560.5 1456C2591 1377 2837 1489 2837 1352.5C2837 1216 2019 1310 1821.5 1352.5C1624 1395 1721 1532 1526.5 1611C1332 1690 1134.5 1580.5 1134.5 1580.5"
           stroke="#111"
           strokeWidth="63"
@@ -76,13 +93,17 @@ export default function Page() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {Object.entries(skills).map(([category, skillList]) => (
-              <div id="home-skillblock" key={category} className="group relative rounded-2xl p-5 border-1 border-white/10 bg-white/10 backdrop-blur-xl">
+              <div id="home-skillblock" key={category} className="group relative cursor-pointer border-neutral-800 border-1 rounded-[16px] p-5"
+              onPointerEnter={(e) => handleCardEnter(e)} onPointerLeave={(e) => handleCardLeave(e)}>
+                <div id="home-card-bg" style={{backgroundImage: "linear-gradient(180deg, #22c55e 0%, #000 0%)"}}
+                className="absolute -inset-[1px] rounded-[16px] -z-5 opacity-0 blur-sm" />
+                <div className="absolute inset-0 bg-neutral-950 -z-4 rounded-[16px]" />
                 <h3 className="text-lg sm:text-xl font-semibold tracking-wide text-white/90">{category}</h3>
                 <div className="my-4 h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
 
                 <div className="flex flex-wrap gap-2">
                   {skillList.map((skill) => (
-                    <span className="bg-white/5 items-center rounded-xl px-3 py-1" key={skill}>
+                    <span id="home-skillList-item" className="bg-white/5 items-center rounded-xl px-3 py-1" key={skill}>
                       {skill}
                     </span>
                   ))}
