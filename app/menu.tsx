@@ -12,7 +12,8 @@ export default function Menu() {
   })
 
   return (
-    <nav className="fixed text-white w-full top-0 z-10 flex items-center p-7">
+    <nav className="fixed text-white w-full top-0 z-10 flex items-center p-7" >
+        <div className="absolute inset-0 -z-1 backdrop-blur-3xl bg-black" style={{maskImage: "linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.7), rgba(0,0,0,0))"}} />
         <Link href="/" className="hover:opacity-60 transition-opacity"><Image src="/lenny/logo.svg" alt="Logo" width={50} height={50} /></Link>
         <Link href="/contact" className="ml-auto cursor-pointer bg-white text-black py-2 px-3 rounded-2xl">Get in touch</Link>
     </nav>

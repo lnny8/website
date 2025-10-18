@@ -10,24 +10,12 @@ import {ScrollToPlugin} from "gsap/ScrollToPlugin"
 import {projects} from "../lib/projects"
 import Link from "next/link"
 import Image from "next/image"
+import Card from "@/lib/ui/magic-card"
+import {ArrowLeft, ArrowRight} from "lucide-react"
+import ImageTilt from "@/lib/ui/image-tilt"
 
 export default function Page() {
   gsap.registerPlugin(ScrambleTextPlugin, SplitText, ScrollSmoother, ScrollTrigger, DrawSVGPlugin, ScrollToPlugin)
-
-  function updateCardGradient(target: HTMLDivElement, e: React.PointerEvent<HTMLDivElement>, duration = 0.3) {
-    const rect = target.getBoundingClientRect()
-    const pointerX = e.clientX - rect.left
-    const pointerY = e.clientY - rect.top
-    const background = target.querySelector<HTMLElement>("#home-card-bg")
-    if (!background) return
-
-    gsap.to(background, {
-      backgroundImage: `radial-gradient(circle at ${pointerX}px ${pointerY}px, #22c55e 0%, #000 100%)`,
-      opacity: 1,
-      duration,
-      overwrite: "auto",
-    })
-  }
 
   useGSAP(() => {
     const t1 = new SplitText("#home-t1", {type: "words, chars", mask: "words"})
@@ -52,25 +40,7 @@ export default function Page() {
     gsap.from("#home-projectblock", {y: 70, opacity: 0, duration: 1, ease: "back.inOut", stagger: 0.2, scrollTrigger: {trigger: "#home-s2", start: "top 85%"}})
   }, [])
 
-  function handleCardEnter(e: React.PointerEvent<HTMLDivElement>) {
-    updateCardGradient(e.currentTarget, e, 0.6)
-
-    const skillItems = e.currentTarget.querySelectorAll("#home-skillList-item")
-    const skillListTween = gsap.getTweensOf(skillItems)
-    if (skillListTween.length === 0) {
-      gsap.to(skillItems, {scrambleText: {text: "{original}", chars: "lowerCase", revealDelay: 0, speed: 0.3}, duration: 1, ease: "power2.inOut", stagger: 0.1})
-    }
-  }
-  function handleCardMove(e: React.PointerEvent<HTMLDivElement>) {
-    updateCardGradient(e.currentTarget, e, 0.2)
-  }
-  function handleCardLeave(e: React.PointerEvent<HTMLDivElement>) {
-    const background = e.currentTarget.querySelector("#home-card-bg")
-    if (!background) return
-    gsap.killTweensOf(background)
-    gsap.to(background, {backgroundImage: "radial-gradient(circle at 0px 0px, #22c55e 0%, #000 100%)", opacity: 0, duration: 0.5})
-  }
-
+ 
   const skills = {
     "🧠 Programming Languages": ["JavaScript", "TypeScript", "Python", "Java", "HTML", "GLSL"],
     "🔧 Development": ["n8n", "Git", "Docker", "Hetzner Cloud", "coolify", "replicate", "Ubuntu"],
@@ -111,20 +81,7 @@ export default function Page() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {Object.entries(skills).map(([category, skillList]) => (
-              <div id="home-skillblock" key={category} className="group relative border-neutral-800 border-1 rounded-[16px] p-5" onPointerEnter={handleCardEnter} onPointerMove={handleCardMove} onPointerLeave={handleCardLeave}>
-                <div id="home-card-bg" style={{backgroundImage: "radial-gradient(circle at 0px 0px, #22c55e 0%, #000 100%)"}} className="absolute -inset-[1px] rounded-[16px] -z-5 opacity-0 blur-sm" />
-                <div className="absolute inset-0 bg-neutral-950 -z-4 rounded-[16px]" />
-                <h3 className="text-lg sm:text-xl font-semibold tracking-wide text-white/90 cursor-pointer">{category}</h3>
-                <div className="my-4 h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
-
-                <div className="flex flex-wrap gap-2">
-                  {skillList.map((skill) => (
-                    <span id="home-skillList-item" className="cursor-pointer bg-white/5 items-center rounded-xl px-3 py-1" key={skill}>
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <Card scrambleList={true} id={"home-skillblock"} key={category} skillList={skillList} title={category} />
             ))}
           </div>
         </div>
@@ -142,10 +99,29 @@ export default function Page() {
                   <div className="my-4 h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
 
                   <div className="flex flex-wrap gap-2">
-                    <Image src={project.picture} alt={project.name} width={500} height={500} className="rounded-xl hover:scale-105 transition-transform" />
+                   <ImageTilt picture={project.picture} name={project.name} />
                   </div>
                 </div>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2 className="text-center pt-50 pb-32 text-3xl sm:text-5xl font-bold tracking-tight">My UI Components</h2>
+        <div className="relative min-h-100 flex flex-col items-center justify-center mx-auto max-w-7xl bordfer-1">
+          <h1 className="text-4xl font-bold tracking-tight pb-10">Magic Card</h1>
+          <Card id="random-Card-home" scrambleList={false} skillList={["React", "Tailwind CSS", "GSAP", "Framer Motion"]} title={"UI Components"} />
+          <button className="cursor-pointer absolute right-20 bg-neutral-900 p-4 rounded-2xl top-1/2 transform -translate-y-1/2">
+            <ArrowRight />
+          </button>
+          <button className="cursor-pointer absolute left-20 bg-neutral-900 p-4 rounded-2xl top-1/2 transform -translate-y-1/2">
+            <ArrowLeft />
+          </button>
+          {/* Indicators */}
+          <div className="flex space-x-2 mt-4 absolute bottom-10">
+            {[true, false, false, false, false].map((current, index) => (
+              <span key={index} className={`w-3 h-3 rounded-full block ${current ? "bg-white/50" : "bg-white/20"}`}></span>
             ))}
           </div>
         </div>
