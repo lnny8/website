@@ -3,7 +3,7 @@ import React from "react"
 import gsap from "gsap"
 import {PointerEvent as ReactPointerEvent} from "react"
 
-export default function Card({skillList, title, id, scrambleList = false}: {skillList: string[]; title: string; id: string; scrambleList: boolean}) {
+export default function Card({skillList, title, id, scrambleList = false, color} : {skillList: string[]; title: string; id: string; scrambleList: boolean, color:string}) {
   function updateCardGradient(target: HTMLDivElement, e: ReactPointerEvent<HTMLDivElement>, duration = 0.3) {
     const rect = target.getBoundingClientRect()
     const pointerX = e.clientX - rect.left
@@ -12,7 +12,7 @@ export default function Card({skillList, title, id, scrambleList = false}: {skil
     if (!background) return
 
     gsap.to(background, {
-      backgroundImage: `radial-gradient(circle at ${pointerX}px ${pointerY}px, #22c55e 0%, #000 100%)`,
+      backgroundImage: `radial-gradient(circle at ${pointerX}px ${pointerY}px, ${color} 0%, #000 42%)`,
       opacity: 1,
       duration,
       overwrite: "auto",
@@ -35,12 +35,12 @@ export default function Card({skillList, title, id, scrambleList = false}: {skil
     const background = e.currentTarget.querySelector("#home-card-bg")
     if (!background) return
     gsap.killTweensOf(background)
-    gsap.to(background, {backgroundImage: "radial-gradient(circle at 0px 0px, #22c55e 0%, #000 100%)", opacity: 0, duration: 0.5})
+    gsap.to(background, {backgroundImage: `radial-gradient(circle at 0px 0px, ${color} 0%, #000 100%)`, opacity: 0, duration: 0.5})
   }
 
   return (
     <div id={id} className="max-w-100 group relative border-neutral-800 border-1 rounded-[16px] p-5" onPointerEnter={handleCardEnter} onPointerMove={handleCardMove} onPointerLeave={handleCardLeave}>
-      <div id="home-card-bg" style={{backgroundImage: "radial-gradient(circle at 0px 0px, #22c55e 0%, #000 100%)"}} className="absolute -inset-[1px] rounded-[16px] -z-5 opacity-0 blur-sm" />
+      <div id="home-card-bg" style={{backgroundImage: "radial-gradient(circle at 0px 0px, #22c55e 0%, #000 100%)"}} className="absolute -inset-[1px] rounded-[10px] -z-5 opacity-0 blur-sm" />
       <div className="absolute inset-0 bg-neutral-950 -z-4 rounded-[16px]" />
       <h3 className="text-lg sm:text-xl font-semibold tracking-wide text-white/90 cursor-pointer">{title}</h3>
       <div className="my-4 h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
