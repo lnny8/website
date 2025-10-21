@@ -31,7 +31,7 @@ export default function Background() {
     const material = new THREE.MeshBasicNodeMaterial()
     const hoverPointUniform = TSL.uniform(new THREE.Vector3())
     const hoverStrengthUniform = TSL.uniform(0)
-    material.wireframe = true
+    // material.wireframe = true
 
     const object = new THREE.Mesh(geometry, material)
     scene.add(object)
@@ -49,7 +49,7 @@ export default function Background() {
     const displacedPosition = TSL.positionLocal.add(TSL.normalLocal.mul(totalDisplacement))
     material.positionNode = displacedPosition
     const baseColorNode = getColor()
-    const brightness = TSL.clamp(TSL.abs(totalDisplacement).mul(10), TSL.float(0), TSL.float(1))
+    const brightness = TSL.clamp(TSL.abs(totalDisplacement).mul(15), TSL.float(0), TSL.float(1))
     material.colorNode = TSL.mix(baseColorNode, TSL.vec3(1, 1, 1), brightness)
 
     let isRunning = true
@@ -108,7 +108,7 @@ export default function Background() {
   }, [])
 
   function getColor() {
-    return TSL.vec3(0.8, 0, 0.6)
+    return TSL.vec3(0.13, 0.77, 0.37).mul(TSL.vec3(0.8))
   }
 
   return <canvas style={{width: "100vw", height: "100vh", touchAction: "none", display: "block", backgroundColor: "#000"}} id="myCanvas" />

@@ -9,7 +9,6 @@ import {DrawSVGPlugin} from "gsap/DrawSVGPlugin"
 import {ScrollToPlugin} from "gsap/ScrollToPlugin"
 import {projects} from "../lib/projects"
 import Link from "next/link"
-import Image from "next/image"
 import Card from "@/lib/ui/magic-card"
 import {ArrowLeft, ArrowRight} from "lucide-react"
 import ImageTilt from "@/lib/ui/image-tilt"
@@ -31,57 +30,73 @@ export default function Page() {
     gsap.from("#home-projectblock", {y: 70, opacity: 0, duration: 1, ease: "back.inOut", stagger: 0.2, scrollTrigger: {trigger: "#home-s2", start: "top 85%"}})
   }, [])
 
- 
   const skills = {
     "🧠 Programming Languages": ["JavaScript", "TypeScript", "Python", "Java", "HTML", "GLSL", "TSL"],
     "🔧 Development": ["n8n", "Git", "Docker", "Hetzner Cloud", "coolify", "replicate", "Ubuntu"],
     "🔒 Security & Access": ["auth0", "HMAC", "JWT", "OAuth", "Stripe API", "Webhooks"],
-    "🎨 Design": ["Webdesign", "Mobile Design", "Custom Tkinter", "Figma", "Blender"],
-    "🧩 Frameworks": ["React", "Next.js", "Expo", "OpenCV", "Supabase"],
-    "📚 Libraries": ["Three.js", "GSAP", "Motion", "TailwindCSS", "Pytorch (learning)"],
+    "🎨 Design": ["Web- / Mobile Design", "Custom Tkinter", "Figma", "Blender", "TailwindCSS"],
+    "🧩 Frameworks": ["React", "Next.js", "Expo", "OpenCV", "Supabase", "Three.js", "GSAP / motion"],
+    "🤖 AI": ["Reinforcement Learning", "Mujoco", "Markov Decision Processes", "Pytorch", "Monte Carlo method"],
   }
 
   return (
-    <main id="home-m" className="min-h-screen flex flex-col relative">
+    <main id="home-m" className="relative min-h-screen overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(34,197,94,0.18),_transparent_55%)]" />
+      <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_bottom,_rgba(56,189,248,0.1),_transparent_60%)]" />
+
       {/* Hero */}
-      <div className="h-screen flex flex-col items-center justify-center -translate-y-10">
-        <h1 id="home-t1" className="text-center text-5xl sm:text-7xl md:text-8xl font-extrabold tracking-tight">
-          Lenny Muffler
-        </h1>
-        <p id="home-t2" className="text-center text-xl sm:text-2xl text-white/70 mt-4">
-          software developer
-        </p>
-      </div>
+      <section className="relative px-6 pb-24 pt-32 sm:pt-40">
+        <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
+          <span className="text-xs uppercase tracking-[0.5em] text-white/40">Creative Engineer</span>
+          <h1 id="home-t1" className="mt-8 text-5xl font-extrabold tracking-tight sm:text-7xl md:text-8xl">
+            Lenny Muffler
+          </h1>
+          <p id="home-t2" className="mt-6 max-w-2xl text-lg text-white/70 sm:text-2xl">
+            Software developer crafting playful interfaces, reliable systems, and immersive web experiences.
+          </p>
+          <div className="mt-10 flex flex-wrap justify-center gap-4 text-sm text-white/60">
+            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">Full-stack Product Builder</span>
+            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">Real-time Interfaces</span>
+            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">Simulation & AI</span>
+          </div>
+        </div>
+      </section>
 
       {/* Knowledge */}
-      <section id="home-s1" className="-translate-y-60">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="text-center mb-10 sm:mb-14">
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">Knowledge</h2>
-            <p className="mt-3 text-white/60 max-w-2xl mx-auto">A concise overview of the technologies and tools I use.</p>
+      <section id="home-s1" className="px-6 pb-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="text-xs uppercase tracking-[0.4em] text-white/40">Knowledge Stack</span>
+            <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl">Tools I return to daily</h2>
+            <p className="mt-4 text-white/60">A concise overview of the languages, frameworks, and platforms I use to move ideas into production.</p>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {Object.entries(skills).map(([category, skillList]) => (
-              <Card color="#fff" scrambleList={false} id={"home-skillblock"} key={category} skillList={skillList} title={category} />
+              <Card color="#ffffff" scrambleList={false} id={"home-skillblock"} key={category} skillList={skillList} title={category} />
             ))}
           </div>
         </div>
       </section>
-      <section id="home-s2">
-        <h2 id="home-t3" className="text-center pb-32 text-3xl sm:text-5xl font-bold tracking-tight">
-          Projects
-        </h2>
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      {/* Projects */}
+      <section id="home-s2" className="relative px-6 pb-32">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(249,115,22,0.12),_transparent_75%)]" />
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center">
+            <span className="text-xs uppercase tracking-[0.4em] text-white/40">Projects</span>
+            <h2 id="home-t3" className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl">
+              Selected builds
+            </h2>
+            <p className="mt-4 text-white/60">Interactive experiments, client work, and personal tools that show how I combine motion, data, and polish.</p>
+          </div>
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (
               <Link href={project.link} key={project.name} className="relative">
-                <div id="home-projectblock" key={project.name} className="group relative rounded-2xl p-5 border-1 border-white/10 bg-white/10 backdrop-blur-xl">
+                <div id="home-projectblock" className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur transition duration-300 hover:border-white/30 hover:bg-white/10">
                   <h3 className="text-lg sm:text-xl font-semibold tracking-wide text-white/90">{project.name}</h3>
                   <div className="my-4 h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
-
                   <div className="flex flex-wrap gap-2">
-                   <ImageTilt picture={project.picture} name={project.name} />
+                    <ImageTilt picture={project.picture} name={project.name} />
                   </div>
                 </div>
               </Link>
@@ -89,22 +104,32 @@ export default function Page() {
           </div>
         </div>
       </section>
-      <section>
-        <h2 className="text-center pt-50 pb-32 text-3xl sm:text-5xl font-bold tracking-tight">My UI Components</h2>
-        <div className="relative min-h-100 flex flex-col items-center justify-center mx-auto max-w-7xl bordfer-1">
-          <h1 className="text-4xl font-bold tracking-tight pb-10">Magic Card</h1>
-          <Card color="#fff" id="random-Card-home" scrambleList={false} skillList={["React", "Tailwind CSS", "GSAP", "Framer Motion"]} title={"UI Components"} />
-          <button className="cursor-pointer absolute right-20 bg-neutral-900 p-4 rounded-2xl top-1/2 transform -translate-y-1/2">
-            <ArrowRight />
-          </button>
-          <button className="cursor-pointer absolute left-20 bg-neutral-900 p-4 rounded-2xl top-1/2 transform -translate-y-1/2">
-            <ArrowLeft />
-          </button>
-          {/* Indicators */}
-          <div className="flex space-x-2 mt-4 absolute bottom-10">
-            {[true, false, false, false, false].map((current, index) => (
-              <span key={index} className={`w-3 h-3 rounded-full block ${current ? "bg-white/50" : "bg-white/20"}`}></span>
-            ))}
+
+      {/* UI Components */}
+      <section className="px-6 pb-32">
+        <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-10 text-center backdrop-blur">
+          <div className="mx-auto max-w-3xl">
+            <span className="text-xs uppercase tracking-[0.4em] text-white/40">UI Playground</span>
+            <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl">Reusable components I refine</h2>
+            <p className="mt-4 text-white/60">Micro-interactions and hover effects that make interfaces feel responsive without sacrificing clarity.</p>
+          </div>
+          <div className="relative mt-12 flex flex-col items-center gap-10">
+            <Card color="#ffffff" id="random-Card-home" scrambleList={false} skillList={["React", "Tailwind CSS", "GSAP", "Framer Motion"]} title={"Magic Card"} />
+            <div className="flex items-center gap-4 text-sm text-white/50">
+              <button className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-neutral-900 px-4 py-2 transition hover:border-white/30 hover:text-white">
+                <ArrowLeft className="h-4 w-4" />
+                Previous
+              </button>
+              <button className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-neutral-900 px-4 py-2 transition hover:border-white/30 hover:text-white">
+                Next
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              {[true, false, false, false, false].map((current, index) => (
+                <span key={index} className={`h-2 w-8 rounded-full ${current ? "bg-white/60" : "bg-white/20"}`} />
+              ))}
+            </div>
           </div>
         </div>
       </section>

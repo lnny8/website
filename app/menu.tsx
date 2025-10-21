@@ -20,7 +20,7 @@ export default function Menu() {
           {/* <span className="tracking-tight text-xl font-bold">Lenny</span> */}
           <Image src="/lenny/logo.svg" alt="Logo" width={50} height={50} />
         </Link>
-        <Link id="menu-link" href="/contact" className="ml-auto relative"><FillButton text="Get in touch" size={1.3} /></Link>
+        <Link id="menu-link" href="/contact" className="ml-auto relative"><FillButton text="Get in touch" /></Link>
         
     </nav>
   )
