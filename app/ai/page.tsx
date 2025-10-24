@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "next/link"
-import Card from "@/lib/ui/magic-card"
+import Card from "@/lib/ui/card"
 import {ArrowLeft} from "lucide-react"
 
 const topicGroups = [
@@ -97,7 +97,7 @@ export default function Page() {
           </div>
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {topicGroups.map((topic, index) => (
-              <Card key={topic.title} color={topic.color} id={`ai-skillblock-${index}`} scrambleList={false} skillList={topic.skillList} title={topic.title} />
+              <Card items={topic.skillList} title={topic.title} />
             ))}
           </div>
         </div>
