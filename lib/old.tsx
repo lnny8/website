@@ -1,15 +1,13 @@
 "use client"
 import * as THREE from "three/webgpu"
-import {float, vec3, pass, mx_fractal_noise_vec3, positionLocal, mul, time, mx_noise_vec3, abs, sin} from "three/tsl"
-import {useEffect, useRef} from "react"
-import {PostProcessing} from "three/webgpu"
-import {bloom} from "three/examples/jsm/tsl/display/BloomNode.js"
+import * as TSL from "three/tsl"
+import {useEffect} from "react"
 
-export default function Numbers() {
+export default function Background() {
   useEffect(() => {
     if (typeof window === "undefined") return
 
-    const canvas = document.getElementById("myCanvas") as HTMLCanvasElement
+    const canvas = document.getElementById("fmyCanvas") as HTMLCanvasElement
     if (!canvas) return
 
     const renderer = new THREE.WebGPURenderer({canvas, antialias: true})
@@ -18,7 +16,6 @@ export default function Numbers() {
 
     const scene = new THREE.Scene()
     const aspect = window.innerWidth / window.innerHeight
-    const size = 4
     const camera = new THREE.PerspectiveCamera(70, aspect)
     camera.position.z = 1
 
@@ -27,43 +24,71 @@ export default function Numbers() {
       camera.aspect = aspect
       camera.updateProjectionMatrix()
       renderer.setSize(window.innerWidth, window.innerHeight)
-      // bloom node resizes itself each frame based on renderer size
     }
     window.addEventListener("resize", onResize)
 
-    const postProcessing = new PostProcessing(renderer)
-    const scenePass = pass(scene, camera)
-    const sceneColor = scenePass.getTextureNode("output")
-    const bloomPass = bloom(sceneColor, 1.4, 0.85, 0.2)
-    postProcessing.outputNode = sceneColor.add(bloomPass)
-
-    const geometry = new THREE.IcosahedronGeometry(0.3, 1)
+    const geometry = new THREE.IcosahedronGeometry(0.5, 50)
     const material = new THREE.MeshBasicNodeMaterial()
-    material.colorNode = getColor()
+    const hoverPointUniform = TSL.uniform(new THREE.Vector3())
+    const hoverStrengthUniform = TSL.uniform(0)
     // material.wireframe = true
 
     const object = new THREE.Mesh(geometry, material)
-
     scene.add(object)
-    const adding = mx_noise_vec3(positionLocal.add(time.mul(0.2)))
-    material.positionNode = positionLocal.xyz.add(adding.mul(0.7))
+
+    const frequencyPosition = TSL.positionLocal.mul(10)
+    const noise = TSL.mx_noise_vec3(frequencyPosition.add(TSL.time.mul(0.5)))
+    const displacement = noise.x.mul(0.05)
+    // push vertices near the hovered point outward
+    const hoverPointNode = TSL.vec3(hoverPointUniform)
+    const hoverDist = TSL.distance(TSL.positionLocal, hoverPointNode)
+    const radius = TSL.float(0.2)
+    const influence = TSL.clamp(TSL.float(1).sub(hoverDist.div(radius)), TSL.float(0), TSL.float(1))
+    const hoverDisplacement = influence.mul(hoverStrengthUniform)
+    const totalDisplacement = displacement.add(hoverDisplacement)
+    const displacedPosition = TSL.positionLocal.add(TSL.normalLocal.mul(totalDisplacement))
+    material.positionNode = displacedPosition
+    const baseColorNode = getColor()
+    const brightness = TSL.clamp(TSL.abs(totalDisplacement).mul(15), TSL.float(0), TSL.float(1))
+    material.colorNode = TSL.mix(baseColorNode, TSL.vec3(1, 1, 1), brightness)
 
     let isRunning = true
     let animationFrameId: number | null = null
 
+    const raycaster = new THREE.Raycaster()
+    const mouse = new THREE.Vector2()
+    const localPoint = new THREE.Vector3()
+
+    let targetHover = 0
+    let currentHover = 0
+
+    function onMouseMove(event: MouseEvent) {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+    }
+    window.addEventListener("mousemove", onMouseMove)
+
     const animate = async () => {
       if (!isRunning) return
-      try {
-        await postProcessing.renderAsync()
-      } catch (error) {
-        console.error("WebGPU render error", error)
-        isRunning = false
-        return
+
+      // update raycaster and find intersection point in world space
+      raycaster.setFromCamera(mouse, camera)
+      const intersects = raycaster.intersectObject(object)
+
+      if (intersects.length > 0) {
+        const worldPoint = intersects[0].point
+        object.worldToLocal(localPoint.copy(worldPoint))
+        hoverPointUniform.value.copy(localPoint)
+        targetHover = 1
+      } else {
+        targetHover = 0
       }
-      if (!isRunning) return
-      animationFrameId = window.requestAnimationFrame(() => {
-        void animate()
-      })
+
+      currentHover += (targetHover - currentHover) * 0.18
+      hoverStrengthUniform.value = currentHover * 0.05
+
+      await renderer.renderAsync(scene, camera)
+      animationFrameId = requestAnimationFrame(animate)
     }
     void animate()
 
@@ -71,15 +96,20 @@ export default function Numbers() {
       isRunning = false
       if (animationFrameId !== null) cancelAnimationFrame(animationFrameId)
       window.removeEventListener("resize", onResize)
-      postProcessing.dispose()
+      window.removeEventListener("mousemove", onMouseMove)
+      try {
+        material.dispose()
+      } catch {}
+      try {
+        geometry.dispose()
+      } catch {}
       renderer.dispose()
     }
   }, [])
 
   function getColor() {
-    const adding = mx_noise_vec3(positionLocal.add(time.mul(0.2)))
-    return vec3(abs(sin(adding.x)), abs(sin(adding.y)), abs(sin(adding.z)))
+    return TSL.vec3(0.13, 0.77, 0.37).mul(TSL.vec3(0.8))
   }
 
-  return <canvas style={{width: "100vw", height: "100vh", touchAction: "none", display: "block", backgroundColor: "#000"}} id="myCanvas" />
+  return <canvas className="block w-screen h-screen -z-100 fixed" id="fmyCanvas" />
 }

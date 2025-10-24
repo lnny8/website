@@ -2,8 +2,18 @@
 import ContactBackground from "@/lib/ui/blob"
 import {Github, Instagram, Linkedin} from "lucide-react"
 import React, {Suspense} from "react"
+import gsap from "gsap"
+import { useGSAP } from "@gsap/react"
 
 export default function ContactPage() {
+
+  useGSAP(() => {
+    if (typeof window === "undefined") return
+    const tl = gsap.timeline()
+    tl.to("#contact-bgcover", {opacity: 0, duration: 5, backdropFilter: "blur(0px)", ease: "power2.out"})
+  })
+
+
   const socialLinks = [
     {href: "https://linkedin.com/in/lennymuffler", label: "LinkedIn", icon: Linkedin},
     {href: "https://github.com/lnny8", label: "GitHub", icon: Github},
@@ -16,6 +26,7 @@ export default function ContactPage() {
 
       <div className="pointer-events-none absolute inset-0 -z-40 opacity-80">
         <Suspense fallback={<div className="h-full w-full bg-black" />}>
+          <div id="contact-bgcover" className="absolute inset-0" style={{backdropFilter: "blur(100px)"}} />
           <ContactBackground />
         </Suspense>
       </div>

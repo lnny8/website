@@ -11,6 +11,7 @@ import {projects} from "../lib/projects"
 import Link from "next/link"
 import {ArrowLeft, ArrowRight} from "lucide-react"
 import ImageTilt from "@/lib/ui/image-tilt"
+import Blob from "@/lib/old"
 
 export default function Page() {
   gsap.registerPlugin(ScrambleTextPlugin, SplitText, ScrollSmoother, ScrollTrigger, DrawSVGPlugin, ScrollToPlugin)
@@ -22,7 +23,7 @@ export default function Page() {
     const t5 = new SplitText("#home-t5", {type: "lines words, chars", mask: "lines"})
     const t6 = new SplitText("#home-t6", {type: "lines words, chars", mask: "lines"})
     const tl = gsap.timeline()
-    tl.from("#home-gradient1", {opacity: 0, duration: 1}, 0)
+    tl.from("#home-gradient1", {opacity: 0, duration: 2}, 0)
     tl.from("#home-t4", {opacity: 0, duration: 1}, 0.3)
     tl.from(t1.chars, {yPercent: 100, opacity: 0, duration: 0.5, ease: "back.out", stagger: 0.05}, "<0.3")
     tl.from(t2.chars, {yPercent: 100, opacity: 0, duration: 0.3, ease: "back.out", stagger: {amount: 0.4}, delay: 0.3}, "<")
@@ -64,9 +65,9 @@ export default function Page() {
             Software developer crafting playful interfaces, reliable systems, and immersive web experiences.
           </p>
           <div id="home-spans" className="mt-10 flex flex-wrap justify-center gap-4 text-sm text-white/60">
-            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">Full-stack Product Builder</span>
-            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">Real-time Interfaces</span>
-            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">Simulation & AI</span>
+            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 transition-colors duration-300 hover:border-white/30 hover:bg-white/10">Full-stack Product Builder</span>
+            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 transition-colors duration-300 hover:border-white/30 hover:bg-white/10">Real-time Interfaces</span>
+            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 transition-colors duration-300 hover:border-white/30 hover:bg-white/10">Simulation & AI</span>
           </div>
         </div>
       </section>
