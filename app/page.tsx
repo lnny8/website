@@ -106,7 +106,7 @@ export default function Page() {
 
       {/* Projects */}
       <section id="home-s2" className="relative px-6 pb-32">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(249,115,22,0.12),_transparent_75%)]" />
+      {/* <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,_rgba(249,115,22,0.12),_transparent_75%)]" /> */}
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
             <span className="text-xs uppercase tracking-[0.4em] text-white/40">Projects</span>
