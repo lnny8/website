@@ -40,8 +40,8 @@ export default function Page() {
 
   const skills = {
     "🧠 Programming Languages": ["JavaScript", "TypeScript", "Python", "Java", "HTML", "GLSL", "TSL"],
-    "🔧 Development": ["n8n", "Git", "Docker", "Hetzner Cloud", "coolify", "replicate", "Ubuntu"],
-    "🔒 Security & Access": ["auth0", "HMAC", "JWT", "OAuth", "Stripe API", "Webhooks"],
+    "🔧 Development": ["Linux", "Git", "n8n", "Caddy", "Docker", "Hetzner Cloud", "coolify", "replicate"],
+    "🔒 Security & Access": ["auth0", "HMAC", "JWT", "SSL", "OAuth", "Stripe API", "Webhooks"],
     "🎨 Design": ["Web- / Mobile Design", "Custom Tkinter", "Figma", "Blender", "TailwindCSS"],
     "🧩 Frameworks": ["React", "Next.js", "Expo", "OpenCV", "Supabase", "Three.js", "GSAP / motion"],
     "🤖 AI": ["Reinforcement Learning", "DQN", "Pytorch", "Monte Carlo method"],
@@ -67,7 +67,7 @@ export default function Page() {
           <div id="home-spans" className="mt-10 flex flex-wrap justify-center gap-4 text-sm text-white/60">
             <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 transition-colors duration-300 hover:border-white/30 hover:bg-white/10">Full-stack Product Builder</span>
             <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 transition-colors duration-300 hover:border-white/30 hover:bg-white/10">Real-time Interfaces</span>
-            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 transition-colors duration-300 hover:border-white/30 hover:bg-white/10">Simulation & AI</span>
+            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 transition-colors duration-300 hover:border-white/30 hover:bg-white/10">Server Management</span>
           </div>
         </div>
       </section>
@@ -106,7 +106,7 @@ export default function Page() {
 
       {/* Projects */}
       <section id="home-s2" className="relative px-6 pb-32">
-      {/* <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,_rgba(249,115,22,0.12),_transparent_75%)]" /> */}
+        {/* <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,_rgba(249,115,22,0.12),_transparent_75%)]" /> */}
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
             <span className="text-xs uppercase tracking-[0.4em] text-white/40">Projects</span>
