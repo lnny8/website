@@ -41,7 +41,7 @@ export default function Page() {
   const skills = {
     "🧠 Programming Languages": ["JavaScript", "TypeScript", "Python", "Java", "HTML", "GLSL", "TSL"],
     "🔧 Development": ["Linux", "Git", "n8n", "Caddy", "Docker", "Hetzner Cloud", "coolify", "replicate"],
-    "🔒 Security & Access": ["auth0", "HMAC", "JWT", "SSL", "OAuth", "Stripe API", "Webhooks"],
+    "🔒 Security & Access": ["auth0", "HMAC", "JWT", "SSL", "OAuth", "Stripe API", "Webhooks", "Caddy"],
     "🎨 Design": ["Web- / Mobile Design", "Custom Tkinter", "Figma", "Blender", "TailwindCSS"],
     "🧩 Frameworks": ["React", "Next.js", "Expo", "OpenCV", "Supabase", "Three.js", "GSAP / motion"],
     "🤖 AI": ["Reinforcement Learning", "DQN", "Pytorch", "Monte Carlo method"],
