@@ -107,5 +107,16 @@ export default function Game() {
     return Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2)
   }
 
-  return <canvas id="myCanvas" className="absolute inset-0" />
+  return (
+    <main className="relative min-h-screen overflow-hidden text-white">
+      <canvas id="myCanvas" className="absolute inset-0" aria-label="WebGPU shader exploration by Lenny Muffler" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center gap-6 px-6 text-center">
+        <p className="text-xs uppercase tracking-[0.4em] text-white/50">WebGPU research</p>
+        <h1 className="text-4xl font-bold">Color Bloom Shader</h1>
+        <p className="text-white/80">Built to test bloom nodes, mouse-driven uniforms, and async renderer init. This scene is part of my shader toolkit for premium hero sections.</p>
+        <p className="text-white/60">Move the cursor to nudge chroma and bloom intensity — a small preview of how Lenny Muffler blends creative direction with performance budgets.</p>
+      </div>
+    </main>
+  )
 }

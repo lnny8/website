@@ -110,6 +110,16 @@ export default function Background() {
   function getColor() {
     return TSL.vec3(0.13, 0.77, 0.37).mul(TSL.vec3(0.8))
   }
-
-  return <canvas style={{width: "100vw", height: "100vh", touchAction: "none", display: "block", backgroundColor: "#000"}} id="myCanvas" />
+  return (
+    <main className="relative min-h-screen overflow-hidden text-white">
+      <canvas style={{width: "100vw", height: "100vh", touchAction: "none", display: "block", backgroundColor: "#000"}} id="myCanvas" aria-label="Interactive WebGPU blob shader by Lenny Muffler" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black" />
+      <div className="relative z-10 mx-auto max-w-3xl px-6 py-24 text-center">
+        <p className="text-xs uppercase tracking-[0.4em] text-white/50">WebGPU experiment</p>
+        <h1 className="mt-4 text-4xl font-bold">Organic Blob Shader</h1>
+        <p className="mt-4 text-white/80">Exploring WebGPU nodes, interactive ray-marching, and hover-reactive displacement. This study shows how I combine GLSL intuition with the new Three.js node APIs to craft tactile hero backgrounds for brands.</p>
+        <p className="mt-4 text-white/60">Move the cursor to warp the surface and see how the lighting stack responds. The project demonstrates how Lenny Muffler prototypes realtime visuals for campaigns and landing pages.</p>
+      </div>
+    </main>
+  )
 }

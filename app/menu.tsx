@@ -9,8 +9,7 @@ export default function Menu() {
   useEffect(() => {
     const menu = document.getElementById("menu-border")
     if (menu) {
-      menu.style.opacity = (scrollProgress/100).toString()
-      console.log(scrollProgress)
+      menu.style.opacity = (scrollProgress / 100).toString()
     }
   }, [scrollProgress])
 
@@ -27,7 +26,7 @@ export default function Menu() {
   }, [])
 
   return (
-    <nav className="fixed top-0 text-white w-full z-10">
+    <nav className="fixed top-0 text-white w-full z-10" aria-label="Primary">
       <div className="max-w-4xl md:mt-15 mt-10 mx-10 md:mx-0 md:right-1/2 md:translate-x-1/2 flex items-center justify-between">
         <div id="menu-border" className="absolute bg-black -z-1 inset-0 -inset-y-5 -inset-x-10 border-2 border-white/10 rounded-4xl" />
         <Link href="/">

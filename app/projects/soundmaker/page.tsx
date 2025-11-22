@@ -156,13 +156,10 @@ const sliderConfigs: SliderConfig[] = [
   },
 ]
 
-const sliderBounds = sliderConfigs.reduce(
-  (acc, config) => {
-    acc[config.key] = {min: config.min, max: config.max}
-    return acc
-  },
-  {} as Record<NumericParamKey, {min: number; max: number}>
-)
+const sliderBounds = sliderConfigs.reduce((acc, config) => {
+  acc[config.key] = {min: config.min, max: config.max}
+  return acc
+}, {} as Record<NumericParamKey, {min: number; max: number}>)
 
 const waveforms: Waveform[] = ["square", "sawtooth", "triangle", "sine", "noise"]
 
@@ -455,23 +452,13 @@ export default function Page() {
           <div>
             <p className="text-xs uppercase tracking-[0.45em] text-white/50">Procedural Audio Lab</p>
             <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">Soundmaker</h1>
-            <p className="mt-3 max-w-xl text-sm text-white/60 sm:text-base">
-              Shape retro game sounds with envelopes, pitch slides, and noise layers — fast iterations inspired by the classic sfxr workflow.
-            </p>
+            <p className="mt-3 max-w-xl text-sm text-white/60 sm:text-base">Shape retro game sounds with envelopes, pitch slides, and noise layers — a playground I (Lenny Muffler) use when crafting sonic feedback for WebGL experiences.</p>
           </div>
           <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setParams(defaultParams)}
-              className="rounded-full border border-white/10 px-4 py-2 text-sm text-white/70 transition hover:border-white/40 hover:text-white"
-            >
+            <button type="button" onClick={() => setParams(defaultParams)} className="rounded-full border border-white/10 px-4 py-2 text-sm text-white/70 transition hover:border-white/40 hover:text-white">
               Reset
             </button>
-            <button
-              type="button"
-              onClick={playSound}
-              className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-3 text-sm font-semibold text-black transition hover:bg-emerald-400"
-            >
+            <button type="button" onClick={playSound} className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-3 text-sm font-semibold text-black transition hover:bg-emerald-400">
               <span className="h-2 w-2 rounded-full bg-black" />
               Play Sound
             </button>
@@ -516,10 +503,7 @@ export default function Page() {
                       key={wave}
                       type="button"
                       onClick={() => setParams((prev) => ({...prev, waveform: wave}))}
-                      className={`rounded-2xl border px-3 py-2 text-sm capitalize transition ${
-                        selected ? "border-white/80 bg-white/20 text-white" : "border-white/10 bg-white/5 text-white/70 hover:border-white/40 hover:text-white"
-                      }`}
-                    >
+                      className={`rounded-2xl border px-3 py-2 text-sm capitalize transition ${selected ? "border-white/80 bg-white/20 text-white" : "border-white/10 bg-white/5 text-white/70 hover:border-white/40 hover:text-white"}`}>
                       {wave}
                     </button>
                   )
@@ -539,29 +523,16 @@ export default function Page() {
                     {label: "Blip", action: presets.blip},
                   ] as const
                 ).map(({label, action}) => (
-                  <button
-                    key={label}
-                    type="button"
-                    onClick={() => applyPreset(action)}
-                    className="rounded-full border border-white/10 px-3 py-1.5 text-xs uppercase tracking-[0.25em] text-white/60 transition hover:border-white/40 hover:text-white"
-                  >
+                  <button key={label} type="button" onClick={() => applyPreset(action)} className="rounded-full border border-white/10 px-3 py-1.5 text-xs uppercase tracking-[0.25em] text-white/60 transition hover:border-white/40 hover:text-white">
                     {label}
                   </button>
                 ))}
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={mutate}
-                  className="rounded-full border border-white/10 px-3 py-1.5 text-xs uppercase tracking-[0.25em] text-white/70 transition hover:border-white/40 hover:text-white"
-                >
+                <button type="button" onClick={mutate} className="rounded-full border border-white/10 px-3 py-1.5 text-xs uppercase tracking-[0.25em] text-white/70 transition hover:border-white/40 hover:text-white">
                   Mutate
                 </button>
-                <button
-                  type="button"
-                  onClick={copyPreset}
-                  className="rounded-full border border-white/10 px-3 py-1.5 text-xs uppercase tracking-[0.25em] text-white/70 transition hover:border-white/40 hover:text-white"
-                >
+                <button type="button" onClick={copyPreset} className="rounded-full border border-white/10 px-3 py-1.5 text-xs uppercase tracking-[0.25em] text-white/70 transition hover:border-white/40 hover:text-white">
                   Copy JSON
                 </button>
               </div>
@@ -579,11 +550,7 @@ export default function Page() {
               </div>
             </div>
 
-            {status ? (
-              <div className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-center text-xs uppercase tracking-[0.25em] text-emerald-200">
-                {status}
-              </div>
-            ) : null}
+            {status ? <div className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-center text-xs uppercase tracking-[0.25em] text-emerald-200">{status}</div> : null}
           </aside>
         </div>
       </div>

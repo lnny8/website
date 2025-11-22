@@ -149,33 +149,42 @@ export default function Page() {
   }
 
   return (
-    <main className="h-screen w-full flex flex-col items-center justify-center">
-      <div id="wheelspin-circle" className="overflow-hidden rounded-full size-100 relative" style={{backgroundImage: `conic-gradient(${gradientParts.join(", ")})`}}></div>
-      <div className="bg-white w-5 h-10 absolute -translate-y-70" />
-
-      <div className="absolute translate-y-90 flex items-center justify-center">
-        <div ref={barRef} onMouseDown={(e) => handleMouseDown(e)} className="relative h-10 w-80 rounded" style={{backgroundImage: `linear-gradient(to right, ${gradientParts.join(", ")})`}}>
-          {boundaryPercents.map((boundary, index) => (
-            <button
-              key={`handle-${index}`}
-              type="button"
-              className="absolute top-1/2 h-6 w-1 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize bg-white/80"
-              style={{left: `${boundary}%`}}
-              onMouseDown={(e) => {
-                e.stopPropagation()
-                setActiveHandle(index)
-                updateHandlePosition(e.clientX, index)
-              }}
-            />
-          ))}
-        </div>
-        <Plus onClick={() => addColor()} className="cursor-pointer bg-white text-black rounded-full m-2" />
-        <Minus onClick={() => removeColor()} className="cursor-pointer bg-white text-black rounded-full m-2" />
+    <main className="min-h-screen w-full flex flex-col items-center justify-center gap-10 px-6 text-center">
+      <div className="max-w-2xl space-y-4">
+        <p className="text-xs uppercase tracking-[0.4em] text-white/50">Probability · Tooling</p>
+        <h1 className="text-4xl font-bold">Wheelspin probability editor</h1>
+        <p className="text-white/70">I use this interactive control to prototype reward mechanics and pricing wheels. Drag the handles to redistribute odds, then spin the wheel to preview outcomes.</p>
+      </div>
+      <div className="relative flex flex-col items-center justify-center">
+        <div id="wheelspin-circle" className="overflow-hidden rounded-full size-100" aria-live="polite" style={{backgroundImage: `conic-gradient(${gradientParts.join(", ")})`}} />
+        <div className="pointer-events-none absolute -top-6 h-10 w-5 rounded-b-full bg-white shadow-xl" aria-hidden />
       </div>
 
-      <button className="mt-30 px-4 py-2 cursor-pointer bg-white text-black rounded-xl" onClick={() => spinWheel()}>
-        Spin
-      </button>
+      <div className="flex flex-col items-center justify-center gap-4">
+        <p className="text-sm text-white/60">Drag the handles on the slider to rebalance the distribution.</p>
+        <div className="flex items-center justify-center">
+          <div ref={barRef} onMouseDown={(e) => handleMouseDown(e)} className="relative h-10 w-80 rounded" style={{backgroundImage: `linear-gradient(to right, ${gradientParts.join(", ")})`}}>
+            {boundaryPercents.map((boundary, index) => (
+              <button
+                key={`handle-${index}`}
+                type="button"
+                className="absolute top-1/2 h-6 w-1 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize bg-white/80"
+                style={{left: `${boundary}%`}}
+                onMouseDown={(e) => {
+                  e.stopPropagation()
+                  setActiveHandle(index)
+                  updateHandlePosition(e.clientX, index)
+                }}
+              />
+            ))}
+          </div>
+          <Plus onClick={() => addColor()} className="cursor-pointer bg-white text-black rounded-full m-2" />
+        </div>
+
+        <button className="px-6 py-3 cursor-pointer bg-white text-black rounded-full font-semibold uppercase tracking-[0.3em]" onClick={() => spinWheel()}>
+          Spin
+        </button>
+      </div>
     </main>
   )
 }

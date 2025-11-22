@@ -1,5 +1,4 @@
 "use client"
-import {boolean, row} from "mathjs"
 import React, {useEffect} from "react"
 
 export default function Page() {
@@ -84,8 +83,14 @@ export default function Page() {
   }
 
   return (
-    <main className="w-full h-screen flex items-center justify-center">
-      <canvas onClick={handleClick} id="connect-four-canvas"></canvas>
+    <main className="w-full min-h-screen bg-black flex flex-col items-center justify-center gap-10 px-6 py-24 text-center">
+      <div className="max-w-2xl space-y-4">
+        <p className="text-xs uppercase tracking-[0.4em] text-white/50">Prototype · Game design</p>
+        <h1 className="text-4xl font-bold">Connect Four Trainer by Lenny Muffler</h1>
+        <p className="text-white/70">A minimalist Web Canvas prototype that demonstrates how I teach probability, animation cadence, and human-friendly feedback when building casual games for the web.</p>
+        <p className="text-white/60">Tap the board to drop a disc. The visual system deliberately mirrors neon arcade displays, making it perfect for fullscreen hero shots.</p>
+      </div>
+      <canvas onClick={handleClick} id="connect-four-canvas" role="img" aria-label="Interactive Connect Four board by Lenny Muffler" />
     </main>
   )
 }
