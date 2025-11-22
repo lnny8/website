@@ -9,9 +9,22 @@ export default function Menu() {
   useEffect(() => {
     const menu = document.getElementById("menu-border")
     if (menu) {
-      menu.style.opacity = ((scrollProgress - window.innerHeight * (3 / 4)) / (window.innerHeight / 4)).toString()
+      menu.style.opacity = (scrollProgress/100).toString()
+      console.log(scrollProgress)
     }
   }, [scrollProgress])
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrollProgress((prev) => (prev === scrollY ? prev : scrollY))
+    }
+
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, {passive: true})
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
 
   return (
     <nav className="fixed top-0 text-white w-full z-10">

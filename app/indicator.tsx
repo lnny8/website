@@ -3,16 +3,11 @@ import React, {useEffect, useState} from "react"
 import gsap from "gsap"
 import {AnimatePresence, motion} from "motion/react"
 
-const SECTIONS = [
-  {name: "Start", link: "#start"},
-  {name: "Knowledge", link: "#knowledge"},
-  {name: "Projects", link: "#projects"},
-  {name: "Tutorials", link: "#tutorials"},
-]
 
-export default function Indicator() {
+
+export default function Indicator({sections}: {sections: {name: string, link: string}[]}) {
   const [scrollProgress, setScrollProgress] = useState(0)
-  const [currentSection, setCurrentSection] = useState<string>(SECTIONS[0].name)
+  const [currentSection, setCurrentSection] = useState<string>(sections[0].name)
 
   useEffect(() => {
     const menu = document.getElementById("menu-border")
@@ -24,8 +19,8 @@ export default function Indicator() {
   useEffect(() => {
     function handleScroll() {
       const scrollY = window.scrollY
-      const visibleSection = SECTIONS.find((section, index) => {
-        const nextSection = SECTIONS[index + 1]
+      const visibleSection = sections.find((section, index) => {
+        const nextSection = sections[index + 1]
         const sectionElement = document.querySelector(section.link)
         const nextSectionElement = nextSection ? document.querySelector(nextSection.link) : null
         const sectionTop = sectionElement ? sectionElement.getBoundingClientRect().top + window.scrollY : 0
@@ -48,7 +43,7 @@ export default function Indicator() {
 
   return (
     <div className="absolute flex-col items-start pl-10 pt-20 top-0 gap-3 hidden md:flex">
-      {SECTIONS.map((section) => (
+      {sections.map((section) => (
         <div key={section.name} className="flex items-center gap-3">
           <AnimatePresence mode="wait">{currentSection === section.name && <motion.div exit={{scale: 0.1}} transition={{duration: 0.3}} initial={{scale: 0.1}} animate={{scale: 1}}
           className="bg-white rounded-full size-2 absolute -translate-x-4" />}</AnimatePresence>

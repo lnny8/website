@@ -16,18 +16,22 @@ import Indicator from "./indicator"
 export default function Page() {
   gsap.registerPlugin(ScrambleTextPlugin, SplitText, ScrollSmoother, ScrollTrigger, DrawSVGPlugin, ScrollToPlugin)
 
+  const sections = [
+    {name: "Start", link: "#start"},
+    {name: "Knowledge", link: "#knowledge"},
+    {name: "Projects", link: "#projects"},
+    {name: "Tutorials", link: "#tutorials"},
+  ]
   useGSAP(() => {
     const panels = gsap.utils.toArray<HTMLElement>("#tutorials .panel")
     if (!panels.length) return
 
-    gsap.to(panels, {
-      xPercent: -100 * (panels.length - 1),
+    gsap.to(panels[0], {
       ease: "none",
       scrollTrigger: {
         trigger: "#tutorials",
         pin: true,
-        scrub: 0.5,
-        end: window.innerWidth * (panels.length - 1),
+        end: "+=" + window.innerHeight,
       },
     })
   })
@@ -44,10 +48,10 @@ export default function Page() {
   return (
     <main className="relative min-h-screen overflow-hidden">
       <div className="fixed z-10">
-        <Indicator />
+        <Indicator sections={sections} />
       </div>
       {/* Hero */}
-      <section id="start" className="relative w-screen overflow-hidden h-screen px-6f pb-24 pt-32 sm:pt-40 flex flex-col items-center justify-center">
+      <section id="start" aria-label="Hero section with a big ASCII Art of the name Lenny from the author Lenny Muffler" className="relative w-screen overflow-hidden h-screen px-6f pb-24 pt-32 sm:pt-40 flex flex-col items-center justify-center">
         <Name />
       </section>
 
@@ -99,18 +103,21 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="tutorials" className="h-screen overflow-visible">
-        <article className="panel flex-col relative h-full w-full flex-shrink-0 bg-rose-500 flex items-center justify-center">
+      <section id="tutorials" className="">
+        <article className="panel flex-col relative h-screen w-full flex-shrink-0 bg-rose-500 flex items-center justify-center">
           <h2 className="text-4xl font-bold text-white">Tutorial 1</h2>
           <p className="mt-4 text-white/70">Learn how to create stunning scroll animations with GSAP and ScrollTrigger.</p>
         </article>
-        <article className="panel flex-col relative h-full w-full flex-shrink-0 bg-emerald-500 flex items-center justify-center">
-          <h2 className="text-4xl font-bold text-white">Tutorial </h2>
+        <article className="panel flex-col relative h-screen w-full flex-shrink-0 bg-emerald-500 flex items-center justify-center">
+          <h2 className="text-4xl font-bold text-white">Tutorial 2</h2>
+          <p className="mt-4 text-white/70">Learn how to create stunning scroll animations with GSAP and ScrollTrigger.</p>
+        </article>
+        <article className="panel flex-col relative h-screen w-full flex-shrink-0 bg-sky-500 flex items-center justify-center">
+          <h2 className="text-4xl font-bold text-white">Tutorial 3</h2>
           <p className="mt-4 text-white/70">Learn how to create stunning scroll animations with GSAP and ScrollTrigger.</p>
         </article>
       </section>
-      
-      <section className="h-100" />
+
     </main>
   )
 }
