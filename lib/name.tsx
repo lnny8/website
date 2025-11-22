@@ -25,7 +25,7 @@ export default function Page() {
     canvas.style.display = "none"
 
     const renderer = new THREE.WebGLRenderer({canvas})
-    renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setSize(window.innerWidth-20, window.innerHeight)
 
     const camera = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, -window.innerHeight / 2, 0.1, 1000)
     camera.position.z = 200
@@ -33,16 +33,14 @@ export default function Page() {
     const scene = new THREE.Scene()
 
     // is mobile?
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent)
- 
-    
+    const isMobile = window.innerWidth <= 768
+
     const effect = new AsciiEffect(renderer, " nnley", {invert: true, resolution: 0.15})
-    effect.setSize(window.innerWidth, window.innerHeight)
+    effect.setSize(canvas.width, canvas.height)
     effect.domElement.style.position = "absolute"
     effect.domElement.style.top = "0px"
+    effect.domElement.style.left = "0px"
     document.body.appendChild(effect.domElement)
-    const previousOverflowX = document.body.style.overflowX
-    document.body.style.overflowX = "hidden"
 
     const loader = new TTFLoader()
     const fontLoader = new FontLoader()
@@ -59,8 +57,7 @@ export default function Page() {
     const textGeometry = new TextGeometry("lenny", {
       font,
       size: isMobile ? 90 : 180,
-      curveSegments: 12,
-      bevelEnabled: false,
+      curveSegments: 1,
     })
     const textMesh = new THREE.Mesh(textGeometry, new THREE.MeshBasicMaterial({color: 0xffffff}))
     textGeometry.center()
@@ -96,7 +93,7 @@ export default function Page() {
       camera.top = window.innerHeight / 2
       camera.bottom = -window.innerHeight / 2
       camera.updateProjectionMatrix()
-      effect.setSize(window.innerWidth, window.innerHeight)
+      effect.setSize(window.innerWidth-20, window.innerHeight)
     }
     window.addEventListener("resize", handleResize)
 
@@ -105,11 +102,10 @@ export default function Page() {
       window.removeEventListener("resize", handleResize)
       window.removeEventListener("mousemove", handleMouseMove)
       effect.domElement.remove()
-      document.body.style.overflowX = previousOverflowX
       renderer.dispose()
       textGeometry.dispose()
     }
   }
 
-  return <canvas id="name-canvas" className="overflow-hidden" style={{display: "none"}} />
+  return <canvas id="name-canvas" className="overflow-x-hidden" style={{display: "none"}} />
 }

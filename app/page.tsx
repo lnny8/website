@@ -9,14 +9,28 @@ import {DrawSVGPlugin} from "gsap/DrawSVGPlugin"
 import {ScrollToPlugin} from "gsap/ScrollToPlugin"
 import {projects} from "../lib/projects"
 import Link from "next/link"
-import {ArrowLeft, ArrowRight} from "lucide-react"
 import ImageTilt from "@/lib/ui/image-tilt"
 import Name from "@/lib/name"
+import Indicator from "./indicator"
 
 export default function Page() {
   gsap.registerPlugin(ScrambleTextPlugin, SplitText, ScrollSmoother, ScrollTrigger, DrawSVGPlugin, ScrollToPlugin)
 
-  useGSAP(() => {}, [])
+  useGSAP(() => {
+    const panels = gsap.utils.toArray<HTMLElement>("#tutorials .panel")
+    if (!panels.length) return
+
+    gsap.to(panels, {
+      xPercent: -100 * (panels.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#tutorials",
+        pin: true,
+        scrub: 0.5,
+        end: window.innerWidth * (panels.length - 1),
+      },
+    })
+  })
 
   const skills = {
     "🧠 Programming Languages": ["JavaScript", "TypeScript", "Python", "Java", "HTML", "GLSL", "TSL"],
@@ -29,8 +43,11 @@ export default function Page() {
 
   return (
     <main className="relative min-h-screen overflow-hidden">
+      <div className="fixed z-10">
+        <Indicator />
+      </div>
       {/* Hero */}
-      <section id="start" className="relative h-screen px-6f pb-24 pt-32 sm:pt-40 flex flex-col items-center justify-center">
+      <section id="start" className="relative w-screen overflow-hidden h-screen px-6f pb-24 pt-32 sm:pt-40 flex flex-col items-center justify-center">
         <Name />
       </section>
 
@@ -38,12 +55,8 @@ export default function Page() {
       <section id="knowledge" className="px-6 pb-24">
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl">
-              Tools I return to daily
-            </h2>
-            <p className="mt-4 text-white/60">
-              A concise overview of the languages, frameworks, and platforms I use to move ideas into production.
-            </p>
+            <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl">Tools I return to daily</h2>
+            <p className="mt-4 text-white/60">A concise overview of the languages, frameworks, and platforms I use to move ideas into production.</p>
           </div>
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {Object.entries(skills).map(([category, skillList]) => (
@@ -67,9 +80,7 @@ export default function Page() {
       <section id="projects" className="relative px-6 pb-32">
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
-            <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl">
-              Some cool projects
-            </h2>
+            <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl">Some cool projects</h2>
             <p className="mt-4 text-white/60">Interactive experiments, client work, and personal tools that show how I combine motion, data, and polish.</p>
           </div>
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -87,6 +98,19 @@ export default function Page() {
           </div>
         </div>
       </section>
+
+      <section id="tutorials" className="h-screen overflow-visible">
+        <article className="panel flex-col relative h-full w-full flex-shrink-0 bg-rose-500 flex items-center justify-center">
+          <h2 className="text-4xl font-bold text-white">Tutorial 1</h2>
+          <p className="mt-4 text-white/70">Learn how to create stunning scroll animations with GSAP and ScrollTrigger.</p>
+        </article>
+        <article className="panel flex-col relative h-full w-full flex-shrink-0 bg-emerald-500 flex items-center justify-center">
+          <h2 className="text-4xl font-bold text-white">Tutorial </h2>
+          <p className="mt-4 text-white/70">Learn how to create stunning scroll animations with GSAP and ScrollTrigger.</p>
+        </article>
+      </section>
+      
+      <section className="h-100" />
     </main>
   )
 }
