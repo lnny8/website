@@ -28,5 +28,21 @@ export const projects = [
     name: "🎨 WebGPU Shader",
     link: "/projects/webgpu-shader",
     picture: "/projects/shader.png",
-  }
+  },
+  {
+    name: "🎰 Spinning Wheel",
+    link: "/projects/wheelspin",
+    picture: "/projects/wheelspin.png",
+  },
+  {
+    name: "🌀 Blob Shader",
+    link: "/projects/blob-shader",
+    picture: "/projects/blob-shader.png",
+  },
+  {
+    name: "📱 Connect Four",
+    link: "/projects/connect-four",
+    picture: "/projects/connect-four.png",
+  },
+  
 ]

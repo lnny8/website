@@ -1,9 +1,13 @@
 import type {Metadata} from "next"
-import {Outfit} from "next/font/google"
+import {Outfit, Plus_Jakarta_Sans} from "next/font/google"
 import "./globals.css"
 import Menu from "./menu"
 
 const outfit = Outfit({
+  subsets: ["latin"],
+})
+
+const font = Plus_Jakarta_Sans({
   subsets: ["latin"],
 })
 
@@ -19,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning lang="en">
-      <body suppressHydrationWarning className={`${outfit.className} bg-black text-white antialiased`}>
+      <body suppressHydrationWarning className={`${font.className} bg-black text-white antialiased`}>
         <Menu />
         {children}
       </body>

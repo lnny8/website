@@ -4,8 +4,8 @@ import React from "react"
 export default function page() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center">
-      <h1 className="text-4xl font-bold text-center">Download BlackJack</h1>
-      <a href="/games/BlackJack.jar" download className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer mt-4">
+      <h1 className="text-4xl font-bold text-center">BlackJack in Java</h1>
+      <a href="/files/BlackJack.jar" download className="bg-white text-black mt-20 text-lg tracking-tight font-black px-6 py-4 rounded-2xl cursor-pointer">
         Download .jar
       </a>
     </main>
