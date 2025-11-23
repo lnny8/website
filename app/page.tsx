@@ -12,6 +12,9 @@ import Link from "next/link"
 import ImageTilt from "@/lib/ui/image-tilt"
 import Name from "@/lib/name"
 import Indicator from "./indicator"
+import {Suspense} from "react"
+import Image from "next/image"
+import { p } from "motion/react-client"
 
 export default function Page() {
   gsap.registerPlugin(ScrambleTextPlugin, SplitText, ScrollSmoother, ScrollTrigger, DrawSVGPlugin, ScrollToPlugin)
@@ -25,12 +28,12 @@ export default function Page() {
   useGSAP(() => {
     const panels = gsap.utils.toArray<HTMLElement>("#tutorials .panel")
     if (!panels.length) return
-
-    gsap.to(panels[0], {
+    gsap.to(panels, {
       ease: "none",
       scrollTrigger: {
         trigger: "#tutorials",
-        pin: true,
+        pin: panels[1],
+        scrub: 0.5,
         end: "+=" + window.innerHeight,
       },
     })
@@ -52,7 +55,9 @@ export default function Page() {
       </div>
       {/* Hero */}
       <section id="start" aria-label="Hero section with a big ASCII Art of the name Lenny from the author Lenny Muffler" className="relative w-screen overflow-hidden h-screen px-6f pb-24 pt-32 sm:pt-40 flex flex-col items-center justify-center">
-        <Name />
+        <Suspense fallback={"loading..."}>
+          <Name />
+        </Suspense>
       </section>
 
       {/* Knowledge */}
@@ -104,20 +109,31 @@ export default function Page() {
       </section>
 
       <section id="tutorials" className="">
-        <article className="panel flex-col relative h-screen w-full flex-shrink-0 bg-rose-500 flex items-center justify-center">
-          <h2 className="text-4xl font-bold text-white">Tutorial 1</h2>
-          <p className="mt-4 text-white/70">Learn how to create stunning scroll animations with GSAP and ScrollTrigger.</p>
+        <article className="panel border-2 bg-black border-white/20 max-w-5xl mx-auto rounded-4xl flex-col relative p-10 flex items-center justify-center">
+          <h2 className="text-4xl font-bold text-white">Horizontal Scroll Tutorial</h2>
+          <p className="mt-4 mb-8 text-white/70">Learn how to create stunning scroll animations with GSAP and ScrollTrigger.</p>
+          <Image src={"/tutorials/horizontal-scroll.png"} width={600} height={400} alt="" />
+          <Link href="/tutorials/horizontal-scroll" className="mt-6 px-6 py-3 bg-white text-black rounded-full font-semibold uppercase tracking-[0.3em]">
+            Read Tutorial
+          </Link>
         </article>
-        <article className="panel flex-col relative h-screen w-full flex-shrink-0 bg-emerald-500 flex items-center justify-center">
-          <h2 className="text-4xl font-bold text-white">Tutorial 2</h2>
-          <p className="mt-4 text-white/70">Learn how to create stunning scroll animations with GSAP and ScrollTrigger.</p>
+        <article className="panel border-2 bg-black border-white/20 max-w-5xl mx-auto rounded-4xl flex-col relative p-10 flex items-center justify-center">
+          <h2 className="text-4xl font-bold text-white">Liquid Button Tutorial</h2>
+          <Image src={"/tutorials/horizontal-scroll.png"} width={600} height={400} alt="" />
+          <p className="mt-4 text-white/70">Learn how to create a liquid button effect using GSAP and SVG filters.</p>
+          <Link href="/tutorials/liquid-button" className="mt-6 px-6 py-3 bg-white text-black rounded-full font-semibold uppercase tracking-[0.3em]">
+            Read Tutorial
+          </Link>
         </article>
-        <article className="panel flex-col relative h-screen w-full flex-shrink-0 bg-sky-500 flex items-center justify-center">
-          <h2 className="text-4xl font-bold text-white">Tutorial 3</h2>
-          <p className="mt-4 text-white/70">Learn how to create stunning scroll animations with GSAP and ScrollTrigger.</p>
+        <article className="panel border-2 bg-black border-white/20 max-w-5xl mx-auto rounded-4xl flex-col relative p-10 flex items-center justify-center">
+          <h2 className="text-4xl font-bold text-white">Image Tilt Tutorial</h2>
+          <p className="mt-4 text-white/70">Learn how to create an interactive image tilt effect using GSAP and React.</p>
+          <Image src={"/tutorials/horizontal-scroll.png"} width={600} height={400} alt="" />
+          <Link href="/tutorials/image-tilt" className="mt-6 px-6 py-3 bg-white text-black rounded-full font-semibold uppercase tracking-[0.3em]">
+            Read Tutorial
+          </Link>
         </article>
       </section>
-
     </main>
   )
 }

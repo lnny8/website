@@ -27,8 +27,8 @@ export default function Menu() {
 
   return (
     <nav className="fixed top-0 text-white w-full z-10" aria-label="Primary">
-      <div className="max-w-4xl md:mt-15 mt-10 mx-10 md:mx-0 md:right-1/2 md:translate-x-1/2 flex items-center justify-between">
-        <div id="menu-border" className="absolute bg-black -z-1 inset-0 -inset-y-5 -inset-x-10 border-2 border-white/10 rounded-4xl" />
+      <div className="2xl:max-w-6xl xl:max-w-4xl lg:max-w-2xl md:max-w-md md:mt-15 mt-10 mx-10 md:mx-auto flex items-center justify-between relative">
+        <div id="menu-border" className="mx-auto absolute bg-black -z-1 inset-0 -inset-y-5 -inset-x-10 border-2 border-white/10 rounded-4xl" />
         <Link href="/">
           <span className="font-black text-[#555] tracking-widest">LENNY MUFFLER</span>
         </Link>
