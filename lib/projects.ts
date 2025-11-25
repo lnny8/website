@@ -44,5 +44,9 @@ export const projects = [
     link: "/projects/connect-four",
     picture: "/projects/connect-four.png",
   },
-  
+  {
+    name: "📱 Maze Generator",
+    link: "/projects/maze",
+    picture: "/projects/connect-four.png",
+  },
 ]
