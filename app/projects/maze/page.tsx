@@ -1,11 +1,15 @@
 "use client"
-import React, {useEffect, useState} from "react"
+import {resolve} from "path"
+import React, {useEffect, useRef, useState} from "react"
+import {finished} from "stream"
 
 export default function Page() {
   const cols = 29
   const rows = 15
   const bs = 10
-  const [maze, setMaze] = useState<("visited" | "unvisited" | "wall" | "broken" | "initial")[][]>(Array.from({length: cols}, () => Array(rows).fill("initial")))
+  const maze = useRef<("visited" | "unvisited" | "wall" | "broken" | "initial")[][]>(Array.from({length: cols}, () => Array(rows).fill("initial")))
+
+  const inBounds = (x: number, y: number) => x >= 0 && x < cols && y >= 0 && y < rows
 
   function initMaze() {
     const newMaze: ("visited" | "unvisited" | "wall" | "broken" | "initial")[][] = Array.from({length: cols}, () => Array(rows).fill("initial"))
@@ -22,7 +26,7 @@ export default function Page() {
       }
     }
 
-    setMaze(newMaze)
+    maze.current = newMaze
   }
 
   useEffect(() => {
@@ -41,33 +45,63 @@ export default function Page() {
     drawMaze()
   }, [maze])
 
+  let pos = {x: 0, y: 0}
+
   function backTracking() {
+    gotoStartPos()
+    gotoNeighbor()
+  }
+
+  function gotoStartPos() {
     const randX = Math.floor(Math.random() * (cols / 2)) * 2
     const randY = Math.floor(Math.random() * (rows / 2)) * 2
+    pos = {x: randX, y: randY}
     changeMaze(randX, randY, "visited")
-    let pos = {x: randX, y: randY}
+  }
 
-    for (let i = 0; i < 10; i++) {
+  function getNeighborsVisited() {
+    const x = pos.x
+    const y = pos.y
+
+    const top = inBounds(x, y - 1) && maze.current[x][y - 2] === "visited"
+    const right = inBounds(x + 1, y) && maze.current[x + 2][y] === "visited"
+    const bottom = inBounds(x, y + 1) && maze.current[x][y + 2] === "visited"
+    const left = inBounds(x - 1, y) && maze.current[x - 2][y] === "visited"
+
+    return {top, right, bottom, left}
+  }
+
+  async function gotoNeighbor() {
+    while (!(getNeighborsVisited().top && getNeighborsVisited().right && getNeighborsVisited().bottom && getNeighborsVisited().left)) {
+      await new Promise((resolve) => setTimeout(resolve, 50))
       switch (getRandomDirection(4)) {
         case 1:
-          pos = {x: pos.x, y: pos.y + 1}
+          if (pos.y - 2 < 0) continue
+          if (getNeighborsVisited().top) continue
+          pos = {x: pos.x, y: pos.y - 1}
           changeMaze(pos.x, pos.y, "broken")
-          pos = {x: pos.x, y: pos.y + 1}
+          pos = {x: pos.x, y: pos.y - 1}
           changeMaze(pos.x, pos.y, "visited")
           break
         case 2:
+          if (pos.x + 2 >= cols) continue
+          if (getNeighborsVisited().right) continue
           pos = {x: pos.x + 1, y: pos.y}
           changeMaze(pos.x, pos.y, "broken")
           pos = {x: pos.x + 1, y: pos.y}
           changeMaze(pos.x, pos.y, "visited")
           break
         case 3:
-          pos = {x: pos.x, y: pos.y - 1}
+          if (pos.y + 2 >= rows) continue
+          if (getNeighborsVisited().bottom) continue
+          pos = {x: pos.x, y: pos.y + 1}
           changeMaze(pos.x, pos.y, "broken")
-          pos = {x: pos.x, y: pos.y - 1}
+          pos = {x: pos.x, y: pos.y + 1}
           changeMaze(pos.x, pos.y, "visited")
           break
-        case 3:
+        case 4:
+          if (pos.x - 2 < 0) continue
+          if (getNeighborsVisited().left) continue
           pos = {x: pos.x - 1, y: pos.y}
           changeMaze(pos.x, pos.y, "broken")
           pos = {x: pos.x - 1, y: pos.y}
@@ -78,13 +112,13 @@ export default function Page() {
   }
 
   function getRandomDirection(options: number) {
-    return Math.floor(Math.random() * options)
+    return Math.floor(Math.random() * 4) + 1
   }
 
   function changeMaze(x: number, y: number, state: "visited" | "unvisited" | "wall" | "broken") {
-    const newMaze = maze
+    const newMaze = maze.current
     newMaze[x][y] = state
-    setMaze(newMaze)
+    maze.current = newMaze
     drawMaze()
   }
 
@@ -96,7 +130,7 @@ export default function Page() {
     for (let x = 0; x < cols; x++) {
       for (let y = 0; y < rows; y++) {
         ctx.fillStyle = "#000"
-        switch (maze[x][y]) {
+        switch (maze.current[x][y]) {
           case "wall":
             ctx.fillStyle = "#000"
             break
@@ -107,9 +141,10 @@ export default function Page() {
             ctx.fillStyle = "#0f0"
             break
           case "broken":
-            ctx.fillStyle = "#0f0"
+            ctx.fillStyle = "#0a0"
             break
         }
+        if (x == pos.x && y == pos.y) ctx.fillStyle = "yellow"
         ctx.fillRect(x * bs, y * bs, bs, bs)
       }
     }
