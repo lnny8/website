@@ -20,6 +20,11 @@ export const projects = [
     picture: "/projects/blackjack.png",
   },
   {
+    name: "🖼️ Image Editor",
+    link: "/projects/images",
+    picture: "/projects/images.png",
+  },
+  {
     name: "8️⃣ Digital Clock Number Font",
     link: "/projects/number-font",
     picture: "/projects/number-font.png",
@@ -47,6 +52,11 @@ export const projects = [
   {
     name: "📱 Maze Generator",
     link: "/projects/maze",
-    picture: "/projects/connect-four.png",
+    picture: "/projects/maze.png",
+  },
+  {
+    name: "📱 PostGUI",
+    link: "https://postgui.lenny.website",
+    picture: "/projects/maze.png",
   },
 ]

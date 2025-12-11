@@ -1,151 +1,137 @@
 "use client"
-import {resolve} from "path"
-import React, {useEffect, useRef, useState} from "react"
-import {finished} from "stream"
+import React, {useEffect, useRef} from "react"
+
+type CellState = "visited" | "unvisited" | "wall" | "broken"
+type Cell = {state: CellState; index: number}
+type Position = {x: number; y: number}
+
+const COLS = 29
+const ROWS = 15
+const CELL_SIZE = 10
+
+const DIRECTIONS = [
+  {dx: 0, dy: -2, wallDx: 0, wallDy: -1},
+  {dx: 2, dy: 0, wallDx: 1, wallDy: 0},
+  {dx: 0, dy: 2, wallDx: 0, wallDy: 1},
+  {dx: -2, dy: 0, wallDx: -1, wallDy: 0},
+]
 
 export default function Page() {
-  const cols = 29
-  const rows = 15
-  const bs = 10
-  const maze = useRef<("visited" | "unvisited" | "wall" | "broken" | "initial")[][]>(Array.from({length: cols}, () => Array(rows).fill("initial")))
-
-  const inBounds = (x: number, y: number) => x >= 0 && x < cols && y >= 0 && y < rows
-
-  function initMaze() {
-    const newMaze: ("visited" | "unvisited" | "wall" | "broken" | "initial")[][] = Array.from({length: cols}, () => Array(rows).fill("initial"))
-
-    for (let x = 0; x < cols; x++) {
-      for (let y = 0; y < rows; y++) {
-        if (y % 2 === 1) {
-          newMaze[x][y] = "wall"
-        } else if (x % 2 === 1) {
-          newMaze[x][y] = "wall"
-        } else {
-          newMaze[x][y] = "unvisited"
-        }
-      }
-    }
-
-    maze.current = newMaze
-  }
+  const maze = useRef<Cell[][]>(createGrid())
+  const currentIndex = useRef(0)
+  const stack = useRef<Position[]>([])
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const isGenerating = useRef(false)
 
   useEffect(() => {
-    const canvas = document.getElementById("maze-canvas") as HTMLCanvasElement
-    if (!canvas) return
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
-    const bs = 10
-    if ((canvas.width % 2) * bs == 0) {
-      canvas.width -= bs
-    }
     initMaze()
   }, [])
 
-  useEffect(() => {
+  function initMaze() {
+    maze.current = createGrid()
+    currentIndex.current = 0
+    stack.current = []
     drawMaze()
-  }, [maze])
-
-  let pos = {x: 0, y: 0}
-
-  function backTracking() {
-    gotoStartPos()
-    gotoNeighbor()
   }
 
-  function gotoStartPos() {
-    const randX = Math.floor(Math.random() * (cols / 2)) * 2
-    const randY = Math.floor(Math.random() * (rows / 2)) * 2
-    pos = {x: randX, y: randY}
-    changeMaze(randX, randY, "visited")
+  function createGrid(): Cell[][] {
+    return Array.from({length: COLS}, (_, x) =>
+      Array.from({length: ROWS}, (_, y) => {
+        const isWall = x % 2 === 1 || y % 2 === 1
+        return {state: isWall ? "wall" : "unvisited", index: 0}
+      })
+    )
   }
 
-  function getNeighborsVisited() {
-    const x = pos.x
-    const y = pos.y
-
-    const top = inBounds(x, y - 1) && maze.current[x][y - 2] === "visited"
-    const right = inBounds(x + 1, y) && maze.current[x + 2][y] === "visited"
-    const bottom = inBounds(x, y + 1) && maze.current[x][y + 2] === "visited"
-    const left = inBounds(x - 1, y) && maze.current[x - 2][y] === "visited"
-
-    return {top, right, bottom, left}
+  function inBounds(x: number, y: number) {
+    return x >= 0 && x < COLS && y >= 0 && y < ROWS
   }
 
-  async function gotoNeighbor() {
-    while (!(getNeighborsVisited().top && getNeighborsVisited().right && getNeighborsVisited().bottom && getNeighborsVisited().left)) {
-      await new Promise((resolve) => setTimeout(resolve, 50))
-      switch (getRandomDirection(4)) {
-        case 1:
-          if (pos.y - 2 < 0) continue
-          if (getNeighborsVisited().top) continue
-          pos = {x: pos.x, y: pos.y - 1}
-          changeMaze(pos.x, pos.y, "broken")
-          pos = {x: pos.x, y: pos.y - 1}
-          changeMaze(pos.x, pos.y, "visited")
-          break
-        case 2:
-          if (pos.x + 2 >= cols) continue
-          if (getNeighborsVisited().right) continue
-          pos = {x: pos.x + 1, y: pos.y}
-          changeMaze(pos.x, pos.y, "broken")
-          pos = {x: pos.x + 1, y: pos.y}
-          changeMaze(pos.x, pos.y, "visited")
-          break
-        case 3:
-          if (pos.y + 2 >= rows) continue
-          if (getNeighborsVisited().bottom) continue
-          pos = {x: pos.x, y: pos.y + 1}
-          changeMaze(pos.x, pos.y, "broken")
-          pos = {x: pos.x, y: pos.y + 1}
-          changeMaze(pos.x, pos.y, "visited")
-          break
-        case 4:
-          if (pos.x - 2 < 0) continue
-          if (getNeighborsVisited().left) continue
-          pos = {x: pos.x - 1, y: pos.y}
-          changeMaze(pos.x, pos.y, "broken")
-          pos = {x: pos.x - 1, y: pos.y}
-          changeMaze(pos.x, pos.y, "visited")
-          break
-      }
+  function getUnvisitedNeighbors(position: Position) {
+    const neighbors: {cell: Position; wall: Position}[] = []
+    for (const dir of DIRECTIONS) {
+      const nx = position.x + dir.dx
+      const ny = position.y + dir.dy
+      const wx = position.x + dir.wallDx
+      const wy = position.y + dir.wallDy
+      if (!inBounds(nx, ny)) continue
+      if (maze.current[nx][ny].state !== "unvisited") continue
+      neighbors.push({cell: {x: nx, y: ny}, wall: {x: wx, y: wy}})
     }
+    return neighbors
   }
 
-  function getRandomDirection(options: number) {
-    return Math.floor(Math.random() * 4) + 1
+  async function backTracking() {
+    if (isGenerating.current) return
+    isGenerating.current = true
+    initMaze()
+    const start: Position = {
+      x: Math.floor(Math.random() * Math.ceil(COLS / 2)) * 2,
+      y: Math.floor(Math.random() * Math.ceil(ROWS / 2)) * 2,
+    }
+    currentIndex.current = 1
+    changeMaze(start.x, start.y, "visited", currentIndex.current)
+    stack.current.push(start)
+
+    while (stack.current.length) {
+      const current = stack.current[stack.current.length - 1]
+      const neighbors = getUnvisitedNeighbors(current)
+      if (neighbors.length === 0) {
+        stack.current.pop()
+        continue
+      }
+      const next = neighbors[Math.floor(Math.random() * neighbors.length)]
+      changeMaze(next.wall.x, next.wall.y, "broken", 0)
+      currentIndex.current++
+      changeMaze(next.cell.x, next.cell.y, "visited", currentIndex.current)
+      stack.current.push(next.cell)
+      await delay(30)
+    }
+
+    isGenerating.current = false
   }
 
-  function changeMaze(x: number, y: number, state: "visited" | "unvisited" | "wall" | "broken") {
-    const newMaze = maze.current
-    newMaze[x][y] = state
-    maze.current = newMaze
+  function delay(ms: number) {
+    return new Promise<void>((resolve) => setTimeout(resolve, ms))
+  }
+
+  function changeMaze(x: number, y: number, state: CellState, index: number) {
+    if (!maze.current[x]) return
+    maze.current[x][y] = {state, index}
     drawMaze()
   }
 
   function drawMaze() {
-    const canvas = document.getElementById("maze-canvas") as HTMLCanvasElement
+    const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext("2d")
     if (!ctx) return
-    for (let x = 0; x < cols; x++) {
-      for (let y = 0; y < rows; y++) {
-        ctx.fillStyle = "#000"
-        switch (maze.current[x][y]) {
+    const head = stack.current[stack.current.length - 1]
+    for (let x = 0; x < COLS; x++) {
+      for (let y = 0; y < ROWS; y++) {
+        let fill = "#000"
+        const cell = maze.current[x]?.[y]
+        switch (cell?.state) {
           case "wall":
-            ctx.fillStyle = "#000"
+            fill = "#000"
             break
           case "unvisited":
-            ctx.fillStyle = "#fff"
+            fill = "#fff"
             break
           case "visited":
-            ctx.fillStyle = "#0f0"
+            fill = "#0f0"
             break
           case "broken":
-            ctx.fillStyle = "#0a0"
+            fill = "#0a0"
             break
+          default:
+            fill = "#000"
         }
-        if (x == pos.x && y == pos.y) ctx.fillStyle = "yellow"
-        ctx.fillRect(x * bs, y * bs, bs, bs)
+        if (head && head.x === x && head.y === y) {
+          fill = "#ff0"
+        }
+        ctx.fillStyle = fill
+        ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
       }
     }
   }
@@ -153,9 +139,12 @@ export default function Page() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center">
       <h1 className="text-3xl text-bold pb-20">Maze Generator</h1>
-      <canvas className="w-full max-w-6xl h-full" id="maze-canvas" />
-      <button className="bg-white text-black text-2xl font-semibold p-2 mt-10 rounded-2xl cursor-pointer" onClick={() => backTracking()}>
+      <canvas ref={canvasRef} className="w-full max-w-6xl h-full" width={COLS * CELL_SIZE} height={ROWS * CELL_SIZE} />
+      <button className="bg-white text-black text-2xl font-semibold p-2 mt-10 rounded-2xl cursor-pointer" onClick={() => void backTracking()}>
         Start
+      </button>
+      <button className="bg-white text-black text-2xl font-semibold p-2 mt-4 rounded-2xl cursor-pointer" onClick={() => initMaze()}>
+        Reset
       </button>
     </main>
   )

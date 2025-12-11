@@ -14,7 +14,12 @@ import Name from "@/lib/name"
 import Indicator from "./indicator"
 import {Suspense} from "react"
 import Image from "next/image"
-import { p } from "motion/react-client"
+import {image} from "motion/react-client"
+import FillButton from "./tutorials/fill-button/fill-button"
+import {ArrowRight} from "lucide-react"
+import HorizontalScroll from "./tutorials/horizontal-scroll/horizontalScroll"
+import Blob from "./tutorials/blob/blob"
+import Background from "@/lib/bg"
 
 export default function Page() {
   gsap.registerPlugin(ScrambleTextPlugin, SplitText, ScrollSmoother, ScrollTrigger, DrawSVGPlugin, ScrollToPlugin)
@@ -25,19 +30,16 @@ export default function Page() {
     {name: "Projects", link: "#projects"},
     {name: "Tutorials", link: "#tutorials"},
   ]
-  useGSAP(() => {
-    const panels = gsap.utils.toArray<HTMLElement>("#tutorials .panel")
-    if (!panels.length) return
-    gsap.to(panels, {
-      ease: "none",
-      scrollTrigger: {
-        trigger: "#tutorials",
-        pin: panels[1],
-        scrub: 0.5,
-        end: "+=" + window.innerHeight,
-      },
-    })
-  })
+
+  const tutorials = [
+    {
+      title: "Horizontal Scroll with GSAP",
+      description: "Learn how to create stunning horizontal scroll animations using GSAP and ScrollTrigger in this step-by-step tutorial.",
+      link: "/tutorials/horizontal-scroll",
+      image: "/tutorials/horizontal-scroll.png",
+    },
+    {title: "3D Letters", description: "Create interactive 3D letters with Three.js and React Three Fiber.", link: "/tutorials/3d-letters", image: "/tutorials/horizontal-scroll.png"},
+  ]
 
   const skills = {
     "🧠 Programming Languages": ["JavaScript", "TypeScript", "Python", "Java", "HTML", "GLSL", "TSL"],
@@ -50,6 +52,7 @@ export default function Page() {
 
   return (
     <main className="relative min-h-screen overflow-hidden">
+      <Background />
       <div className="fixed z-10">
         <Indicator sections={sections} />
       </div>
@@ -69,7 +72,9 @@ export default function Page() {
           </div>
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {Object.entries(skills).map(([category, skillList]) => (
-              <article key={category} className="relative overflow-hidden rounded-3xl border-2 border-white/10 p-6 transition-colors duration-300 hover:border-white/20 hover:bg-white/5">
+              <article
+                key={category}
+                className="relative backdrop-blur-lg overflow-hidden rounded-3xl bg-white/5 border-1 border-white/10 p-6 transition-all duration-300 hover:border-white/20 hover:bg-white/10">
                 <h4 className="text-xl font-semibold tracking-tight">{category}</h4>
                 <div className="flex flex-wrap gap-2 pt-5">
                   {skillList.map((item) => (
@@ -78,7 +83,6 @@ export default function Page() {
                     </span>
                   ))}
                 </div>
-                <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(34,197,94,0.12),_transparent_65%)] opacity-0 transition duration-300 hover:opacity-100" />
               </article>
             ))}
           </div>
@@ -95,7 +99,7 @@ export default function Page() {
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (
               <Link href={project.link} key={project.name} className="relative">
-                <div className="group relative overflow-hidden rounded-3xl border-2 border-white/10 p-5 backdrop-blur transition duration-300 hover:border-white/20 hover:bg-white/5">
+                <div className="group bg-white/5 relative overflow-hidden rounded-3xl border-1 border-white/10 p-5 backdrop-blur-lg transition duration-300 hover:border-white/20 hover:bg-white/10">
                   <h3 className="text-lg sm:text-xl font-semibold tracking-wide text-white/90">{project.name}</h3>
                   <div className="my-4 h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
                   <div className="flex flex-wrap gap-2">
@@ -109,30 +113,83 @@ export default function Page() {
       </section>
 
       <section id="tutorials" className="">
-        <article className="panel border-2 bg-black border-white/20 max-w-5xl mx-auto rounded-4xl flex-col relative p-10 flex items-center justify-center">
-          <h2 className="text-4xl font-bold text-white">Horizontal Scroll Tutorial</h2>
-          <p className="mt-4 mb-8 text-white/70">Learn how to create stunning scroll animations with GSAP and ScrollTrigger.</p>
-          <Image src={"/tutorials/horizontal-scroll.png"} width={600} height={400} alt="" />
-          <Link href="/tutorials/horizontal-scroll" className="mt-6 px-6 py-3 bg-white text-black rounded-full font-semibold uppercase tracking-[0.3em]">
-            Read Tutorial
-          </Link>
-        </article>
-        <article className="panel border-2 bg-black border-white/20 max-w-5xl mx-auto rounded-4xl flex-col relative p-10 flex items-center justify-center">
-          <h2 className="text-4xl font-bold text-white">Liquid Button Tutorial</h2>
-          <Image src={"/tutorials/horizontal-scroll.png"} width={600} height={400} alt="" />
-          <p className="mt-4 text-white/70">Learn how to create a liquid button effect using GSAP and SVG filters.</p>
-          <Link href="/tutorials/liquid-button" className="mt-6 px-6 py-3 bg-white text-black rounded-full font-semibold uppercase tracking-[0.3em]">
-            Read Tutorial
-          </Link>
-        </article>
-        <article className="panel border-2 bg-black border-white/20 max-w-5xl mx-auto rounded-4xl flex-col relative p-10 flex items-center justify-center">
-          <h2 className="text-4xl font-bold text-white">Image Tilt Tutorial</h2>
-          <p className="mt-4 text-white/70">Learn how to create an interactive image tilt effect using GSAP and React.</p>
-          <Image src={"/tutorials/horizontal-scroll.png"} width={600} height={400} alt="" />
-          <Link href="/tutorials/image-tilt" className="mt-6 px-6 py-3 bg-white text-black rounded-full font-semibold uppercase tracking-[0.3em]">
-            Read Tutorial
-          </Link>
-        </article>
+        <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl text-center">Useful tutorials</h2>
+        <p className="mt-4 text-white/60 text-center">Dive into hands-on guides covering animation, shaders, and UI polish so you can adapt the techniques immediately in your own builds.</p>
+        <div className="grid grid-cols-2 gap-8 w-full max-w-7xl mx-auto mt-12">
+          <article className="rounded-4xl w-full h-full transition-all duration-300 bg-white/5 hover:border-white/20 hover:bg-white/10 border border-white/10 backdrop-blur-lg p-8 flex flex-col gap-6">
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-white/60">Featured tutorial</p>
+              <h3 className="text-2xl font-semibold mt-2">Liquid Button</h3>
+              <p className="text-white/70">Build a radial-fill hover effect powered by GSAP and layered gradients. Perfect for call-to-action buttons that feel alive.</p>
+            </div>
+            <div className="w-full">
+              <span className="text-sm text-white/60">Demo</span>
+              <div className="mt-4 rounded-3xl border border-white/10 bg-white/5  px-10 py-12 flex items-center justify-center">
+                <FillButton text="Hover me" />
+              </div>
+            </div>
+            <Link href="/tutorials/fill-button" className="text-sm group uppercase tracking-[0.3em] text-white/80 hover:text-white">
+              Read tutorial <ArrowRight className="inline-block ml-2 h-4 w-4 group-hover:translate-x-3 transition-transform duration-300" />
+            </Link>
+          </article>
+
+          <article className="rounded-4xl row-span-2 w-full h-full transition-all duration-300 bg-white/5 hover:border-white/20 hover:bg-white/10 border border-white/10 backdrop-blur-lg p-8 flex flex-col gap-6">
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-white/60">Featured tutorial</p>
+              <h3 className="text-2xl font-semibold mt-2">Horizontal Scroll</h3>
+              <p className="text-white/70">Learn how to craft seamless horizontal scroll experiences with GSAP's ScrollTrigger and smart layout math.</p>
+            </div>
+            <div className="w-full h-full">
+              <span className="text-sm text-white/60">Demo</span>
+              <div className="mt-4 relative w-full h-full rounded-3xl border border-white/10 bg-white/5 px-10 py-12 flex items-center justify-center">
+                <HorizontalScroll />
+              </div>
+            </div>
+            <Link href="/tutorials/horizontal-scroll" className="pt-10 text-sm group uppercase tracking-[0.3em] text-white/80 hover:text-white">
+              Read tutorial <ArrowRight className="inline-block ml-2 h-4 w-4 group-hover:translate-x-3 transition-transform duration-300" />
+            </Link>
+          </article>
+
+          <article className="rounded-4xl w-full h-full transition-all duration-300 bg-white/5 hover:border-white/20 hover:bg-white/10 border border-white/10 backdrop-blur-lg p-8 flex flex-col gap-6">
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-white/60">Featured tutorial</p>
+              <h3 className="text-2xl font-semibold mt-2">WebGPU Blob Shader</h3>
+              <p className="text-white/70">Learn how to craft seamless horizontal scroll experiences with GSAP’s ScrollTrigger and smart layout math.</p>
+            </div>
+            <div className="w-full">
+              <span className="text-sm text-white/60">Demo</span>
+              <div className="mt-4 rounded-3xl border border-white/10 bg-white/5 px-10 py-12 flex items-center justify-center">
+                <Suspense fallback={"loading..."}>
+                  <Blob />
+                </Suspense>
+              </div>
+            </div>
+            <Link href="/tutorials/fill-button" className="text-sm group uppercase tracking-[0.3em] text-white/80 hover:text-white">
+              Read tutorial <ArrowRight className="inline-block ml-2 h-4 w-4 group-hover:translate-x-3 transition-transform duration-300" />
+            </Link>
+          </article>
+
+
+
+          <article className="rounded-4xl w-full h-full col-span-2 transition-all duration-300 bg-white/5 hover:border-white/20 hover:bg-white/10 border border-white/10 backdrop-blur-lg p-8 flex flex-col gap-6">
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-white/60">Featured tutorial</p>
+              <h3 className="text-2xl font-semibold mt-2">Big Tutorial</h3>
+              <p className="text-white/70">Learn how to craft seamless horizontal scroll experiences with GSAP’s ScrollTrigger and smart layout math.</p>
+            </div>
+            <div className="w-full">
+              <span className="text-sm text-white/60">Demo</span>
+              <div className="mt-4 rounded-3xl border border-white/10 bg-white/5 px-10 py-12 flex items-center justify-center">
+                <Suspense fallback={"loading..."}>
+                  <Blob />
+                </Suspense>
+              </div>
+            </div>
+            <Link href="/tutorials/fill-button" className="text-sm group uppercase tracking-[0.3em] text-white/80 hover:text-white">
+              Read tutorial <ArrowRight className="inline-block ml-2 h-4 w-4 group-hover:translate-x-3 transition-transform duration-300" />
+            </Link>
+          </article>
+        </div>
       </section>
     </main>
   )

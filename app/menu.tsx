@@ -1,10 +1,15 @@
 "use client"
 import Link from "next/link"
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import gsap from "gsap"
+import {useGSAP} from "@gsap/react"
+import {TextPlugin} from "gsap/TextPlugin"
+import {SplitText} from "gsap/all"
 
 export default function Menu() {
   const [scrollProgress, setScrollProgress] = useState(0)
+  const lennySplitRef = useRef<SplitText | null>(null)
+  gsap.registerPlugin(TextPlugin, SplitText)
 
   useEffect(() => {
     const menu = document.getElementById("menu-border")
@@ -25,12 +30,23 @@ export default function Menu() {
     }
   }, [])
 
+  async function handleLennyHover() {
+    const lennyText = document.querySelector("#menu-lenny-text")
+    if (!lennyText) return
+    lennySplitRef.current = new SplitText(lennyText, {type: "chars"})
+    gsap.to(lennySplitRef.current.chars, {opacity: 1, stagger: {amount: 0.5}, delay: 0, color: "#fff"})
+    await gsap.to(lennySplitRef.current.chars, {opacity: 1, stagger: {amount: 0.4}, delay: 0.4, color: "#666",
+    })
+  }
+
   return (
     <nav className="fixed top-0 text-white w-full z-10" aria-label="Primary">
       <div className="2xl:max-w-6xl xl:max-w-4xl lg:max-w-2xl md:max-w-md md:mt-15 mt-10 mx-10 md:mx-auto flex items-center justify-between relative">
         <div id="menu-border" className="mx-auto absolute bg-black -z-1 inset-0 -inset-y-5 -inset-x-10 border-2 border-white/10 rounded-4xl" />
         <Link href="/">
-          <span className="font-black text-[#555] tracking-widest">LENNY MUFFLER</span>
+          <span onMouseEnter={() => handleLennyHover()} id="menu-lenny-text" className="font-black text-[#555] tracking-widest">
+            LENNY MUFFLER
+          </span>
         </Link>
         <Link href="mailto:lenny@lenny.website" className="hover:bg-[#222] rounded-xl group p-2">
           <svg width="32" height="32" fill="none">

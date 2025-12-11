@@ -84,6 +84,8 @@ export default function Background() {
         targetHover = 0
       }
 
+      document.body.style.cursor = targetHover > 0 ? "pointer" : "default"
+
       currentHover += (targetHover - currentHover) * 0.18
       hoverStrengthUniform.value = currentHover * 0.05
 
@@ -113,7 +115,6 @@ export default function Background() {
   return (
     <main className="relative min-h-screen overflow-hidden text-white">
       <canvas style={{width: "100vw", height: "100vh", touchAction: "none", display: "block", backgroundColor: "#000"}} id="myCanvas" aria-label="Interactive WebGPU blob shader by Lenny Muffler" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black" />
       <div className="relative z-10 mx-auto max-w-3xl px-6 py-24 text-center">
         <p className="text-xs uppercase tracking-[0.4em] text-white/50">WebGPU experiment</p>
         <h1 className="mt-4 text-4xl font-bold">Organic Blob Shader</h1>
