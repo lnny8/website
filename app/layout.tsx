@@ -1,43 +1,43 @@
 import type {Metadata} from "next"
-import {Outfit, Plus_Jakarta_Sans} from "next/font/google"
+import {Inter, Outfit, Plus_Jakarta_Sans} from "next/font/google"
 import "./globals.css"
 import Menu from "./menu"
 import Footer from "./footer"
-import {absoluteUrl, metadataBase, siteConfig} from "@/lib/seo"
+import localFont from "next/font/local"
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+})
+
+export const clash = localFont({
+  src: "./clashdisplay-medium.otf",
+  variable: "--font-clash",
+})
 
 const outfit = Outfit({
   subsets: ["latin"],
-})
-
-const font = Plus_Jakarta_Sans({
-  subsets: ["latin"],
+  variable: "--font-outfit",
 })
 
 export const metadata: Metadata = {
-  metadataBase,
+  metadataBase: new URL("https://lenny.website"),
   title: {
-    default: `${siteConfig.name} · Creative Developer`,
-    template: `%s | ${siteConfig.name}`,
+    default: `Lenny Muffler · Full Stack Developer`,
+    template: `%s · Lenny Muffler`,
   },
-  description: siteConfig.description,
-  keywords: siteConfig.keywords,
-  authors: [{name: siteConfig.name, url: siteConfig.url}],
-  creator: siteConfig.name,
-  publisher: siteConfig.name,
-  alternates: {canonical: siteConfig.url},
+  description: "Creative developer crafting motion-heavy web experiences",
+  keywords: ["Lenny Muffler", "creative developer", "Next.js portfolio", "GSAP engineer", "WebGL developer", "motion design", "frontend consultant", "shader artist"],
+  authors: [{name: "Lenny Muffler", url: "https://lenny.website"}],
+  creator: "Lenny Muffler",
+  publisher: "Lenny Muffler",
+  alternates: {canonical: "https://lenny.website"},
   openGraph: {
-    title: `${siteConfig.name} · Creative Developer`,
-    description: siteConfig.description,
-    url: siteConfig.url,
-    siteName: siteConfig.name,
+    title: `Lenny Muffler · Creative Developer`,
+    description: "Creative developer crafting motion-heavy web experiences",
+    url: "https://lenny.website",
+    siteName: "Lenny Muffler",
     type: "website",
-    images: [{url: absoluteUrl(siteConfig.defaultOgImage)}],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${siteConfig.name} · Creative Developer`,
-    description: siteConfig.description,
-    images: [absoluteUrl(siteConfig.defaultOgImage)],
   },
   robots: {
     index: true,
@@ -49,16 +49,6 @@ export const metadata: Metadata = {
   },
 }
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: siteConfig.name,
-  jobTitle: siteConfig.tagline,
-  url: siteConfig.url,
-  email: `mailto:${siteConfig.email}`,
-  sameAs: Object.values(siteConfig.socials).filter(Boolean),
-}
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -66,10 +56,7 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning lang="en">
-      <head>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(structuredData)}} />
-      </head>
-      <body suppressHydrationWarning className={`${font.className} bg-black text-white antialiased`}>
+      <body suppressHydrationWarning className={`${inter.className} ${inter.variable} ${clash.variable} bg-black text-white antialiased`}>
         <Menu />
         {children}
         <Footer />

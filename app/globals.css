@@ -4,3 +4,41 @@
   background: #fff;
   color: #000;
 }
+
+:root {
+  scrollbar-width: none;
+}
+
+@theme {
+  --font-clash: "--font-clash";
+  --color-lime: #b5ff6d;
+  --color-woodsmoke: #0b0b0d;
+  --animate-wave: wave 2.1s 0.6s infinite;
+}
+
+@keyframes wave {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(16deg);
+  }
+  20% {
+    transform: rotate(-6deg);
+  }
+  30% {
+    transform: rotate(16deg);
+  }
+  40% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(16deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

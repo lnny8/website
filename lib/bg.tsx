@@ -13,8 +13,6 @@ export default function Blob() {
     const renderer = new THREE.WebGPURenderer({canvas, alpha: true})
     renderer.setPixelRatio(window.devicePixelRatio)
 
-    
-
     const resize = () => {
       const width = canvas.clientWidth || 200
       const height = canvas.clientHeight || 200
@@ -34,7 +32,7 @@ export default function Blob() {
     const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.3)
     scene.add(pointLightHelper)
 
-    const geometry = new THREE.IcosahedronGeometry(1, 15)
+    const geometry = new THREE.PlaneGeometry(10, 10, 128, 128)
     const material = new THREE.MeshPhysicalNodeMaterial()
 
     material.positionNode = Fn(() => {
@@ -46,8 +44,14 @@ export default function Blob() {
     })()
 
     material.colorNode = Fn(() => {
-      const color1 = uniform(new THREE.Color(0xffffff))
-      return color1
+      const noise = mx_noise_vec3(positionLocal.mul(0.3).add(time.mul(0.1)))
+      const türkis = uniform(new THREE.Color(0x00ffff))
+      const blau = uniform(new THREE.Color(0x0000ff))
+      const black = uniform(new THREE.Color(0x000000))
+      const red = uniform(new THREE.Color(0xff0000))
+      const green = uniform(new THREE.Color(0x00ff00))
+      const mixed = mix(black, green, smoothstep(0, 0.5, noise))
+      return mixed
     })()
 
     const sphere = new THREE.Mesh(geometry, material)

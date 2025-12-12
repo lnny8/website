@@ -19,7 +19,7 @@ export default function Background() {
       if (!ctx) return
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)"
       ctx.fillRect(0, 0, width, height)
-      ctx.fillStyle = "#030"
+      ctx.fillStyle = "#0f0"
       ctx.font = fontSize + "px monospace"
       for (let i = 0; i < drops.length; i++) {
         const text = letters[Math.floor(Math.random() * letters.length)]
