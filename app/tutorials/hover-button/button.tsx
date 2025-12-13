@@ -46,13 +46,13 @@ export default function HoverButton({text1, text2}: {text1: string; text2: strin
   }
 
   return (
-    <div onMouseEnter={() => handleEnter()} onMouseLeave={() => handleLeave()} className="button relative flex items-center justify-center w-full overflow-hidden h-full cursor-pointer border-1 border-white px-4 py-2 rounded-full">
-      <svg className="svg absolute inset-0 w-full h-full fill-white" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <rect width="300" x={"-100"} y={200} height="100" fill="white" />
+    <div onMouseEnter={() => handleEnter()} onMouseLeave={() => handleLeave()} className="button relative flex items-center justify-center w-full overflow-hidden h-full cursor-pointer border-1 border-white light:border-black px-4 py-2 rounded-full">
+      <svg className="svg absolute inset-0 w-full h-full fill-white light:fill-black" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <rect width="300" x={"-100"} y={200} height="100" className="fill-white light:fill-black" />
         <path d={initialPath} />
       </svg>
       <span className="text1 relative">{text1}</span>
-      <span className="text2 text-black absolute hidden">{text2}</span>
+      <span className="text2 text-black light:text-white absolute hidden">{text2}</span>
     </div>
   )
 }

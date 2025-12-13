@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 ::selection {
-  background: #fff;
-  color: #000;
+  background: #f7f8fa;
+  color: #0b0b0d;
+}
+
+/* Light theme override */
+:where(.light, .light *) ::selection {
+  background: #0b0b0d;
+  color: #f7f8fa;
 }
 
 :root {
@@ -11,10 +17,14 @@
 
 @theme {
   --font-clash: "--font-clash";
-  --color-lime: #b5ff6d;
+  --color-lime: #f772c2;
+  --color-darklime: #b53c85;
   --color-woodsmoke: #0b0b0d;
+  --color-athensgray: #f7f8fa;
   --animate-wave: wave 2.1s 0.6s infinite;
 }
+
+@custom-variant light (&:where(.light, .light *));
 
 @keyframes wave {
   0% {

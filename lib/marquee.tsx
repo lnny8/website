@@ -5,7 +5,7 @@ import {useGSAP} from "@gsap/react"
 import {Sparkle} from "lucide-react"
 
 export default function Marquee() {
-  const themes = ["Websites", "Designing", "Graphics", "Animations", "Community", "Development", "Mentor"]
+  const themes = ["Websites", "Designing", "Graphics", "Animations", "Infrastructure", "Development", "Engineering"]
 
   useGSAP(() => {
     const items = gsap.utils.toArray<HTMLElement>(".flow-item")
@@ -22,10 +22,10 @@ export default function Marquee() {
     })
   }, [])
   return (
-    <div className="border-t border-b relative border-white/10 mt-20 h-30 w-full overflow-hidden flex">
+    <div className="border-t border-b relative border-white/10 light:border-black/10 mt-20 h-30 w-full overflow-hidden flex">
       <div className="flow-track flex items-center gap-10 whitespace-nowrap">
         {themes.map((theme, index) => (
-          <span key={index} className="flow-item font-clash text-[#2c2c35] font-medium text-5xl flex items-center gap-5">
+          <span key={index} className="flow-item font-clash text-[#2c2c35] light:text-[#cbd5e1] font-medium text-5xl flex items-center gap-5">
             {theme}
             <Sparkle className="size-7" />
           </span>
@@ -33,14 +33,14 @@ export default function Marquee() {
 
         {/* Duplicate für Seamless Loop */}
         {themes.map((theme, index) => (
-          <span key={"dup-" + index} className="flow-item font-clash text-[#2c2c35] font-medium text-5xl flex items-center gap-5">
+          <span key={"dup-" + index} className="flow-item font-clash text-[#2c2c35] light:text-[#cbd5e1] font-medium text-5xl flex items-center gap-5">
             {theme}
             <Sparkle className="size-7" />
           </span>
         ))}
       </div>
 
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-woodsmoke via-transparent to-woodsmoke" />
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-woodsmoke light:from-athensgray via-transparent to-woodsmoke light:to-athensgray" />
     </div>
   )
 }

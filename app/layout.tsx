@@ -4,14 +4,22 @@ import "./globals.css"
 import Menu from "./menu"
 import Footer from "./footer"
 import localFont from "next/font/local"
+import ReactLenis from "lenis/react"
+import BlurReveal from "./blurReveal"
+import { ThemeProvider } from "next-themes"
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 })
 
+const satoshi = localFont({
+  src: "/satoshi.ttf",
+  variable: "--font-satoshi",
+})
+
 export const clash = localFont({
-  src: "./clashdisplay-medium.otf",
+  src: "/clashdisplay.ttf",
   variable: "--font-clash",
 })
 
@@ -55,12 +63,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
+    <ThemeProvider attribute="class">
     <html suppressHydrationWarning lang="en">
-      <body suppressHydrationWarning className={`${inter.className} ${inter.variable} ${clash.variable} bg-black text-white antialiased`}>
+      <ReactLenis root />
+      <body suppressHydrationWarning className={`${satoshi.className} ${clash.variable} bg-black text-white antialiased`}>
+        <BlurReveal />
         <Menu />
         {children}
         <Footer />
       </body>
     </html>
+    </ThemeProvider>
   )
 }
