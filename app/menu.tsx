@@ -101,15 +101,15 @@ export default function Menu() {
     data.tl = tl
   }
 
-  useEffect(() => {
-    return () => {
-      hoverData.current.forEach((data) => {
-        data.tl?.kill()
-        data.topSplit.revert()
-        data.bottomSplit.revert()
-      })
-    }
-  }, [])
+  // useEffect(() => {
+  //   return () => {
+  //     hoverData.current.forEach((data) => {
+  //       data.tl?.kill()
+  //       data.topSplit.revert()
+  //       data.bottomSplit.revert()
+  //     })
+  //   }
+  // }, [])
 
   return (
     <nav className="w-full fixed h-20 flex items-center justify-center z-10">
@@ -126,10 +126,10 @@ export default function Menu() {
               href={tab.link}
               className={`flex items-center justify-center gap-2 cursor-pointer relative ${pathname === tab.link ? "text-white light:text-black" : "text-white/70 light:text-black/70 hover:text-white light:hover:text-black"}`}>
               {pathname === tab.link && <motion.div initial={{scale: 0}} animate={{scale: 1}} exit={{scale: 0}} className="rounded-full size-1.5 bg-lime" />}
-              <span className="text-sm flex flex-col">
+              <motion.span layout layoutId={tab.label} className="text-sm flex flex-col">
                 <span className="text-top">{tab.label}</span>
                 <span className="text-bottom absolute hidden">{tab.label}</span>
-              </span>
+              </motion.span>
             </Link>
           ))}
         </div>

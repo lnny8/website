@@ -8,6 +8,7 @@ import gsap from "gsap"
 import {useGSAP} from "@gsap/react"
 import {ScrollTrigger} from "gsap/all"
 import {SplitText} from "gsap/all"
+import SocialSpan from "@/lib/social-span"
 
 export default function Footer() {
   gsap.registerPlugin(ScrollTrigger, SplitText)
@@ -46,20 +47,7 @@ export default function Footer() {
 
       <div className="flex items-center justify-between max-w-7xl mx-auto py-10">
         <span className="text-white/70 light:text-black/70 text-sm font-light">© 2025 Lenny Muffler. All rights reserved.</span>
-        <div className="flex gap-4">
-          <Link href="https://linkedin.com/in/lennymuffler" target="_blank" aria-label="LinkedIn">
-            <Linkedin className="size-5 text-white/70 light:text-black/70 hover:text-white transition-all duration-300" />
-          </Link>
-          <Link href="https://github.com/lnny8" target="_blank" aria-label="GitHub">
-            <Github className="size-5 text-white/70 light:text-black/70 hover:text-white transition-all duration-300" />
-          </Link>
-          <Link href="https://instagram.com/lnny.8" target="_blank" aria-label="Instagram">
-            <Instagram className="size-5 text-white/70 light:text-black/70 hover:text-white transition-all duration-300" />
-          </Link>
-          <Link href="mailto:lennymuffler@gmail.com" target="_blank" aria-label="Email">
-            <Mail className="size-5 text-white/70 light:text-black/70 hover:text-white transition-all duration-300" />
-          </Link>
-        </div>
+        <SocialSpan />
       </div>
     </footer>
   )

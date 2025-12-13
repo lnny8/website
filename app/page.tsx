@@ -26,9 +26,9 @@ export default function Page() {
   ]
 
   const expertise = [
-    {title: "Development", icon: <Code2 className="size-5" />, imageUrl:"/expertise/development.jpg", content: "Building responsive websites. Providing the users an enriching experience that responds to any device and screen size."},
-    {title: "UI/UX Design", icon: <PenTool className="size-5" />, imageUrl:"/expertise/design.png", content: "Designing user-centric, modern interfaces that shapes how the audience interacts with the product."},
-    {title: "Branding", icon: <SwatchBook className="size-5" />, imageUrl:"/expertise/branding.png", content: "Building brand identities including working on logo, typography, iconography, colour palette, visual language, and brand personality."},
+    {title: "Development", icon: <Code2 className="size-5" />, imageUrl: "/expertise/development.jpg", content: "Building responsive websites. Providing the users an enriching experience that responds to any device and screen size."},
+    {title: "UI/UX Design", icon: <PenTool className="size-5" />, imageUrl: "/expertise/design.png", content: "Designing user-centric, modern interfaces that shapes how the audience interacts with the product."},
+    {title: "Branding", icon: <SwatchBook className="size-5" />, imageUrl: "/expertise/branding.png", content: "Building brand identities including working on logo, typography, iconography, colour palette, visual language, and brand personality."},
   ]
 
   return (
@@ -58,9 +58,9 @@ export default function Page() {
             ))}
           </div>
 
-          <div className="w-42 h-12 mt-10 relative">
+          <Link href="/about" className="w-42 h-12 mt-10 relative">
             <HoverButton text1="Know me better" text2="About me" />
-          </div>
+          </Link>
         </div>
       </section>
 
