@@ -1,17 +1,11 @@
 import type {Metadata} from "next"
-import {Inter, Outfit, Plus_Jakarta_Sans} from "next/font/google"
 import "./globals.css"
 import Menu from "./menu"
 import Footer from "./footer"
 import localFont from "next/font/local"
 import ReactLenis from "lenis/react"
 import BlurReveal from "./blurReveal"
-import { ThemeProvider } from "next-themes"
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-})
+import {ThemeProvider} from "next-themes"
 
 const satoshi = localFont({
   src: "/satoshi.ttf",
@@ -21,11 +15,6 @@ const satoshi = localFont({
 export const clash = localFont({
   src: "/clashdisplay.ttf",
   variable: "--font-clash",
-})
-
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
 })
 
 export const metadata: Metadata = {
@@ -63,16 +52,20 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <ThemeProvider attribute="class">
     <html suppressHydrationWarning lang="en">
-      <ReactLenis root />
-      <body suppressHydrationWarning className={`${satoshi.className} ${clash.variable} bg-black text-white antialiased`}>
-        <BlurReveal />
-        <Menu />
-        {children}
-        <Footer />
+      <head>
+      <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.16/build/spline-viewer.js"></script>
+      </head>
+      <body suppressHydrationWarning className={`${satoshi.className} ${clash.variable} bg-woodsmoke light:bg-athensgray light:text-black text-white antialiased`}>
+        <ReactLenis root>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
+            <BlurReveal />
+            <Menu />
+            {children}
+            <Footer />
+          </ThemeProvider>
+        </ReactLenis>
       </body>
     </html>
-    </ThemeProvider>
   )
 }

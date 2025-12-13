@@ -2,6 +2,7 @@
 import React from "react"
 import gsap from "gsap"
 import {SplitText} from "gsap/all"
+import { useGSAP } from "@gsap/react";
 
 export default function HoverButton({text1, text2}: {text1: string; text2: string}) {
   gsap.registerPlugin(SplitText)
@@ -14,13 +15,19 @@ export default function HoverButton({text1, text2}: {text1: string; text2: strin
 
   const ease = "circ.out"
 
+  useGSAP(() => {
+    gsap.set(".text2", {yPercent: 100})
+  })
+
   function handleEnter() {
     text1Ref.current && text1Ref.current.revert()
     text2Ref.current && text2Ref.current.revert()
+
     text1Ref.current = new SplitText(".text1", {type: "lines", mask: "lines"})
     text2Ref.current = new SplitText(".text2", {type: "lines", mask: "lines"})
 
     gsap.set(".text2", {display: "block", yPercent: 0})
+
     gsap.set(text2Ref.current.lines, {yPercent: 100})
 
     gsap.to(".button", {scale: 1.06, duration: 0.3, ease: "power2.out"})
@@ -35,6 +42,7 @@ export default function HoverButton({text1, text2}: {text1: string; text2: strin
 
   function handleLeave() {
     gsap.killTweensOf(".button")
+    gsap.killTweensOf(text2Ref.current.lines)
     gsap.to(".button", {scale: 1, duration: 0.3, ease: "power2.out"})
 
     gsap.to(".svg path", {duration: 0.5, ease: ease, attr: {d: initialPath}})
@@ -42,7 +50,6 @@ export default function HoverButton({text1, text2}: {text1: string; text2: strin
 
     gsap.to(text1Ref.current.lines, {yPercent: 0, duration: 0.5, ease: "power2.out"})
     gsap.to(text2Ref.current.lines, {yPercent: 100, duration: 0.3, ease: "power4.out"})
-
   }
 
   return (
@@ -51,8 +58,8 @@ export default function HoverButton({text1, text2}: {text1: string; text2: strin
         <rect width="300" x={"-100"} y={200} height="100" className="fill-white light:fill-black" />
         <path d={initialPath} />
       </svg>
-      <span className="text1 relative">{text1}</span>
-      <span className="text2 text-black light:text-white absolute hidden">{text2}</span>
+      <span className="text1 relative font-medium">{text1}</span>
+      <span className="text2 text-black light:text-white absolute font-medium">{text2}</span>
     </div>
   )
 }

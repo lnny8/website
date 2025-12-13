@@ -20,6 +20,7 @@
   --color-lime: #f772c2;
   --color-darklime: #b53c85;
   --color-woodsmoke: #0b0b0d;
+  --color-woodsmoke-light: #111116;
   --color-athensgray: #f7f8fa;
   --animate-wave: wave 2.1s 0.6s infinite;
 }
@@ -50,5 +51,16 @@
   }
   100% {
     transform: rotate(0deg);
+  }
+}
+
+@keyframes blink {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
   }
 }
