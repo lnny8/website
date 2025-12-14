@@ -6,7 +6,7 @@ import localFont from "next/font/local"
 import ReactLenis from "lenis/react"
 import BlurReveal from "./blurReveal"
 import {ThemeProvider} from "next-themes"
-import NextTopLoader from 'nextjs-toploader';
+import NextTopLoader from "nextjs-toploader"
 import MobileMenu from "./mobile-menu"
 
 const satoshi = localFont({
@@ -20,21 +20,21 @@ export const clash = localFont({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lenny.website"),
+  metadataBase: new URL("https://lnny.dev"),
   title: {
-    default: `Lenny Muffler · Full Stack Developer`,
+    default: `Lenny Muffler · Portfolio`,
     template: `%s · Lenny Muffler`,
   },
   description: "Creative developer crafting motion-heavy web experiences",
   keywords: ["Lenny Muffler", "creative developer", "Next.js portfolio", "GSAP engineer", "WebGL developer", "motion design", "frontend consultant", "shader artist"],
-  authors: [{name: "Lenny Muffler", url: "https://lenny.website"}],
+  authors: [{name: "Lenny Muffler", url: "https://lnny.dev"}],
   creator: "Lenny Muffler",
   publisher: "Lenny Muffler",
-  alternates: {canonical: "https://lenny.website"},
+  alternates: {canonical: "https://lnny.dev"},
   openGraph: {
-    title: `Lenny Muffler · Creative Developer`,
+    title: `Lenny Muffler · Portfolio`,
     description: "Creative developer crafting motion-heavy web experiences",
-    url: "https://lenny.website",
+    url: "https://lnny.dev",
     siteName: "Lenny Muffler",
     type: "website",
   },
@@ -55,12 +55,9 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning lang="en">
-      <head>
-      <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.16/build/spline-viewer.js"></script>
-      </head>
       <body suppressHydrationWarning className={`${satoshi.className} ${clash.variable} bg-woodsmoke light:bg-athensgray light:text-black text-white antialiased`}>
         <ReactLenis root>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={true}>
             <BlurReveal />
             <NextTopLoader color="#f772c2" showSpinner={false} height={3} />
             <Menu />
