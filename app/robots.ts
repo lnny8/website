@@ -1,5 +1,4 @@
 import type {MetadataRoute} from "next"
-import {absoluteUrl, siteConfig} from "@/lib/seo"
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: absoluteUrl("/sitemap.xml"),
-    host: siteConfig.url,
+    sitemap: "https://lnny.dev/sitemap.xml",
+    host: "https://lnny.dev",
   }
 }
