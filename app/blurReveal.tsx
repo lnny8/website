@@ -23,9 +23,5 @@ export default function BlurReveal() {
     })
   }, [])
 
-  const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
-
-  if (prefersReducedMotion) return null
-
   return <div ref={blurRef} className="blur pointer-events-none fixed w-screen h-screen opacity-100 light:bg-athensgray bg-woodsmoke backdrop-blur-[200px] z-10" style={{mask: "linear-gradient(100deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 0%)"}} />
 }

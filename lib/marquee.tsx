@@ -8,34 +8,32 @@ export default function Marquee() {
   const themes = ["Websites", "Designing", "Graphics", "Animations", "Infrastructure", "Development", "Engineering"]
 
   useGSAP(() => {
-    const items = gsap.utils.toArray<HTMLElement>(".flow-item")
-    const totalWidth = items.reduce((acc, item) => acc + item.offsetWidth + 40, 0)
+    const totalWidth = document.querySelector<HTMLElement>(".flow-track")!.offsetWidth
 
     gsap.to(".flow-track", {
-      x: -totalWidth,
+      x: `-= ${totalWidth}px`,
+      duration: 42,
       ease: "linear",
-      duration: 84,
       repeat: -1,
-      modifiers: {
-        x: gsap.utils.unitize((x) => parseFloat(x) % -totalWidth),
-      },
     })
   }, [])
+
   return (
     <div className="border-t border-b relative border-white/10 light:border-black/10 mt-20 h-30 w-full overflow-hidden flex">
-      <div className="flow-track flex items-center gap-10 whitespace-nowrap">
+      <div className="flow-track flex items-center whitespace-nowrap">
         {themes.map((theme, index) => (
-          <span key={index} className="flow-item font-clash text-[#2c2c35] light:text-[#cbd5e1] font-medium text-5xl flex items-center gap-5">
+          <span key={index} className="flow-item font-clash text-[#2c2c35] light:text-[#cbd5e1] font-medium text-5xl flex items-center">
             {theme}
-            <Sparkle className="size-7" />
+            <Sparkle className="size-7 mx-5" />
           </span>
         ))}
+      </div>
 
-        {/* Duplicate für Seamless Loop */}
+      <div className="flow-track flex items-center whitespace-nowrap">
         {themes.map((theme, index) => (
-          <span key={"dup-" + index} className="flow-item font-clash text-[#2c2c35] light:text-[#cbd5e1] font-medium text-5xl flex items-center gap-5">
+          <span key={index} className="flow-item font-clash text-[#2c2c35] light:text-[#cbd5e1] font-medium text-5xl flex items-center">
             {theme}
-            <Sparkle className="size-7" />
+            <Sparkle className="size-7 mx-5" />
           </span>
         ))}
       </div>
