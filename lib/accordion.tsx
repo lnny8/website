@@ -16,7 +16,7 @@ export default function Accordion({items = []}: {items: AccordionItem[]}) {
   const activeIndex = openedIndex ?? 0
 
   return (
-    <div className="grid grid-cols-2 mt-20 gap-10">
+    <div className="grid md:grid-cols-2 mt-20 gap-10">
       <div className="">
         <div className="flex flex-col gap-4">
           {items.map((item, index) => (
@@ -40,9 +40,9 @@ export default function Accordion({items = []}: {items: AccordionItem[]}) {
           ))}
         </div>
       </div>
-      <div className="relative rounded-3xl overflow-hidden w-full h-full aspect-[3/2] ">
+      <div className="relative rounded-3xl group overflow-hidden w-full h-full aspect-[3/2] bg-gradient-to-br from-lime to-blue-400 flex items-center justify-center">
         <AnimatePresence initial={false}>
-          <motion.img key={activeIndex} src={items[activeIndex].imageUrl} alt={"image of" + items[activeIndex].title} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.45}} className="absolute" width={900} height={600} />
+          <motion.img key={activeIndex} src={items[activeIndex].imageUrl} alt={"image of" + items[activeIndex].title} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.45}} className="absolute group-hover:scale-105 transition-transform duration-300" width={900} height={600} />
         </AnimatePresence>
       </div>
     </div>

@@ -1,7 +1,7 @@
 "use client"
 
 import {Facebook, Github, Instagram, Linkedin, Mail, Split, Twitter, X} from "lucide-react"
-import React from "react"
+import React, { useEffect } from "react"
 import Link from "next/link"
 import HoverButton from "./tutorials/hover-button/button"
 import gsap from "gsap"
@@ -12,6 +12,10 @@ import SocialSpan from "@/lib/social-span"
 
 export default function Footer() {
   gsap.registerPlugin(ScrollTrigger, SplitText)
+
+  useEffect(() => {
+    gsap.killTweensOf(".text")
+  }, [])
 
   useGSAP(() => {
     const text = document.querySelector(".text")
@@ -25,13 +29,13 @@ export default function Footer() {
       scrollTrigger: {
         trigger: text,
         start: "top 90%",
-        toggleActions: "play pause reverse reset", // Play on enter, reverse on leave
+        toggleActions: "play reverse restart reverse",
       },
     })
   })
 
   return (
-    <footer className="w-full bg-woodsmoke light:bg-athensgray light:text-black pt-40">
+    <footer className="w-full md:px-0 px-6 bg-woodsmoke light:bg-athensgray light:text-black md:pt-40 pt-20">
       <div className="rounded-4xl bg-woodsmoke-light light:bg-white w-full max-w-7xl mx-auto py-20 flex flex-col items-center justify-center">
         <div className="px-4 py-2 flex gap-3 items-center justify-center rounded-full bg-lime/10">
           <div className="rounded-full size-2 bg-lime relative">

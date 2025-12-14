@@ -112,7 +112,7 @@ export default function Menu() {
   // }, [])
 
   return (
-    <nav className="w-full fixed h-20 flex items-center justify-center z-10">
+    <nav className="w-full hidden md:flex fixed h-20 items-center justify-center z-10">
       <div ref={containerRef} className="w-full max-w-7xl flex items-center justify-between backdrop-blur-xl light:bg-athensgray bg-woodsmoke/80 rounded-full py-2.5">
         <Link href="/" className="text-white font-clash light:text-black font-medium text-lg">
           LM

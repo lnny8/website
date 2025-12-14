@@ -14,14 +14,14 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto">
+    <main className="min-h-screen max-w-7xl mx-auto md:px-0 px-6">
       <span className="text-lime pt-40 flex gap-3 text-sm tracking-wider items-center font-clash">
         <Sparkle className="size-4" />
         CONNECT WITH ME
       </span>
-      <h1 className="text-5xl font-clash font-medium mt-5 max-w-lg">Let's start a project together</h1>
+      <h1 className="text-5xl font-clash font-medium mt-5 md:max-w-lg">Let's start a project together</h1>
 
-      <div className="grid grid-cols-2 gap-10 mt-10">
+      <div className="grid md:grid-cols-2 gap-10 mt-10">
         <form onSubmit={handleSubmit} className="flex flex-col relative">
           <label className="text-sm font-medium" htmlFor="contact-fullName">
             Full Name
@@ -37,7 +37,7 @@ export default function Page() {
           <textarea rows={4} id="contact-message" className="border-1 border-white/10 light:border-black/10 rounded-xl mt-2 px-4 py-2 focus:outline-none focus:ring-2 ring-lime" />
         </form>
 
-        <div className="bg-woodsmoke-light rounded-3xl p-5 flex flex-col h-full justify-between light:bg-white">
+        <div className="bg-woodsmoke-light rounded-3xl p-5 flex flex-col md:gap-0 gap-6 h-full justify-between light:bg-white">
           <span className="px-4 py-2 flex gap-3 items-center justify-center rounded-full bg-lime/10 w-max">
             <div className="rounded-full size-2 bg-lime relative">
               <div className="bg-lime rounded-full absolute inset-0 animate-[blink_1s_infinite]" />

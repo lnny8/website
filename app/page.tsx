@@ -19,37 +19,37 @@ export default function Page() {
   ]
 
   const projects = [
-    {title: "Lonui", description: "A demo website", imageUrl: "/projects/lonui.png", link: "#", date: "2024", color: "#faa"},
-    {title: "Flowline", description: "Logical Simulator", imageUrl: "/projects/flowline.png", link: "#", date: "2024", color: "#aaf"},
-    {title: "Sorting Visualizer", description: "Visualize sorting algorithms", imageUrl: "/projects/sorting.png", link: "#", date: "2025", color: "#aff"},
-    {title: "Image Editor", description: "An online image editor", imageUrl: "/projects/images.png", link: "#", date: "2025", color: "#faf"},
+    {title: "Lonui", description: "A demo website", imageUrl: "/projects/lonui.png", link: "https://lonui.de", date: "2024", color: "#faa"},
+    {title: "Flowline", description: "Logical Simulator", imageUrl: "/projects/flowline.png", link: "https://flowline.app", date: "2024", color: "#aaf"},
+    {title: "Sorting Visualizer", description: "Visualize sorting algorithms", imageUrl: "/projects/sorting.png", link: "/projects/sorting-visualizer", date: "2025", color: "#aff"},
+    {title: "Image Editor", description: "An online image editor", imageUrl: "/projects/images.png", link: "/projects/images", date: "2025", color: "#faf"},
   ]
 
   const expertise = [
-    {title: "Development", icon: <Code2 className="size-5" />, imageUrl: "/expertise/development.jpg", content: "Building responsive websites. Providing the users an enriching experience that responds to any device and screen size."},
+    {title: "Development", icon: <Code2 className="size-5" />, imageUrl: "/expertise/development.png", content: "Building responsive websites. Providing the users an enriching experience that responds to any device and screen size."},
     {title: "UI/UX Design", icon: <PenTool className="size-5" />, imageUrl: "/expertise/design.png", content: "Designing user-centric, modern interfaces that shapes how the audience interacts with the product."},
     {title: "Branding", icon: <SwatchBook className="size-5" />, imageUrl: "/expertise/branding.png", content: "Building brand identities including working on logo, typography, iconography, colour palette, visual language, and brand personality."},
   ]
 
   return (
     <main className="min-h-screen w-full">
-      <section className="max-w-7xl mx-auto pt-40">
+      <section className="max-w-7xl mx-auto pt-40 px-6 md:px-0">
         <h1 className="pb-8 flex gap-3">
           <Hand className="text-lime animate-wave" style={{transformOrigin: "75% 75%"}} />
           Hey! I'm Lenny
         </h1>
 
-        <h2 className="text-7xl font-clash font-medium">
+        <h2 className="md:text-7xl text-5xl font-clash font-medium">
           Crafting <span className="bg-gradient-to-r from-lime to-blue-400 bg-clip-text text-transparent">purpose driven experiences</span> that inspire <br />& engage
         </h2>
 
-        <div className="flex items-center justify-center gap-15 mt-10">
-          <div className="w-1/2 bg-white/10 light:bg-black/10 h-0.25" />
-          <div className="w-1/2 h-full flex items-center justify-center text-white/60 light:text-black/60">I work with brands globally to build pixel-perfect, engaging, and accessible digital experiences that drive results and achieve business goals.</div>
+        <div className="flex flex-col md:flex-row items-center justify-center md:gap-15 gap-10 mt-10">
+          <div className="md:w-1/2 w-full bg-white/10 light:bg-black/10 h-0.25" />
+          <div className="md:w-1/2 h-full flex items-center justify-center text-white/60 light:text-black/60">I work with brands globally to build pixel-perfect, engaging, and accessible digital experiences that drive results and achieve business goals.</div>
         </div>
 
         <div className="flex items-center justify-between">
-          <div className="flex gap-2 font-light group mt-10">
+          <div className="hidden md:flex gap-2 font-light group mt-10">
             {socialLinks.map((link) => (
               <Link key={link.name} href={link.url} className="flex gap-2 items-center justify-center text-white/70 group-hover:opacity-50 hover:opacity-100 light:text-black/70 transition-opacity duration-300" target="_blank">
                 <span>{link.name.toUpperCase()}</span>
@@ -66,7 +66,7 @@ export default function Page() {
 
       <Marquee />
 
-      <section className="max-w-7xl mx-auto flex flex-col items-center mt-20">
+      <section className="max-w-7xl md:px-0 px-6 mx-auto flex flex-col items-center mt-20">
         <span className="text-lime flex gap-3 text-sm tracking-wider items-center justify-center font-clash">
           <Sparkle className="size-4" />
           ABOUT ME
@@ -74,7 +74,7 @@ export default function Page() {
         <AnimationText />
       </section>
 
-      <section className="max-w-7xl mx-auto flex flex-col mt-40">
+      <section className="max-w-7xl md:px-0 px-6 mx-auto flex flex-col mt-40">
         <span className="text-lime flex gap-3 text-sm tracking-wider items-center font-clash">
           <Sparkle className="size-4" />
           MY WORK
@@ -83,9 +83,9 @@ export default function Page() {
         <h1 className="text-5xl font-clash font-medium mt-5">Selected Projects</h1>
         <h2 className="mt-5 text-white/70 light:text-black/70">Here's a curated selection showcasing my expertise and the achieved results.</h2>
 
-        <div className="mt-10 grid grid-cols-2 gap-10 group/all">
+        <div className="mt-10 grid md:grid-cols-2 gap-10 group/all">
           {projects.map((project, index) => (
-            <Link href={project.link} className="flex flex-col group group-hover/all:opacity-50 hover:opacity-100 transition-opacity duration-300" key={project.title} style={{translate: index % 2 === 1 ? "0px 4rem" : ""}}>
+            <Link href={project.link} className={`flex flex-col group md:group-hover/all:opacity-50 md:hover:opacity-100 transition-opacity duration-300 ${index % 2 === 1 ? "md:translate-y-14" : ""}`} key={project.title}>
               <div className="rounded-3xl relative flex items-center justify-center mb-3" style={{background: project.color}}>
                 <Image src={project.imageUrl} width={500} height={500} className="group-hover:scale-105 transition-transform duration-300" alt={"image of" + project.description} />
               </div>
@@ -97,12 +97,12 @@ export default function Page() {
             </Link>
           ))}
         </div>
-        <div className="relative mt-30 w-42 h-12 mx-auto">
+        <div className="relative md:mt-30 mt-10 w-42 h-12 mx-auto">
           <HoverButton text1="View All Projects" text2="View All Projects" />
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto flex flex-col mt-40">
+      <section className="max-w-7xl md:px-0 px-6 mx-auto flex flex-col mt-40">
         <span className="text-lime flex gap-3 text-sm tracking-wider items-center font-clash">
           <Sparkle className="size-4" />
           SECIALITY

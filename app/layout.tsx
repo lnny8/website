@@ -7,6 +7,7 @@ import ReactLenis from "lenis/react"
 import BlurReveal from "./blurReveal"
 import {ThemeProvider} from "next-themes"
 import NextTopLoader from 'nextjs-toploader';
+import MobileMenu from "./mobile-menu"
 
 const satoshi = localFont({
   src: "/satoshi.ttf",
@@ -61,8 +62,9 @@ export default function RootLayout({
         <ReactLenis root>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
             <BlurReveal />
-            <NextTopLoader color="#f772c2" showSpinner={false} height={1} />
+            <NextTopLoader color="#f772c2" showSpinner={false} height={3} />
             <Menu />
+            <MobileMenu />
             {children}
             <Footer />
           </ThemeProvider>
