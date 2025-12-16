@@ -1,10 +1,14 @@
 import gsap from "gsap"
 
 export default function toast(message: string, type: "success" | "error" | "info") {
-  document.querySelector(".toast")?.remove()
   const toast = document.createElement("div")
-  gsap.from(toast, {opacity: 0, yPercent: 100, duration: 0.5, ease: "back.out(1.7)"})
-  toast.className = "toast fixed bottom-10 left-1/2 transform overflow-hidden text-black -translate-x-1/2 flex items-center justify-between bg-white px-8 py-2 rounded-xl z-50"
+  const isMobile = window.innerWidth < 768
+  gsap.from(toast, {opacity: 0, yPercent: isMobile ? -100 : 100, duration: 0.5, ease: "back.out(1.7)"})
+  const className = `toast fixed md:bottom-10 top-10 md:top-auto left-1/2 transform w-max
+  -translate-x-1/2 overflow-hidden text-white light:text-black
+  flex items-center justify-between light:bg-white bg-woodsmoke-light
+  border border-white/10 light:border-black/10 px-8 py-2 rounded-xl z-50`
+  toast.className = className
 
   const svgNS = "http://www.w3.org/2000/svg"
   const svg = document.createElementNS(svgNS, "svg")
@@ -66,6 +70,6 @@ export default function toast(message: string, type: "success" | "error" | "info
   document.body.appendChild(toast)
   gsap.to(bar, {width: 0, duration: 2.5, ease: "linear"})
   setTimeout(() => {
-    gsap.to(toast, {opacity: 0, yPercent: 100, duration: 0.5, ease: "back.in(1.7)", onComplete: () => toast.remove()})
+    gsap.to(toast, {opacity: 0, yPercent: isMobile ? -100 : 100, duration: 0.5, ease: "back.in(1.7)", onComplete: () => toast.remove()})
   }, 2500)
 }

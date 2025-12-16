@@ -64,3 +64,24 @@
     opacity: 0;
   }
 }
+
+@keyframes shine {
+  0% {
+    background-position-x: 100%;
+  }
+  42% {
+    background-position-x: 100%;
+  }
+  100% {
+    background-position-x: 0%;
+  }
+}
+
+@keyframes shinenodelay {
+  0% {
+    background-position-x: 100%;
+  }
+  100% {
+    background-position-x: 0%;
+  }
+}

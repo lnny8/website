@@ -9,9 +9,9 @@ export default function Page() {
       <span className="font-clash font-black text-9xl flex">
         4<Image src="/images/smiley.png" alt="Smiley Face" width={128} height={128} />4
       </span>
-      <h1 className="mt-5 font-bold text-3xl">Oops! Page not found.</h1>
-      <h2 className="mt-3 text-white/70 light:text-black/70">We couldn't find the page you're looking for. Please check the URL and try again.</h2>
-      <Link className="mt-5 font-bold cursor-pointer" href={"/"}><HoverButton text1={"Back to Homepage"} text2={"Go home"} /></Link>
+      <h1 className="mt-8 font-bold text-3xl">Oops! Page not found.</h1>
+      <h2 className="mt-4 text-white/70 light:text-black/70">We couldn't find the page you're looking for. Please check the URL and try again.</h2>
+      <Link className="mt-8 h-12 font-bold cursor-pointer" href={"/"}><HoverButton className="px-8" text1={"Back to Homepage"} text2={"Go home"} /></Link>
     </main>
   )
 }

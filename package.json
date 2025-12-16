@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@lnny/toast": "^1.0.4",
     "gsap": "^3.13.0",
     "jsonwebtoken": "^9.0.2",
     "lenis": "^1.3.16",

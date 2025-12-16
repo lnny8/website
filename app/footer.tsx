@@ -1,7 +1,7 @@
 "use client"
 
 import {Facebook, Github, Instagram, Linkedin, Mail, Split, Twitter, X} from "lucide-react"
-import React, { useEffect } from "react"
+import React, {useEffect, useRef} from "react"
 import Link from "next/link"
 import HoverButton from "./tutorials/hover-button/button"
 import gsap from "gsap"
@@ -9,19 +9,20 @@ import {useGSAP} from "@gsap/react"
 import {ScrollTrigger} from "gsap/all"
 import {SplitText} from "gsap/all"
 import SocialSpan from "@/lib/social-span"
+import {useId} from "react"
 
 export default function Footer() {
   gsap.registerPlugin(ScrollTrigger, SplitText)
+  const splitText = useRef<SplitText | null>(null)
+  const id = useId()
 
   useEffect(() => {
-    gsap.killTweensOf(".text")
-  }, [])
-
-  useGSAP(() => {
-    const text = document.querySelector(".text")
-    const splitText = new SplitText(text, {type: "chars", mask: "chars"})
-    gsap.set(splitText.chars, {yPercent: 100, opacity: 0})
-    gsap.to(splitText.chars, {
+    gsap.killTweensOf(`#${id} .text`)
+    splitText.current?.revert()
+    const text = document.querySelector(`#${id} .text`)
+    splitText.current = new SplitText(text, {type: "chars", mask: "chars"})
+    gsap.set(splitText.current.chars, {yPercent: 100, opacity: 0})
+    gsap.to(splitText.current.chars, {
       yPercent: 0,
       opacity: 1,
       stagger: 0.02,
@@ -32,10 +33,10 @@ export default function Footer() {
         toggleActions: "play reverse restart reverse",
       },
     })
-  })
+  }, [])
 
   return (
-    <footer className="w-full md:px-0 px-6 bg-woodsmoke light:bg-athensgray light:text-black md:pt-40 pt-20">
+    <footer id={id} className="w-full md:px-0 px-6 bg-woodsmoke light:bg-athensgray light:text-black md:pt-40 pt-20">
       <div className="rounded-4xl bg-woodsmoke-light light:bg-white w-full max-w-7xl mx-auto py-20 flex flex-col items-center justify-center">
         <div className="px-4 py-2 flex gap-3 items-center justify-center rounded-full bg-lime/10">
           <div className="rounded-full size-2 bg-lime relative">
