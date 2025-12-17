@@ -38,7 +38,7 @@ export default function Marquee() {
         ))}
       </div>
 
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-woodsmoke light:from-athensgray via-transparent to-woodsmoke light:to-athensgray" />
+      <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-woodsmoke light:from-athensgray via-transparent to-woodsmoke light:to-athensgray" />
     </div>
   )
 }

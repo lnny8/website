@@ -1,13 +1,13 @@
 "use client"
 import {Check, Loader2, Sparkle} from "lucide-react"
 import React, {useState} from "react"
-import HoverButton from "../tutorials/hover-button/button"
+import HoverButton from "@/lib/components/hoverButton"
 import Image from "next/image"
 import {Facebook, Github, Instagram, Linkedin, Mail, Twitter} from "lucide-react"
 import Link from "next/link"
-import SocialSpan from "@/lib/social-span"
-import toast from "@/lib/toast"
-import ShineText from "@/lib/shine-text"
+import SocialSpan from "@/lib/components/socialSpan"
+import toast from "@/lib/components/toast"
+import ShineText from "@/lib/components/shineText"
 
 export default function Page() {
   const [formData, setFormData] = useState({name: "", email: "", message: ""})

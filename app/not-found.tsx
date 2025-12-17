@@ -1,7 +1,7 @@
 import React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import HoverButton from "./tutorials/hover-button/button"
+import HoverButton from "@/lib/components/hoverButton"
 
 export default function Page() {
   return (

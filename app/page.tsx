@@ -1,29 +1,20 @@
 import {ArrowUpRight, Code, Code2, Hand, Pen, PenTool, Sparkle, SwatchBook} from "lucide-react"
 import Link from "next/link"
 import React from "react"
-import HoverButton from "./tutorials/hover-button/button"
-import Marquee from "@/lib/marquee"
-import {useGSAP} from "@gsap/react"
-import AnimationText from "@/lib/animation-text"
+import HoverButton from "@/lib/components/hoverButton"
+import Marquee from "@/lib/components/marquee"
+import AnimationText from "@/lib/components/animationText"
 import Image from "next/image"
-import {col} from "motion/react-client"
-import {color} from "motion"
-import Accordion from "@/lib/accordion"
-import ShineText from "@/lib/shine-text"
+import Accordion from "@/lib/components/accordion"
+import ShineText from "@/lib/components/shineText"
+import {projects} from "@/lib/data/projects"
 
 export default function Page() {
   const socialLinks = [
     {name: "LinkedIn", url: "https://linkedin.com/in/lennymuffler"},
     {name: "GitHub", url: "https://github.com/lnny8"},
     {name: "Instagram", url: "https://instagram.com/lnny.8"},
-    {name: "Gmail", url: "mailto:lennymuffler@gmail.com"},
-  ]
-
-  const projects = [
-    {title: "Lonui", description: "A demo website", imageUrl: "/projects/lonui.png", link: "https://lonui.de", date: "2024", color: "#faa"},
-    {title: "Flowline", description: "Logical Simulator", imageUrl: "/projects/flowline.png", link: "https://flowline.app", date: "2024", color: "#aaf"},
-    {title: "Sorting Visualizer", description: "Visualize sorting algorithms", imageUrl: "/projects/sorting.png", link: "/projects/sorting-visualizer", date: "2025", color: "#add"},
-    {title: "Image Editor", description: "An online image editor", imageUrl: "/projects/images.png", link: "/projects/images", date: "2025", color: "#faf"},
+    {name: "Email", url: "mailto:lenny@lnny.dev"},
   ]
 
   const expertise = [
@@ -84,11 +75,11 @@ export default function Page() {
         <h1 className="text-5xl font-clash font-medium mt-5">Selected Projects</h1>
         <h2 className="mt-5 text-white/70 light:text-black/70">Here's a curated selection showcasing my expertise and the achieved results.</h2>
 
-        <div className="mt-10 grid md:grid-cols-2 gap-10 group/all">
-          {projects.map((project, index) => (
-            <Link href={project.link} className={`flex flex-col group md:group-hover/all:opacity-50 md:hover:opacity-100 transition-opacity duration-300 ${index % 2 === 1 ? "md:translate-y-14" : ""}`} key={project.title}>
-              <div className="rounded-3xl relative flex items-center justify-center mb-3 overflow-hidden" style={{backgroundColor: project.color}}>
-                <Image src={project.imageUrl} width={500} height={500} className="group-hover:scale-105 z-1 transition-transform duration-300" alt={"image of" + project.description} />
+        <div className="mt-10 grid md:grid-cols-2 gap-10 group/all has-[>a:hover]:[&>a:not(:hover)]:opacity-50">
+          {projects.slice(0, 4).map((project, index) => (
+            <Link href={project.link} className={`flex flex-col group md:hover:opacity-100 transition-opacity duration-300 ${index % 2 === 1 ? "md:translate-y-14" : ""}`} key={project.title}>
+              <div className="rounded-3xl relative flex items-center aspect-3/2 justify-center mb-3 overflow-hidden" style={{backgroundColor: project.color}}>
+                <Image src={project.imageUrl} fill className="group-hover:scale-105 z-1 transition-transform duration-300" alt={"image of" + project.description} />
                 <div
                   style={{
                     backgroundImage: `linear-gradient(150deg, transparent 45%, rgba(255,255,255,0.42) 50%, transparent 55%)`,

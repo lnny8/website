@@ -1,13 +1,13 @@
 import type {Metadata} from "next"
 import "./globals.css"
-import Menu from "./menu"
-import Footer from "./footer"
+import Menu from "@/lib/layout/menu"
+import Footer from "@/lib/layout/footer"
 import localFont from "next/font/local"
 import ReactLenis from "lenis/react"
-import BlurReveal from "./blurReveal"
+import BlurReveal from "@/lib/layout/blurReveal"
 import {ThemeProvider} from "next-themes"
 import NextTopLoader from "nextjs-toploader"
-import MobileMenu from "./mobile-menu"
+import MobileMenu from "@/lib/layout/mobileMenu"
 
 const satoshi = localFont({
   src: "/satoshi.ttf",

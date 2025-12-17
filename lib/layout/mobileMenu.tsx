@@ -36,13 +36,13 @@ export default function MobileMenu() {
       <Link href="/" className="absolute h-6 gap-3 flex items-center justify-center top-6 left-6 text-xl font-bold z-8">
         <span className="text-white font-clash light:text-black font-medium text-lg">LM</span>
       </Link>
-      <motion.div animate={{rotate: menuOpen ? 180 : 0}} transition={{duration: menuOpen ? 0.42 : 0}} onClick={handleMenuToggle} className="z-50 w-6 h-6 absolute top-6 right-6 flex flex-col items-center justify-center gap-1">
+      <motion.div animate={{rotate: menuOpen ? 0 : 0}} transition={{duration: menuOpen ? 0.42 : 0}} onClick={handleMenuToggle} className="z-50 w-6 h-6 absolute top-6 right-6 flex flex-col items-center justify-center gap-1">
         <motion.div animate={{y: menuOpen ? 3 : 0, rotate: menuOpen ? 45 : 0}} className="bg-white light:bg-black w-5 h-0.5 rounded-full" />
         <motion.div animate={{y: menuOpen ? -3 : 0, rotate: menuOpen ? -45 : 0}} className="bg-white light:bg-black w-5 h-0.5 rounded-full" />
       </motion.div>{" "}
       <AnimatePresence key={menuKey}>
         {menuOpen && (
-          <motion.div animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}} transition={{ease: "easeInOut", duration: 0.3}} className="absolute top-0 left-0 pt-40 w-full h-[100dvh] bg-woodsmoke light:bg-athensgray">
+          <motion.div animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}} transition={{ease: "easeInOut", duration: 0.3}} className="absolute top-0 left-0 pt-40 w-full h-dvh bg-woodsmoke light:bg-athensgray">
             {tabs.map((tab, index) => (
               <motion.div
                 key={index}
@@ -84,14 +84,14 @@ export default function MobileMenu() {
                 duration: 0.4,
                 ease: "easeOut",
               }}>
-              <motion.a href="mailto:lenny@lenny.website" className="w-12 h-12 flex items-center justify-center border-1 border-white/5 light:border-black/5 rounded-full" whileHover={{scale: 1.1, y: -4}} whileTap={{scale: 0.95}} transition={{duration: 0.2, ease: "easeOut"}}>
+              <motion.a href="mailto:lenny@lenny.website" className="w-12 h-12 flex items-center justify-center border border-white/5 light:border-black/5 rounded-full" whileHover={{scale: 1.1, y: -4}} whileTap={{scale: 0.95}} transition={{duration: 0.2, ease: "easeOut"}}>
                 <Mail className="size-5 text-white/70 light:text-black/70" />
               </motion.a>
 
               <motion.button
                 animate={mounted ? {rotate: theme === "dark" ? 0 : 90, transition: {duration: 0.5, type: "spring"}} : {rotate: 0}}
                 whileTap={{scale: 0.9}}
-                className="w-12 h-12 flex items-center justify-center border-1 border-white/5 light:border-black/5 rounded-full"
+                className="w-12 h-12 flex items-center justify-center border border-white/5 light:border-black/5 rounded-full"
                 onClick={() => {
                   if (!mounted) return
                   const newTheme = theme === "dark" ? "light" : "dark"

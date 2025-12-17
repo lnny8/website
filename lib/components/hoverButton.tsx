@@ -5,7 +5,7 @@ import {SplitText} from "gsap/all"
 import {useGSAP} from "@gsap/react"
 import {AnimatePresence} from "motion/react"
 import {Loader2} from "lucide-react"
-import toast from "@/lib/toast"
+import toast from "@/lib/components/toast"
 
 export default function HoverButton({text1, text2, className, disabled, loading}: {text1: string; text2: string; className?: string; disabled?: boolean; loading?: boolean}) {
   gsap.registerPlugin(SplitText)

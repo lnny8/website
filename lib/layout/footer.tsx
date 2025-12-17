@@ -1,14 +1,11 @@
 "use client"
 
-import {Facebook, Github, Instagram, Linkedin, Mail, Split, Twitter, X} from "lucide-react"
 import React, {useEffect, useRef} from "react"
-import Link from "next/link"
-import HoverButton from "./tutorials/hover-button/button"
+import HoverButton from "@/lib/components/hoverButton"
 import gsap from "gsap"
-import {useGSAP} from "@gsap/react"
 import {ScrollTrigger} from "gsap/all"
 import {SplitText} from "gsap/all"
-import SocialSpan from "@/lib/social-span"
+import SocialSpan from "@/lib/components/socialSpan"
 import {useId} from "react"
 
 export default function Footer() {

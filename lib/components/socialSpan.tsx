@@ -14,7 +14,7 @@ export default function SocialSpan() {
       <Link href="https://instagram.com/lnny.8" target="_blank" aria-label="Instagram">
         <Instagram className="size-5 text-white/70 light:text-black/70 hover:text-white group-hover:opacity-50 hover:opacity-100 transition-opacity duration-300" />
       </Link>
-      <Link href="mailto:lennymuffler@gmail.com" target="_blank" aria-label="Email">
+      <Link href="mailto:lenny@lnny.dev" target="_blank" aria-label="Email">
         <Mail className="size-5 text-white/70 light:text-black/70 hover:text-white group-hover:opacity-50 hover:opacity-100 transition-opacity duration-300" />
       </Link>
     </div>

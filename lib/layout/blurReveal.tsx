@@ -1,11 +1,9 @@
 "use client"
 import React, {useEffect, useRef} from "react"
 import gsap from "gsap"
-import {useTheme} from "next-themes"
 
 export default function BlurReveal() {
   const blurRef = useRef<HTMLDivElement | null>(null)
-  const {theme} = useTheme()
 
   useEffect(() => {
     if (typeof window === "undefined") return
