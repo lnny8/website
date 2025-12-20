@@ -1,5 +1,6 @@
 "use client"
 
+import HoverButton from "@/lib/components/hoverButton"
 import {useState, useRef, useEffect} from "react"
 
 export default function Page() {
@@ -164,10 +165,15 @@ export default function Page() {
   }
 
   return (
-    <main className="relative min-h-screen bg-black text-white">
-      <h1 className="text-4xl text-center h-[10vh] pt-10 font-semibold">Sorting algorythms by lenny</h1>
-      <section className="w-full h-[90vh] flex pb-40 pt-40 items-end justify-center">
-        <div className="absolute w-2/3 flex items-center justify-center top-28 left-1/2 -translate-x-1/2">
+    <main className="relative min-h-screen text-white flex flex-col items-center justify-start">
+      <h1 className="text-5xl text-center pt-30 font-medium font-clash">Sorting algorythm visualizer</h1>
+      <div className="w-full mt-10 relative flex justify-center items-end">
+        {arrayRef.current.map((value, index) => (
+          <div key={index} style={{background: finishIndex >= value ? "#00ff00" : currentIndex === index ? "red" : "white", height: `${value * 5}px`, width: "5px", marginLeft: "10px"}} />
+        ))}
+      </div>
+      <div>
+        <div className="flex items-center justify-center mt-10">
           <div className="mr-10 flex flex-col items-center justify-center">
             <label>wait time: {sleepTime}ms</label>
             <input type="range" min="0" max="100" value={sleepTime} onChange={(e) => setSleepTime(Number(e.target.value))} className="ml-5 cursor-pointer" />
@@ -193,7 +199,7 @@ export default function Page() {
             <input
               type="range"
               min="9"
-              max="120"
+              max="99"
               value={maxValue}
               onChange={(e) => {
                 if (runningRef.current) return
@@ -201,35 +207,32 @@ export default function Page() {
                 setMaxValue(newMax)
                 arrayRef.current = arrayRef.current.map(() => Math.ceil(Math.random() * newMax))
               }}
-              className="ml-5 cursor-pointer"
+              className="ml-5 cursor-pointer slider-thumb-blue slider-track-blue"
             />
           </div>
         </div>
-        {arrayRef.current.map((value, index) => (
-          <div key={index} style={{background: finishIndex >= value ? "#00ff00" : currentIndex === index ? "red" : "white", height: `${value * 5}px`, width: "5px", marginLeft: "10px"}} />
-        ))}
-      </section>
-      <div className="absolute w-2/3 flex items-center justify-center bottom-12 left-1/2 -translate-x-1/2">
-        {[
-          {name: "randomize", func: randomize},
-          {name: "bubbleSort", func: bubbleSort},
-          {name: "selectionSort", func: selectionSort},
-          {name: "radixSort", func: radixSort},
-        ].map(({name, func}) => (
-          <button
-            key={name}
-            disabled={runningRef.current}
-            onClick={() => {
-              runningRef.current = true
-              func()
-            }}
-            className="disabled:opacity-50 mx-5 cursor-pointer bottom-10 bg-white text-black px-4 py-2 rounded-md hover:bg-gray-200 transition">
-            {name}
+        <div className="flex items-center justify-center mt-10">
+          {[
+            {name: "randomize", func: randomize},
+            {name: "bubbleSort", func: bubbleSort},
+            {name: "selectionSort", func: selectionSort},
+            {name: "radixSort", func: radixSort},
+          ].map(({name, func}) => (
+            <button
+              key={name}
+              disabled={runningRef.current}
+              onClick={() => {
+                runningRef.current = true
+                func()
+              }}
+              className="mx-2 w-42 h-12 disabled:opacity-70">
+              <HoverButton disabled={runningRef.current} text1={name} text2={name} />
+            </button>
+          ))}
+          <button onClick={stop} disabled={!runningRef.current} className="w-42 h-12 mx-2 disabled:opacity-70">
+            <HoverButton disabled={!runningRef.current} text1="stop" text2="stop" />
           </button>
-        ))}
-        <button onClick={stop} disabled={!runningRef.current} className="disabled:opacity-50 mx-5 cursor-pointer bottom-10 bg-rose-600 text-white px-4 py-2 rounded-md hover:bg-rose-700 transition">
-          stop
-        </button>
+        </div>
       </div>
     </main>
   )

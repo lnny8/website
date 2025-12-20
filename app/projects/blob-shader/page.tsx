@@ -17,7 +17,7 @@ export default function Background() {
     const scene = new THREE.Scene()
     const aspect = window.innerWidth / window.innerHeight
     const camera = new THREE.PerspectiveCamera(70, aspect)
-    camera.position.z = 1
+    camera.position.z = 1.3
 
     function onResize() {
       const aspect = window.innerWidth / window.innerHeight
@@ -36,9 +36,9 @@ export default function Background() {
     const object = new THREE.Mesh(geometry, material)
     scene.add(object)
 
-    const frequencyPosition = TSL.positionLocal.mul(10)
+    const frequencyPosition = TSL.positionLocal.mul(6)
     const noise = TSL.mx_noise_vec3(frequencyPosition.add(TSL.time.mul(0.5)))
-    const displacement = noise.x.mul(0.05)
+    const displacement = noise.x.mul(0.1)
     // push vertices near the hovered point outward
     const hoverPointNode = TSL.vec3(hoverPointUniform)
     const hoverDist = TSL.distance(TSL.positionLocal, hoverPointNode)
@@ -49,7 +49,7 @@ export default function Background() {
     const displacedPosition = TSL.positionLocal.add(TSL.normalLocal.mul(totalDisplacement))
     material.positionNode = displacedPosition
     const baseColorNode = getColor()
-    const brightness = TSL.clamp(TSL.abs(totalDisplacement).mul(15), TSL.float(0), TSL.float(1))
+    const brightness = TSL.clamp(TSL.abs(totalDisplacement).mul(5), TSL.float(0), TSL.float(1))
     material.colorNode = TSL.mix(baseColorNode, TSL.vec3(1, 1, 1), brightness)
 
     let isRunning = true
@@ -110,17 +110,13 @@ export default function Background() {
   }, [])
 
   function getColor() {
-    return TSL.vec3(0.13, 0.77, 0.37).mul(TSL.vec3(0.8))
+    const color = TSL.vec3(0.63, 0.77, 0.67)
+    const pos = TSL.positionLocal
+    return pos
   }
   return (
     <main className="relative min-h-screen overflow-hidden text-white">
-      <canvas style={{width: "100vw", height: "100vh", touchAction: "none", display: "block", backgroundColor: "#000"}} id="myCanvas" aria-label="Interactive WebGPU blob shader by Lenny Muffler" />
-      <div className="relative z-10 mx-auto max-w-3xl px-6 py-24 text-center">
-        <p className="text-xs uppercase tracking-[0.4em] text-white/50">WebGPU experiment</p>
-        <h1 className="mt-4 text-4xl font-bold">Organic Blob Shader</h1>
-        <p className="mt-4 text-white/80">Exploring WebGPU nodes, interactive ray-marching, and hover-reactive displacement. This study shows how I combine GLSL intuition with the new Three.js node APIs to craft tactile hero backgrounds for brands.</p>
-        <p className="mt-4 text-white/60">Move the cursor to warp the surface and see how the lighting stack responds. The project demonstrates how Lenny Muffler prototypes realtime visuals for campaigns and landing pages.</p>
-      </div>
+      <canvas style={{width: "100vw", height: "100vh", touchAction: "none", display: "block"}} id="myCanvas" aria-label="Interactive WebGPU blob shader by Lenny Muffler" />
     </main>
   )
 }

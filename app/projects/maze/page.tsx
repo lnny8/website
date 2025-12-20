@@ -1,12 +1,11 @@
 "use client"
-import React, {useEffect, useRef} from "react"
+import HoverButton from "@/lib/components/hoverButton";
+import React, {useEffect, useRef, useState} from "react"
 
 type CellState = "visited" | "unvisited" | "wall" | "broken"
 type Cell = {state: CellState; index: number}
 type Position = {x: number; y: number}
 
-const COLS = 29
-const ROWS = 15
 const CELL_SIZE = 10
 
 const DIRECTIONS = [
@@ -22,12 +21,18 @@ export default function Page() {
   const stack = useRef<Position[]>([])
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const isGenerating = useRef(false)
+  const [cols, setCols] = useState(0)
+  const [rows, setRows] = useState(0)
 
   useEffect(() => {
     initMaze()
   }, [])
 
   function initMaze() {
+    if(typeof window === 'undefined') return
+    if (!canvasRef.current) return
+    setCols(Math.floor(canvasRef.current.width / CELL_SIZE))
+    setRows(Math.floor(canvasRef.current.height / CELL_SIZE))
     maze.current = createGrid()
     currentIndex.current = 0
     stack.current = []
@@ -35,8 +40,8 @@ export default function Page() {
   }
 
   function createGrid(): Cell[][] {
-    return Array.from({length: COLS}, (_, x) =>
-      Array.from({length: ROWS}, (_, y) => {
+    return Array.from({length: cols}, (_, x) =>
+      Array.from({length: rows}, (_, y) => {
         const isWall = x % 2 === 1 || y % 2 === 1
         return {state: isWall ? "wall" : "unvisited", index: 0}
       })
@@ -44,7 +49,7 @@ export default function Page() {
   }
 
   function inBounds(x: number, y: number) {
-    return x >= 0 && x < COLS && y >= 0 && y < ROWS
+    return x >= 0 && x < cols && y >= 0 && y < rows
   }
 
   function getUnvisitedNeighbors(position: Position) {
@@ -66,8 +71,8 @@ export default function Page() {
     isGenerating.current = true
     initMaze()
     const start: Position = {
-      x: Math.floor(Math.random() * Math.ceil(COLS / 2)) * 2,
-      y: Math.floor(Math.random() * Math.ceil(ROWS / 2)) * 2,
+      x: Math.floor(Math.random() * Math.ceil(cols / 2)) * 2,
+      y: Math.floor(Math.random() * Math.ceil(rows / 2)) * 2,
     }
     currentIndex.current = 1
     changeMaze(start.x, start.y, "visited", currentIndex.current)
@@ -107,13 +112,13 @@ export default function Page() {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
     const head = stack.current[stack.current.length - 1]
-    for (let x = 0; x < COLS; x++) {
-      for (let y = 0; y < ROWS; y++) {
-        let fill = "#000"
+    for (let x = 0; x < cols; x++) {
+      for (let y = 0; y < rows; y++) {
+        let fill = "#0b0b0d"
         const cell = maze.current[x]?.[y]
         switch (cell?.state) {
           case "wall":
-            fill = "#000"
+            fill = "#0b0b0d"
             break
           case "unvisited":
             fill = "#fff"
@@ -125,7 +130,7 @@ export default function Page() {
             fill = "#0a0"
             break
           default:
-            fill = "#000"
+            fill = "#0b0b0d"
         }
         if (head && head.x === x && head.y === y) {
           fill = "#ff0"
@@ -139,13 +144,11 @@ export default function Page() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center">
       <h1 className="text-3xl text-bold pb-20">Maze Generator</h1>
-      <canvas ref={canvasRef} className="w-full max-w-6xl h-full" width={COLS * CELL_SIZE} height={ROWS * CELL_SIZE} />
-      <button className="bg-white text-black text-2xl font-semibold p-2 mt-10 rounded-2xl cursor-pointer" onClick={() => void backTracking()}>
-        Start
-      </button>
-      <button className="bg-white text-black text-2xl font-semibold p-2 mt-4 rounded-2xl cursor-pointer" onClick={() => initMaze()}>
-        Reset
-      </button>
+      <canvas ref={canvasRef} className="w-full max-w-6xl h-full" />
+      <div className="pt-10 space-x-4">
+        <button onClick={() => void backTracking()}><HoverButton text1="Start" text2="Let's go" /></button>
+        <button onClick={() => initMaze()}><HoverButton text1="Reset" text2="Try again" /></button>
+      </div>
     </main>
   )
 }

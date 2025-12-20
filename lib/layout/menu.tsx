@@ -10,15 +10,10 @@ import {SplitText} from "gsap/all"
 import {useTheme} from "next-themes"
 import {motion} from "motion/react"
 import {usePathname} from "next/navigation"
+import tabs from "@/lib/data/tabs"
 
 export default function Menu() {
-  const tabs = [
-    {label: "Home", link: "/"},
-    {label: "About", link: "/about"},
-    {label: "Projects", link: "/projects"},
-    {label: "Tutorials", link: "/tutorials"},
-    {label: "Contact", link: "/contact"},
-  ]
+
   const containerRef = useRef<HTMLDivElement | null>(null)
   const hoverData = useRef<Map<HTMLElement, {topSplit: SplitText; bottomSplit: SplitText; tl?: gsap.core.Timeline}>>(new Map())
   const {theme, resolvedTheme, setTheme} = useTheme()

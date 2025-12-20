@@ -1,13 +1,15 @@
-"use client"
+import ProjectPage from "@/lib/pages/projectPage"
 import React from "react"
 
 export default function page() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center">
-      <h1 className="text-4xl font-bold text-center">BlackJack in Java</h1>
-      <a href="/files/BlackJack.jar" download className="bg-white text-black mt-20 text-lg tracking-tight font-black px-6 py-4 rounded-2xl cursor-pointer">
-        Download .jar
-      </a>
-    </main>
+    <ProjectPage
+      title="BlackJack"
+      imageUrl="/labels/blackjack.png"
+      stack={["Java", "Figma"]}
+      projectUrl="/files/blackJack.jar"
+      description="This is my personal take on the classic BlackJack card game — I built the core game logic in Java and designed the UI flow in Figma. I focused on creating clean, object-oriented code to model hands, rules and betting, handling edge cases like splits and insurance along the way. Working on this project taught me a lot about state management, testable design and user-focused interactions; it began as a learning exercise and grew into a playable, polished demo that reflects how I approach problem solving and UX."
+      text2="Download"
+    />
   )
 }

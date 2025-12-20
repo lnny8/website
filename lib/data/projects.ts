@@ -1,7 +1,9 @@
 export const projects = [
-  {title: "Lonui", description: "A demo website", imageUrl: "/projects/lonui.png", link: "https://lonui.de", date: "2024", color: "#faa"},
-  {title: "Flowline", description: "Logical Simulator", imageUrl: "/projects/flowline.png", link: "https://flowline.app", date: "2024", color: "#aaf"},
-  {title: "Sorting Visualizer", description: "Visualize sorting algorithms", imageUrl: "/projects/sorting.png", link: "/projects/sorting-visualizer", date: "2025", color: "#add"},
-  {title: "Image Editor", description: "An online image editor", imageUrl: "/projects/images.png", link: "/projects/images", date: "2025", color: "#faf"},
-  {title: "asd Editor", description: "An online image editor", imageUrl: "/projects/images.png", link: "/projects/images", date: "2025", color: "#faf"},
+  {title: "Lonui", description: "A demo website", imageUrl: "/projects/lonui.png", link: "/projects/lonui", date: "2024", color: "#fada82"},
+  {title: "Flowline", description: "Logical Simulator", imageUrl: "/projects/flowline.png", link: "/projects/flowline", date: "2024", color: "#abffb5"},
+  {title: "Sorting Visualizer", description: "Visualize sorting algorithms", imageUrl: "/projects/sorting.png", link: "/projects/sorting-visualizer", date: "2025", color: "#dcabff"},
+  {title: "Image Editor", description: "An online image editor", imageUrl: "/projects/images.png", link: "/projects/images", date: "2025", color: "#abafff"},
+  {title: "BlackJack in Java", description: "BlackJack written in Java", imageUrl: "/projects/blackjack.png", link: "/projects/blackjack", date: "2025", color: "#7fb086"},
+  {title: "Blob Shader", description: "A cool shader written in Three.js", imageUrl: "/projects/blob-shader.png", link: "/projects/blob-shader", date: "2025", color: "#b795ed"},
+  {title: "Maze Generator", description: "Visualization of maze generation algorithms", imageUrl: "/projects/maze-generator.png", link: "/projects/maze-generator", date: "2025", color: "#b795ed"},
 ]

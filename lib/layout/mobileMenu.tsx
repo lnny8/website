@@ -5,20 +5,13 @@ import {AnimatePresence, motion} from "motion/react"
 import Image from "next/image"
 import {Mail, Moon, Phone, Sun} from "lucide-react"
 import {useTheme} from "next-themes"
+import tabs from "@/lib/data/tabs"
 
 export default function MobileMenu() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [menuKey, setMenuKey] = useState(0)
   const {theme, resolvedTheme, setTheme} = useTheme()
   const [mounted, setMounted] = useState(false)
-
-  const tabs = [
-    {label: "Home", link: "/"},
-    {label: "About", link: "/about"},
-    {label: "Projects", link: "/projects"},
-    {label: "Tutorials", link: "/tutorials"},
-    {label: "Contact", link: "/contact"},
-  ]
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen)
