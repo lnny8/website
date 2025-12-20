@@ -1,12 +1,15 @@
 "use client"
-import HoverButton from "@/lib/components/hoverButton";
+import HoverButton from "@/lib/components/hoverButton"
+import {th} from "motion/react-client"
 import React, {useEffect, useRef, useState} from "react"
 
 type CellState = "visited" | "unvisited" | "wall" | "broken"
 type Cell = {state: CellState; index: number}
 type Position = {x: number; y: number}
 
-const CELL_SIZE = 10
+const CELL_SIZE = 30
+let cols = 5
+let rows = 5
 
 const DIRECTIONS = [
   {dx: 0, dy: -2, wallDx: 0, wallDy: -1},
@@ -21,22 +24,32 @@ export default function Page() {
   const stack = useRef<Position[]>([])
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const isGenerating = useRef(false)
-  const [cols, setCols] = useState(0)
-  const [rows, setRows] = useState(0)
 
   useEffect(() => {
+    if (typeof window === "undefined") throw new Error("Window is undefined TOP")
+    const canvas = canvasRef.current
+    if (!canvas) throw new Error("Canvas is null in useEffect")
+    handleScaling()
     initMaze()
   }, [])
 
   function initMaze() {
-    if(typeof window === 'undefined') return
+    if (typeof window === "undefined") throw new Error("Window is undefined in initMaze")
     if (!canvasRef.current) return
-    setCols(Math.floor(canvasRef.current.width / CELL_SIZE))
-    setRows(Math.floor(canvasRef.current.height / CELL_SIZE))
     maze.current = createGrid()
     currentIndex.current = 0
     stack.current = []
     drawMaze()
+  }
+
+  function handleScaling() {
+    const canvas = canvasRef.current
+    if (!canvas) throw new Error("Canvas is null in handleScaling")
+    if (typeof window === "undefined") throw new Error("Window is undefined in handleScaling")
+    canvas.width = window.innerWidth * (2 / 3)
+    canvas.height = window.innerHeight * (2 / 3)
+    cols = Math.floor(canvas.width / CELL_SIZE)
+    rows = Math.floor(canvas.height / CELL_SIZE)
   }
 
   function createGrid(): Cell[][] {
@@ -105,6 +118,16 @@ export default function Page() {
     maze.current[x][y] = {state, index}
     drawMaze()
   }
+  useEffect(() => {
+    const handleResize = () => {
+      handleScaling()
+      initMaze()
+    }
+    window.addEventListener("resize", handleResize)
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
 
   function drawMaze() {
     const canvas = canvasRef.current
@@ -112,6 +135,7 @@ export default function Page() {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
     const head = stack.current[stack.current.length - 1]
+    if (typeof window === "undefined") throw new Error("Window is undefined")
     for (let x = 0; x < cols; x++) {
       for (let y = 0; y < rows; y++) {
         let fill = "#0b0b0d"
@@ -143,11 +167,15 @@ export default function Page() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center">
-      <h1 className="text-3xl text-bold pb-20">Maze Generator</h1>
-      <canvas ref={canvasRef} className="w-full max-w-6xl h-full" />
+      <h1 className="text-5xl font-medium font-clash pb-10 pt-20">Maze Generator</h1>
+      <canvas ref={canvasRef} />
       <div className="pt-10 space-x-4">
-        <button onClick={() => void backTracking()}><HoverButton text1="Start" text2="Let's go" /></button>
-        <button onClick={() => initMaze()}><HoverButton text1="Reset" text2="Try again" /></button>
+        <button className="relative w-42 h-12" onClick={() => void backTracking()}>
+          <HoverButton text1="Start" text2="Let's go" />
+        </button>
+        <button className="relative w-42 h-12" onClick={() => initMaze()}>
+          <HoverButton text1="Reset" text2="Try again" />
+        </button>
       </div>
     </main>
   )
