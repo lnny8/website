@@ -5,8 +5,8 @@ import Image from "next/image"
 
 export default function Page() {
   return (
-    <main className="min-h-screen w-full max-w-7xl mx-auto flex items-center justify-center">
-      <div className="mt-40 grid w-full md:grid-cols-2 gap-10 group/all has-[>a:hover]:[&>a:not(:hover)]:opacity-50">
+    <section className="max-w-7xl md:px-0 px-6 mx-auto flex flex-col">
+      <div className="mt-40 grid w-full md:grid-cols-2 gap-10 group/all md:has-[>a:hover]:[&>a:not(:hover)]:opacity-50">
         {projects.map((project, index) => (
           <Link href={project.link} className={`flex flex-col group md:hover:opacity-100 transition-opacity duration-300 ${index % 2 === 1 ? "md:translate-y-14" : ""}`} key={project.title}>
             <div className="rounded-3xl relative flex items-center aspect-3/2 justify-center mb-3 overflow-hidden" style={{backgroundColor: project.color}}>
@@ -28,6 +28,6 @@ export default function Page() {
           </Link>
         ))}
       </div>
-    </main>
+    </section>  
   )
 }

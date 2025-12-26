@@ -4,7 +4,7 @@ import Link from "next/link"
 import {ArrowLeft} from "lucide-react"
 import HoverButton from "../components/hoverButton"
 
-export default function ProjectPage({title, imageUrl, projectUrl, description, stack, text2}: {title: string; imageUrl: string; projectUrl: string; description: string; stack: string[]; text2?: string}) {
+export default function ProjectPage({title, imageUrl, projectUrl, description, stack, text2, date}: {title: string; imageUrl: string; projectUrl: string; description: string; stack: string[]; text2?: string; date?: string}) {
   return (
     <main className="min-h-screen max-w-5xl mx-auto">
       <div className="pt-40 flex justify-between items-center">
@@ -12,7 +12,7 @@ export default function ProjectPage({title, imageUrl, projectUrl, description, s
           <ArrowLeft className="size-4" />
           <span>Back to Projects</span>
         </Link>
-        <div className="py-1 px-2 border-white/20 light:border-black/20 border rounded-lg opacity-60">2024</div>
+        <div className="py-1 px-2 border-white/20 light:border-black/20 border rounded-lg opacity-60">{date ? date : 2025}</div>
       </div>
       <Image className="mt-10 rounded-2xl w-full" width={1000} src={imageUrl} height={600} alt={title} />
       <div className="flex mt-10 items-center justify-between">

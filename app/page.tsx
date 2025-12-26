@@ -75,7 +75,7 @@ export default function Page() {
         <h1 className="text-5xl font-clash font-medium mt-5">Selected Projects</h1>
         <h2 className="mt-5 text-white/70 light:text-black/70">Here's a curated selection showcasing my expertise and the achieved results.</h2>
 
-        <div className="mt-10 grid md:grid-cols-2 gap-10 group/all has-[>a:hover]:[&>a:not(:hover)]:opacity-50">
+        <div className="mt-10 grid md:grid-cols-2 gap-10 group/all md:has-[>a:hover]:[&>a:not(:hover)]:opacity-50">
           {projects.slice(0, 4).map((project, index) => (
             <Link href={project.link} className={`flex flex-col group md:hover:opacity-100 transition-opacity duration-300 ${index % 2 === 1 ? "md:translate-y-14" : ""}`} key={project.title}>
               <div className="rounded-3xl relative flex items-center aspect-3/2 justify-center mb-3 overflow-hidden" style={{backgroundColor: project.color}}>
@@ -97,9 +97,9 @@ export default function Page() {
             </Link>
           ))}
         </div>
-        <div className="relative md:mt-30 mt-10 w-42 h-12 mx-auto">
+        <Link href={"/projects"} className="relative md:mt-30 mt-10 w-42 h-12 mx-auto">
           <HoverButton text1="View All Projects" text2="View All Projects" />
-        </div>
+        </Link>
       </section>
 
       <section className="max-w-7xl md:px-0 px-6 mx-auto flex flex-col mt-40">

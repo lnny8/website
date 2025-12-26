@@ -120,8 +120,10 @@ export default function Page() {
   }
   useEffect(() => {
     const handleResize = () => {
-      handleScaling()
-      initMaze()
+      if (window.innerWidth !== canvasRef.current?.width) {
+        handleScaling()
+        initMaze()
+      }
     }
     window.addEventListener("resize", handleResize)
     return () => {

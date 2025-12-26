@@ -6,4 +6,5 @@ export const projects = [
   {title: "BlackJack in Java", description: "BlackJack written in Java", imageUrl: "/projects/blackjack.png", link: "/projects/blackjack", date: "2025", color: "#7fb086"},
   {title: "Blob Shader", description: "A cool shader written in Three.js", imageUrl: "/projects/blob-shader.png", link: "/projects/blob-shader", date: "2025", color: "#b795ed"},
   {title: "Maze Generator", description: "Visualization of maze generation algorithms", imageUrl: "/projects/maze.png", link: "/projects/maze", date: "2025", color: "#fada82"},
+  {title: "Bubble Shooter", description: "A fun and engaging bubble shooter game.", imageUrl: "/projects/bubble-shooter.png", link: "/projects/bubble-shooter", date: "2025", color: "#f88"},
 ]
