@@ -7,6 +7,7 @@ import {ScrollTrigger} from "gsap/all"
 import {SplitText} from "gsap/all"
 import SocialSpan from "@/lib/components/socialSpan"
 import {useId} from "react"
+import Link from "next/link"
 
 export default function Footer() {
   gsap.registerPlugin(ScrollTrigger, SplitText)
@@ -42,9 +43,9 @@ export default function Footer() {
           <span className="text-sm">Available for work</span>
         </div>
         <span className="text text-5xl max-w-md font-clash font-medium tracking-wide text-center mt-5">Let's create your next big idea</span>
-        <div className="pt-10">
+        <Link href="/contact" className="pt-10">
           <HoverButton text1="Contact Me" text2="Let's go" />
-        </div>
+        </Link>
       </div>
 
       <div className="flex items-center justify-between max-w-7xl mx-auto py-10">
