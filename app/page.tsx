@@ -18,9 +18,9 @@ export default function Page() {
   ]
 
   const expertise = [
-    {title: "Development", icon: <Code2 className="size-5" />, imageUrl: "/expertise/development.png", content: "Building responsive websites. Providing the users an enriching experience that responds to any device and screen size."},
-    {title: "UI/UX Design", icon: <PenTool className="size-5" />, imageUrl: "/expertise/design.png", content: "Designing user-centric, modern interfaces that shapes how the audience interacts with the product."},
-    {title: "Branding", icon: <SwatchBook className="size-5" />, imageUrl: "/expertise/branding.png", content: "Building brand identities including working on logo, typography, iconography, colour palette, visual language, and brand personality."},
+    {title: "Development", icon: <Code2 className="size-5" />, imageUrl: "/expertise/development.png", content: "Building responsive web applications with modern frameworks like React and Next.js. Creating interactive experiences that work seamlessly across all devices."},
+    {title: "Hardware Design", icon: <PenTool className="size-5" />, imageUrl: "/expertise/design.png", content: "Designing and prototyping hardware solutions, from circuit boards to physical interfaces. Bringing digital concepts into the physical world."},
+    {title: "3D Modeling", icon: <SwatchBook className="size-5" />, imageUrl: "/expertise/branding.png", content: "Creating detailed 3D models and prototypes using CAD software. Designing custom components for both digital visualization and 3D printing."},
   ]
 
   return (
@@ -32,12 +32,18 @@ export default function Page() {
         </h1>
 
         <h2 className="md:text-7xl text-5xl font-clash font-medium">
-          Crafting <span className="bg-linear-to-r from-lime to-blue-400 bg-clip-text text-transparent">purpose driven experiences</span> that inspire <br />& engage
+          Building{" "}
+          <span className="bg-linear-to-r from-lime to-blue-400 bg-clip-text text-transparent">
+            innovative <br />
+            projects
+          </span>
+          from code <br />
+          to hardware
         </h2>
 
         <div className="flex flex-col md:flex-row items-center justify-center md:gap-15 gap-10 mt-10">
           <div className="md:w-1/2 w-full bg-white/10 light:bg-black/10 h-px" />
-          <div className="md:w-1/2 h-full flex items-center justify-center text-white/60 light:text-black/60">I work with brands globally to build pixel-perfect, engaging, and accessible digital experiences that drive results and achieve business goals.</div>
+          <div className="md:w-1/2 h-full flex items-center justify-center text-white/60 light:text-black/60">17-year-old student from Stuttgart with a passion for technology. Building web apps, designing hardware, and bringing ideas to life through code.</div>
         </div>
 
         <div className="flex items-center justify-between">

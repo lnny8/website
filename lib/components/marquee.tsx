@@ -5,7 +5,7 @@ import {useGSAP} from "@gsap/react"
 import {Sparkle} from "lucide-react"
 
 export default function Marquee() {
-  const themes = ["Websites", "Designing", "Graphics", "Animations", "Infrastructure", "Development", "Engineering"]
+  const themes = ["Web Development", "Hardware Design", "3D Modeling", "Automation", "PCB Prototyping", "Creative Coding", "Server Infrastructure"]
 
   useGSAP(() => {
     const totalWidth = document.querySelector<HTMLElement>(".flow-track")!.offsetWidth
