@@ -1,6 +1,6 @@
 import {ArrowUpRight, Code, Code2, Hand, Pen, PenTool, Sparkle, SwatchBook} from "lucide-react"
 import Link from "next/link"
-import React from "react"
+import React, {Suspense} from "react"
 import HoverButton from "@/lib/components/hoverButton"
 import Marquee from "@/lib/components/marquee"
 import AnimationText from "@/lib/components/animationText"
@@ -43,7 +43,9 @@ export default function Page() {
             to hardware
           </span>
           <div className="flex-1 relative">
-            <Robot />
+            <Suspense fallback={"loading robot..."}>
+              <Robot />
+            </Suspense>
           </div>
         </h2>
 
