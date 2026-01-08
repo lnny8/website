@@ -8,6 +8,7 @@ import Image from "next/image"
 import Accordion from "@/lib/components/accordion"
 import ShineText from "@/lib/components/shineText"
 import {projects} from "@/lib/data/projects"
+import Robot from "@/lib/components/robot"
 
 export default function Page() {
   const socialLinks = [
@@ -31,14 +32,19 @@ export default function Page() {
           Hey! I'm Lenny
         </h1>
 
-        <h2 className="md:text-7xl text-5xl font-clash font-medium">
-          Building{" "}
-          <span className="bg-linear-to-r from-lime to-blue-400 bg-clip-text text-transparent">
-            innovative <br />
-            projects{" "}
+        <h2 className="md:text-7xl text-5xl font-clash font-medium md:flex-row flex-col flex">
+          <span>
+            Building{" "}
+            <span className="bg-linear-to-r from-lime to-blue-400 bg-clip-text text-transparent">
+              innovative <br />
+              projects{" "}
+            </span>
+            from code <br />
+            to hardware
           </span>
-          from code <br />
-          to hardware
+          <div className="flex-1 relative">
+            <Robot />
+          </div>
         </h2>
 
         <div className="flex flex-col md:flex-row items-center justify-center md:gap-15 gap-10 mt-10">

@@ -1,4 +1,3 @@
-import type {Metadata} from "next"
 import "./globals.css"
 import Menu from "@/lib/layout/menu"
 import Footer from "@/lib/layout/footer"
@@ -8,6 +7,7 @@ import BlurReveal from "@/lib/layout/blurReveal"
 import {ThemeProvider} from "next-themes"
 import NextTopLoader from "nextjs-toploader"
 import MobileMenu from "@/lib/layout/mobileMenu"
+import { metadata as siteMetadata } from "./metadata"
 
 const satoshi = localFont({
   src: "/satoshi.ttf",
@@ -19,34 +19,7 @@ export const clash = localFont({
   variable: "--font-clash",
 })
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://lnny.dev"),
-  title: {
-    default: `Lenny Muffler · Portfolio`,
-    template: `%s · Lenny Muffler`,
-  },
-  description: "Creative developer crafting motion-heavy web experiences",
-  keywords: ["Lenny Muffler", "creative developer", "Next.js portfolio", "GSAP engineer", "WebGL developer", "motion design", "frontend consultant", "shader artist"],
-  authors: [{name: "Lenny Muffler", url: "https://lnny.dev"}],
-  creator: "Lenny Muffler",
-  publisher: "Lenny Muffler",
-  alternates: {canonical: "https://lnny.dev"},
-  openGraph: {
-    title: `Lenny Muffler · Portfolio`,
-    description: "Creative developer crafting motion-heavy web experiences",
-    url: "https://lnny.dev",
-    siteName: "Lenny Muffler",
-    type: "website",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-    },
-  },
-}
+export const metadata = siteMetadata
 
 export default function RootLayout({
   children,

@@ -8,6 +8,7 @@ import {SplitText} from "gsap/all"
 import SocialSpan from "@/lib/components/socialSpan"
 import {useId} from "react"
 import Link from "next/link"
+import {motion} from "motion/react"
 
 export default function Footer() {
   gsap.registerPlugin(ScrollTrigger, SplitText)
@@ -18,9 +19,11 @@ export default function Footer() {
     gsap.killTweensOf(`#${id} .text`)
     splitText.current?.revert()
     const text = document.querySelector(`#${id} .text`)
+    if (!text) return
+
     splitText.current = new SplitText(text, {type: "chars", mask: "chars"})
     gsap.set(splitText.current.chars, {yPercent: 100, opacity: 0})
-    gsap.to(splitText.current.chars, {
+    const animation = gsap.to(splitText.current.chars, {
       yPercent: 0,
       opacity: 1,
       stagger: 0.02,
@@ -31,7 +34,14 @@ export default function Footer() {
         toggleActions: "play reverse restart reverse",
       },
     })
-  }, [])
+
+    return () => {
+      animation.scrollTrigger?.kill()
+      animation.kill()
+      splitText.current?.revert()
+      gsap.killTweensOf(`#${id} .text`)
+    }
+  }, [id])
 
   return (
     <footer id={id} className="w-full md:px-0 px-6 bg-woodsmoke light:bg-athensgray light:text-black md:pt-40 pt-20">
@@ -43,7 +53,7 @@ export default function Footer() {
           <span className="text-sm">Available for work</span>
         </div>
         <span className="text text-5xl max-w-md font-clash font-medium tracking-wide text-center mt-5">Let's create your next big idea</span>
-        <Link href="/contact" className="pt-10">
+        <Link href="/contact" className="mt-10 h-12 w-42">
           <HoverButton text1="Contact Me" text2="Let's go" />
         </Link>
       </div>

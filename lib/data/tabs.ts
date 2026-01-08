@@ -2,8 +2,8 @@ const tabs = [
   {label: "Home", link: "/"},
   {label: "About", link: "/about"},
   {label: "Projects", link: "/projects"},
+  {label: "Applications", link: "/applications"},
   {label: "Tutorials", link: "/tutorials"},
-  // {label: "Packages", link: "/npm"},
   {label: "Contact", link: "/contact"},
 ]
 
