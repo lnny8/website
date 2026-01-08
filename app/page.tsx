@@ -35,7 +35,7 @@ export default function Page() {
           Building{" "}
           <span className="bg-linear-to-r from-lime to-blue-400 bg-clip-text text-transparent">
             innovative <br />
-            projects
+            projects{" "}
           </span>
           from code <br />
           to hardware

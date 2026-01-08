@@ -24,9 +24,9 @@ export default function AnimationText() {
   }, [])
 
   return (
-    <p className="animation-text text-center text-3xl mt-10 leading-normal font-medium text-white light:text-black">
+    <h1 className="animation-text text-center text-3xl mt-10 leading-normal font-medium text-white light:text-black">
       I'm Lenny, a 17-year-old high school student from Germany with a passion for technology and creativity. From building interactive web applications to designing hardware prototypes, I love exploring new ways to bring ideas to life. I specialize in full-stack web and app
       development, 3D modeling, and creating automation workflows that streamline complex tasks.
-    </p>
+    </h1>
   )
 }
