@@ -7,7 +7,7 @@ import AnimationText from "@/lib/components/animationText"
 import Image from "next/image"
 import Accordion from "@/lib/components/accordion"
 import ShineText from "@/lib/components/shineText"
-import {projects} from "@/lib/data/projects"
+import {projects} from "@/lib/data/data"
 import Robot from "@/lib/components/robot"
 
 export default function Page() {
@@ -42,10 +42,10 @@ export default function Page() {
             from code <br />
             to hardware
           </span>
-          <div className="flex-1 relative">
-            <Suspense fallback={"loading robot..."}>
+          <div className="flex-1 relative -z-1">
+            {/* <Suspense fallback={"loading robot..."}> */}
               <Robot />
-            </Suspense>
+            {/* </Suspense> */}
           </div>
         </h2>
 

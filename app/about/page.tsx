@@ -56,7 +56,7 @@ export default function Page() {
   return (
     <main className="min-h-screen w-full pb-24">
       <section className="max-w-6xl mx-auto pt-32 px-6 md:px-0">
-        <h1 className="text-6xl md:text-7xl font-clash font-semibold leading-tight mb-6">About me</h1>
+        <h1 className="text-6xl font-clash font-semibold leading-tight mb-6">About me</h1>
         <p className="text-xl text-white/80 light:text-black/80 leading-relaxed">
           I'm Lenny, a 17-year-old high school student from Stuttgart, Germany with a passion for technology and creativity. From building web applications to designing hardware prototypes, I love exploring new ways to bring ideas to life through code and design. When I'm not coding, you can find me tinkering with 3D modeling or experimenting with automation workflows. I'm always eager to learn and take on new challenges in the tech world.
         </p>
