@@ -2,9 +2,10 @@
 import React, {useRef, useState, useEffect} from "react"
 import {Canvas, useLoader, useFrame} from "@react-three/fiber"
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader.js"
-import {Environment, OrbitControls, useGLTF, useHelper} from "@react-three/drei"
+import {Environment, OrbitControls, useAnimations, useGLTF, useHelper} from "@react-three/drei"
 import * as THREE from "three"
 import gsap from "gsap"
+import {useTheme} from "next-themes"
 
 type MousePos = {x: number; y: number}
 
@@ -16,7 +17,8 @@ function smoothNoise(x: number): number {
   const a = Math.sin(i * 12.9898 + 78.233) * 43758.5453
   const b = Math.sin((i + 1) * 12.9898 + 78.233) * 43758.5453
 
-  return (a - Math.floor(a)) * (1 - fade) + (b - Math.floor(b)) * fade
+  const result = (a - Math.floor(a)) * (1 - fade) + (b - Math.floor(b)) * fade
+  return result - 0.5
 }
 
 export default function Robot() {
@@ -54,9 +56,13 @@ export default function Robot() {
 
 function RobotContainer({mousePos}: {mousePos: MousePos}) {
   const groupRef = useRef<THREE.Group>(null)
+  const {theme} = useTheme()
+  // let animating = true
 
   useFrame(() => {
     if (!groupRef.current) return
+    groupRef.current.position.x = THREE.MathUtils.lerp(groupRef.current.position.x, smoothNoise(performance.now() * 0.001) * 1, 0.1)
+
     groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, mousePos.x * 0.4 - Math.PI / 2, 0.1)
     groupRef.current.rotation.z = THREE.MathUtils.lerp(groupRef.current.rotation.z, mousePos.y * 0.1, 0.1)
   })
@@ -91,35 +97,22 @@ function RobotModel({mousePos}: {mousePos: MousePos}) {
 function Body() {
   const result = useGLTF("/models/robot.glb")
   const bodyRef = useRef<THREE.Group>(null)
-  const bodyMixerRef = useRef<THREE.AnimationMixer | null>(null)
-  const wiggleLightActionRef = useRef<THREE.AnimationAction | null>(null)
-  const waveRightActionRef = useRef<THREE.AnimationAction | null>(null)
-  const waveLeftActionRef = useRef<THREE.AnimationAction | null>(null)
+
+  const {theme} = useTheme()
+  const animations = useAnimations(result.animations, bodyRef)
+  const wave_right_action = animations.actions["wave_right"]
+  const wave_left_action = animations.actions["wave_left"]
+  const wiggle_light_action = animations.actions["light_wiggle"]
 
   useEffect(() => {
-    if (bodyRef.current && !bodyMixerRef.current) {
-      bodyMixerRef.current = new THREE.AnimationMixer(bodyRef.current)
-      const wiggleLightClip = THREE.AnimationClip.findByName(result.animations, "light_wiggle")
-      if (wiggleLightClip) {
-        const action = bodyMixerRef.current.clipAction(wiggleLightClip)
-        action.timeScale = 0.42
-        action.play()
-        wiggleLightActionRef.current = action
-      }
-      const waveRightClip = THREE.AnimationClip.findByName(result.animations, "wave_right")
-      if (waveRightClip) {
-        const action = bodyMixerRef.current.clipAction(waveRightClip)
-        action.play()
-        waveRightActionRef.current = action
-      }
-      const waveLeftClip = THREE.AnimationClip.findByName(result.animations, "wave_left")
-      if (waveLeftClip) {
-        const action = bodyMixerRef.current.clipAction(waveLeftClip)
-        action.play()
-        waveLeftActionRef.current = action
-      }
-    }
-  }, [result.animations])
+    if (!wave_right_action) return
+    if (!wave_left_action) return
+    if (!wiggle_light_action) return
+    wave_right_action.reset().play()
+    wave_left_action.reset().play()
+    wiggle_light_action.reset().timeScale = 0.42
+    wiggle_light_action.reset().play()
+  }, [wave_right_action, wave_left_action, wiggle_light_action])
 
   useEffect(() => {
     if (result.scene) {
@@ -135,9 +128,28 @@ function Body() {
     }
   }, [result.scene])
 
-  useFrame((state, delta) => {
-    bodyMixerRef.current?.update(delta)
-  })
+  useEffect(() => {
+    if (theme == "light") {
+      if (result.scene) {
+        result.scene.traverse((child: any) => {
+          if (child.isMesh) {
+            child.material.needsUpdate = true
+            child.material.color.set("#ffffff")
+          }
+        })
+      }
+    }
+    if (theme == "dark") {
+      if (result.scene) {
+        result.scene.traverse((child: any) => {
+          if (child.isMesh) {
+            child.material.needsUpdate = true
+            child.material.color.set("#494949")
+          }
+        })
+      }
+    }
+  }, [theme, result.scene])
 
   return <primitive ref={bodyRef} object={result.scene} />
 }
@@ -147,41 +159,31 @@ function Eyes({mousePos}: {mousePos: MousePos}) {
   const result_left_eye = useLoader(GLTFLoader, "/models/left_eye.glb")
   const eyesRightRef = useRef<THREE.Group>(null)
   const eyesLeftRef = useRef<THREE.Group>(null)
-  const mixerLeftRef = useRef<THREE.AnimationMixer | null>(null)
-  const mixerRightRef = useRef<THREE.AnimationMixer | null>(null)
-  const blinkLeftActionRef = useRef<THREE.AnimationAction | null>(null)
-  const blinkRightActionRef = useRef<THREE.AnimationAction | null>(null)
-  const nextBlinkAtRef = useRef<number>(0)
 
-  useEffect(() => {
-    if (eyesLeftRef.current && !mixerLeftRef.current) {
-      mixerLeftRef.current = new THREE.AnimationMixer(eyesLeftRef.current)
-      const clip = THREE.AnimationClip.findByName(result_left_eye.animations, "blink_left") || result_left_eye.animations[0]
-      if (clip) {
-        const action = mixerLeftRef.current.clipAction(clip)
-        action.loop = THREE.LoopOnce
-        action.clampWhenFinished = true
-        action.timeScale = 1.6
-        blinkLeftActionRef.current = action
-      }
-    }
+  const animations_right = useAnimations(result_right_eye.animations, eyesRightRef)
+  const animations_left = useAnimations(result_left_eye.animations, eyesLeftRef)
+  const blink_right_action = animations_right.actions["blink_right"]
+  const blink_left_action = animations_left.actions["blink_left"]
+  const nextBlinkTime = useRef<number>(0)
 
-    if (eyesRightRef.current && !mixerRightRef.current) {
-      mixerRightRef.current = new THREE.AnimationMixer(eyesRightRef.current)
-      const clip = THREE.AnimationClip.findByName(result_right_eye.animations, "blink_right") || result_right_eye.animations[0]
-      if (clip) {
-        const action = mixerRightRef.current.clipAction(clip)
-        action.loop = THREE.LoopOnce
-        action.clampWhenFinished = true
-        action.timeScale = 1.6
-        blinkRightActionRef.current = action
-      }
+  async function blinkEyes() {
+    if (!blink_right_action || !blink_left_action) return
+    blink_left_action.setLoop(THREE.LoopOnce, 1)
+    blink_right_action.setLoop(THREE.LoopOnce, 1)
+    blink_left_action.clampWhenFinished = true
+    blink_right_action.clampWhenFinished = true
+    blink_left_action.timeScale = 2
+    blink_right_action.timeScale = 2
+    if (Math.random() > 0.5) {
+      blink_right_action.reset().play()
+      await new Promise((resolve) => setTimeout(resolve, (Math.random() - 0.5) * 100))
+      blink_left_action.reset().play()
+    } else {
+      blink_left_action.reset().play()
+      await new Promise((resolve) => setTimeout(resolve, (Math.random() - 0.5) * 100))
+      blink_right_action.reset().play()
     }
-
-    if (!nextBlinkAtRef.current) {
-      nextBlinkAtRef.current = THREE.MathUtils.randFloat(1, 2)
-    }
-  }, [result_left_eye, result_right_eye])
+  }
 
   useFrame((state, delta) => {
     if (!eyesRightRef.current || !eyesLeftRef.current) return
@@ -198,18 +200,9 @@ function Eyes({mousePos}: {mousePos: MousePos}) {
     eyesRightRef.current.position.z += smoothNoise(state.clock.elapsedTime * 0.5 + 2000) * 0.01
     eyesRightRef.current.position.y += smoothNoise(state.clock.elapsedTime * 0.5 + 3000) * 0.01
 
-    mixerLeftRef.current?.update(delta)
-    mixerRightRef.current?.update(delta)
-
-    const elapsed = state.clock.elapsedTime
-    if (elapsed >= nextBlinkAtRef.current) {
-      if (blinkLeftActionRef.current) {
-        blinkLeftActionRef.current.reset().play()
-      }
-      if (blinkRightActionRef.current) {
-        blinkRightActionRef.current.reset().play()
-      }
-      nextBlinkAtRef.current = elapsed + THREE.MathUtils.randFloat(2.5, 6)
+    if (state.clock.elapsedTime > nextBlinkTime.current) {
+      blinkEyes()
+      nextBlinkTime.current = state.clock.elapsedTime + 1 + Math.random() * 2
     }
   })
 
