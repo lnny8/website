@@ -8,7 +8,7 @@ import Image from "next/image"
 import Accordion from "@/lib/components/accordion"
 import ShineText from "@/lib/components/shineText"
 import {projects} from "@/lib/data/data"
-import Robot from "@/lib/components/robot"
+import Robot from "@/lib/robot/robot"
 
 export default function Page() {
   const socialLinks = [
