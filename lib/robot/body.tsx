@@ -1,6 +1,6 @@
 import {useAnimations, useGLTF} from "@react-three/drei"
 import {useTheme} from "next-themes"
-import {useEffect, useRef} from "react"
+import {useEffect, useRef, useState} from "react"
 import * as THREE from "three"
 
 export function Body() {
@@ -23,48 +23,17 @@ export function Body() {
     wiggle_light_action.reset().play()
   }, [wave_right_action, wave_left_action, wiggle_light_action])
 
-  useEffect(() => {
-    if (result.scene) {
-      result.scene.traverse((child: any) => {
-        if (child.isMesh) {
-          child.material.needsUpdate = true
-          if (child.material.metalness !== undefined) {
-            child.material.metalness = 0.5
-            child.material.roughness = 1.0
-          }
-        }
-      })
-    }
-  }, [result.scene])
-
-  useEffect(() => {
-    if (theme == "light") {
-      if (result.scene) {
-        result.scene.traverse((child: any) => {
-          if (child.isMesh) {
-            child.material.needsUpdate = true
-            child.material.color.set("#ffffff")
-          }
-        })
-      }
-    }
-    if (theme == "dark") {
-      if (result.scene) {
-        result.scene.traverse((child: any) => {
-          if (child.isMesh) {
-            child.material.needsUpdate = true
-            child.material.color.set("#494949")
-          }
-        })
-      }
-    }
-  }, [theme, result.scene])
-
   const nodes = result.nodes as any
 
   const bodyMaterial = new THREE.MeshStandardMaterial({
     color: theme === "light" ? new THREE.Color("#ffffff") : new THREE.Color("#494949"),
     metalness: 0.5,
+    roughness: 1.0,
+  })
+
+  const bodyMaterialLight = new THREE.MeshStandardMaterial({
+    color: new THREE.Color("#ffffff"),
+    metalness: 0.0,
     roughness: 1.0,
   })
 
@@ -77,8 +46,24 @@ export function Body() {
 
   const lightMaterial = new THREE.MeshStandardMaterial({
     emissive: new THREE.Color("#ffffff"),
-    emissiveIntensity: 100.0,
+    emissiveIntensity: 200.0,
   })
+
+  const lightMaterialLight = new THREE.MeshStandardMaterial({
+    color: new THREE.Color("#888"),
+    metalness: 0.0,
+    roughness: 1.0,
+  })
+
+  const [lightTheme, setLightTheme] = useState<boolean>(theme === "light")
+
+  useEffect(() => {
+    if (theme === "dark") {
+      setLightTheme(false)
+    } else if (theme === "light") {
+      setLightTheme(true)
+    }
+  }, [theme])
 
   return (
     <group ref={bodyRef} dispose={null}>
@@ -88,7 +73,7 @@ export function Body() {
           castShadow
           receiveShadow
           geometry={nodes.head.geometry}
-          material={bodyMaterial}
+          material={theme == "light" ? bodyMaterialLight : bodyMaterial}
           position={[0, 2.533, 0]}
           scale={[1, 1, 1.486]}
         />
@@ -106,7 +91,7 @@ export function Body() {
           castShadow
           receiveShadow
           geometry={nodes.body.geometry}
-          material={bodyMaterial}
+          material={lightTheme ? bodyMaterialLight : bodyMaterial}
           position={[0, 1.044, 0]}
           scale={0.557}
         />
@@ -115,7 +100,7 @@ export function Body() {
           castShadow
           receiveShadow
           geometry={nodes.arm_right.geometry}
-          material={bodyMaterial}
+          material={theme == "light" ? bodyMaterialLight : bodyMaterial}
           position={[-0.02, 1.262, -0.679]}
           scale={0.163}
         />
@@ -124,7 +109,7 @@ export function Body() {
           castShadow
           receiveShadow
           geometry={nodes.arm_left.geometry}
-          material={bodyMaterial}
+          material={theme == "light" ? bodyMaterialLight : bodyMaterial}
           position={[-0.01, 1.252, 0.678]}
           rotation={[0, 0, -Math.PI]}
           scale={-0.163}
@@ -134,13 +119,13 @@ export function Body() {
             <skinnedMesh
               name="Icosphere"
               geometry={nodes.Icosphere.geometry}
-              material={lightMaterial}
+              material={theme == "light" ? lightMaterialLight : lightMaterial}
               skeleton={nodes.Icosphere.skeleton}
             />
             <skinnedMesh
               name="Icosphere_1"
               geometry={nodes.Icosphere_1.geometry}
-              material={bodyMaterial}
+              material={theme == "light" ? bodyMaterialLight : bodyMaterial}
               skeleton={nodes.Icosphere_1.skeleton}
             />
           </group>
