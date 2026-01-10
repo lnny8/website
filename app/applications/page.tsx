@@ -4,6 +4,6 @@ import React from 'react'
 
 export default function Page() {
   return (
-    <Collection title="Applications" description="A collection of my applications." data={applications} />
+    <Collection title="Applications" description="A collection of simple useful applications I made because I couldn't find them elsewhere" data={applications} />
   )
 }

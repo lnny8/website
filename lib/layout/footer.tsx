@@ -51,7 +51,6 @@ export default function Footer() {
       start: "top 70%",
       animation: animationRef.current,
       toggleActions: "play reverse restart reverse",
-      markers: true,
     })
 
     return () => {

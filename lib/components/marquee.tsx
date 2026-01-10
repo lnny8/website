@@ -3,9 +3,10 @@ import React from "react"
 import gsap from "gsap"
 import {useGSAP} from "@gsap/react"
 import {Sparkle} from "lucide-react"
+import { knowledgeAreas } from "../data/data"
 
 export default function Marquee() {
-  const themes = ["Web Development", "Hardware Design", "3D Modeling", "Automation", "PCB Prototyping", "Creative Coding", "Server Infrastructure"]
+  const themes = knowledgeAreas
 
   useGSAP(() => {
     const totalWidth = document.querySelector<HTMLElement>(".flow-track")!.offsetWidth

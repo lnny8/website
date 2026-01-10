@@ -7,7 +7,7 @@ import AnimationText from "@/lib/components/animationText"
 import Image from "next/image"
 import Accordion from "@/lib/components/accordion"
 import ShineText from "@/lib/components/shineText"
-import {projects} from "@/lib/data/data"
+import {projects, selectedProjects} from "@/lib/data/data"
 import Robot from "@/lib/robot/robot"
 
 export default function Page() {
@@ -90,7 +90,7 @@ export default function Page() {
         <h2 className="mt-5 text-white/70 light:text-black/70">Here's a curated selection showcasing my expertise and the achieved results.</h2>
 
         <div className="mt-10 grid md:grid-cols-2 gap-10 group/all md:has-[>a:hover]:[&>a:not(:hover)]:opacity-50">
-          {projects.slice(0, 4).map((project, index) => (
+          {selectedProjects.slice(0, 4).map((project, index) => (
             <Link href={project.link} className={`flex flex-col group md:hover:opacity-100 transition-opacity duration-300 ${index % 2 === 1 ? "md:translate-y-14" : ""}`} key={project.title}>
               <div className="rounded-3xl relative flex items-center aspect-3/2 justify-center mb-3 overflow-hidden" style={{backgroundColor: project.color}}>
                 <Image src={project.imageUrl} fill className="group-hover:scale-105 z-1 transition-transform duration-300" alt={"image of" + project.description} />
