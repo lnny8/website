@@ -25,13 +25,13 @@ const sections = [
   {
     title: "Creative Coding",
     description: "Mobile app development and interactive experiences through code.",
-    images: ["/interests/creative1.png", "/interests/creative2.png", "/interests/creative3.png"]
+    images: ["/interests/creative1.png", "/interests/creative2.png", "/interests/creative3.png"],
   },
   {
     title: "Automation & Scripting",
     description: "Creating scripts and automations in n8n to streamline workflows and increase efficiency.",
     images: ["/interests/automation1.png", "/interests/automation2.png", "/interests/automation3.png"],
-  }
+  },
 ]
 
 const about = [
@@ -54,15 +54,16 @@ const about = [
 
 export default function Page() {
   return (
-    <main className="min-h-screen w-full pb-24">
-      <section className="max-w-6xl mx-auto pt-32 px-6 md:px-0">
+    <main className="min-h-screen max-w-7xl mx-auto w-full pb-24">
+      <section className="pt-32 px-6 md:px-0">
         <h1 className="text-6xl font-clash font-semibold leading-tight mb-6">About me</h1>
         <p className="text-xl text-white/80 light:text-black/80 leading-relaxed">
-          I'm Lenny, a 17-year-old high school student from Stuttgart, Germany with a passion for technology and creativity. From building web applications to designing hardware prototypes, I love exploring new ways to bring ideas to life through code and design. When I'm not coding, you can find me tinkering with 3D modeling or experimenting with automation workflows. I'm always eager to learn and take on new challenges in the tech world.
+          Hi, I'm Lenny Muffler, a 17-year-old high school student from Stuttgart, Germany with a passion for technology and creativity. From building web applications to designing hardware prototypes, I love exploring new ways to bring ideas to life through code and design. When
+          I'm not coding, you can find me tinkering with 3D modeling or experimenting with automation workflows. I'm always eager to learn and take on new challenges in the tech world.
         </p>
       </section>
-   
-      <section className="max-w-6xl mx-auto px-6 md:px-0 mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
+
+      <section className="px-6 md:px-0 mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
         {about.map((item) => (
           <div key={item.title} className="rounded-xl border border-white/10 light:border-black/10 bg-white/5 light:bg-black/5 p-4 flex flex-col items-center text-center gap-3">
             <div className="text-3xl">{item.icon}</div>
@@ -73,7 +74,7 @@ export default function Page() {
       </section>
 
       {sections.map((section, idx) => (
-        <section key={section.title} className="max-w-6xl mx-auto px-6 md:px-0 mt-24">
+        <section key={section.title} className="px-6 md:px-0 mt-24">
           <h2 className="text-4xl md:text-5xl font-clash font-semibold mb-4">{section.title}</h2>
           <p className="text-lg text-white/70 light:text-black/70 mb-8 max-w-2xl">{section.description}</p>
 
