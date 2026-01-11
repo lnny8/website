@@ -51,7 +51,7 @@ export function Body() {
 
   const lightMaterialLight = new THREE.MeshStandardMaterial({
     color: new THREE.Color("#888"),
-    metalness: 0.0,
+    metalness: 1.0,
     roughness: 1.0,
   })
 

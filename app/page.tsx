@@ -19,9 +19,30 @@ export default function Page() {
   ]
 
   const expertise = [
-    {title: "Development", icon: <Code2 className="size-5" />, imageUrl: "/expertise/development.png", content: "Building responsive web applications with modern frameworks like React and Next.js. Creating interactive experiences that work seamlessly across all devices."},
-    {title: "Hardware Design", icon: <PenTool className="size-5" />, imageUrl: "/expertise/design.png", content: "Designing and prototyping hardware solutions, from circuit boards to physical interfaces. Bringing digital concepts into the physical world."},
-    {title: "3D Modeling", icon: <SwatchBook className="size-5" />, imageUrl: "/expertise/branding.png", content: "Creating detailed 3D models and prototypes using CAD software. Designing custom components for both digital visualization and 3D printing."},
+    {
+      title: "Web Development",
+      icon: <Code2 className="size-5" />,
+      imageUrl: "/expertise/web.png",
+      content: "Building responsive web applications with modern frameworks like React and Next.js. Creating interactive experiences that work seamlessly across all devices.",
+    },
+    {
+      title: "3D and Hardware Design",
+      icon: <PenTool className="size-5" />,
+      imageUrl: "/expertise/3d.png",
+      content: "From concept to creation, I design and prototype hardware solutions. Skilled in CAD software for 3D modeling, photorealistic rendering and PCB design.",
+    },
+    {
+      title: "Automation & n8n",
+      icon: <Code className="size-5" />,
+      imageUrl: "/expertise/automation.png",
+      content: "Designing workflow automations in n8n to connect services, streamline processes, and reduce manual effort.",
+    },
+    {
+      title: "AI & Machine Learning",
+      icon: <Sparkle className="size-5" />,
+      imageUrl: "/expertise/ai.png",
+      content: "Leveraging AI models and ML techniques to create intelligent features, from data processing to user-facing experiences.",
+    },
   ]
 
   return (
@@ -44,7 +65,7 @@ export default function Page() {
           </span>
           <div className="flex-1 relative -z-1">
             {/* <Suspense fallback={"loading robot..."}> */}
-              <Robot />
+            <Robot />
             {/* </Suspense> */}
           </div>
         </h2>
@@ -122,7 +143,7 @@ export default function Page() {
           <ShineText text="SPECIALITY" />
         </span>
         <h1 className="text-5xl font-clash font-medium mt-5">Areas of Expertise</h1>
-
+        <h2 className="mt-5 text-white/70 light:text-black/70">A glimpse into my areas of expertise.</h2>
         <Accordion items={expertise} />
       </section>
     </main>

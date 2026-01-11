@@ -7,7 +7,7 @@ export const projects = [
   {title: "Maze Generator", description: "Visualization of maze generation algorithms", imageUrl: "/projects/maze.png", link: "/projects/maze", date: "2025", category: "Website", color: "#252d2c"},
   {title: "Bubble Shooter", description: "A fun and engaging bubble shooter game.", imageUrl: "/projects/bubble-shooter.png", link: "/projects/bubble-shooter", date: "2025", category: "Game", color: "#262d25"},
 ]
-export const projectCategories = ["Hardware", "Website", "Game"]
+export const projectCategories = ["Website", "Hardware", "Game"]
 
 export const applications = [
   {title: "Sorting Visualizer", description: "Visualize sorting algorithms", imageUrl: "/applications/sorting.png", link: "/projects/sorting-visualizer", date: "2025", color: "#2d2825"},
@@ -39,3 +39,64 @@ export const knowledgeAreas = [
   "PCB",
   "Server",
 ]
+
+export type ExperienceCategory = {
+  title: string
+  description?: string
+  items: string[]
+}
+
+export const experienceCategories: ExperienceCategory[] = [
+  {
+    title: "Frontend",
+    description: "UI, frameworks, animation, and styling.",
+    items: ["React", "Next.js", "TypeScript", "JavaScript", "CSS", "Tailwind CSS", "Angular", "motion", "GSAP", "Zustand"],
+  },
+  {
+    title: "Backend",
+    description: "APIs, servers, databases, and authentication.",
+    items: ["Node.js", "Express.js", "PostgreSQL", "MySQL", "JWT Web Tokens", "2FA Authentication", "Auth0"],
+  },
+  {
+    title: "3D & Graphics",
+    description: "Real-time graphics, shaders, and 3D pipelines.",
+    items: ["Three.js", "React Three Fiber", "WebGPU", "WGSL", "Blender", "Plasticity", "3D Rigging"],
+  },
+  {
+    title: "DevOps & Infra",
+    description: "Deployment, hosting, and infrastructure tools.",
+    items: ["Linux", "Docker", "Vercel", "Hetzner Cloud", "Git", "GitHub"],
+  },
+  {
+    title: "Hardware & Embedded",
+    description: "Physical computing, PCB work, and prototyping.",
+    items: ["PCB Design", "KiCad", "Arduino", "Raspberry Pi", "CAD Software"],
+  },
+  {
+    title: "Automation & Integrations",
+    description: "Workflows, webhooks, and third-party integrations.",
+    items: ["Automation", "n8n", "Webhooks", "Stripe API", "OpenAI API", "Replicate API", "ElevenLabs API", "Resend API"],
+  },
+  {
+    title: "ML & Data",
+    description: "Machine learning + learning projects.",
+    items: ["Reinforcement Learning", "PyTorch"],
+  },
+  {
+    title: "Tooling & DX",
+    description: "Build tools and developer experience.",
+    items: ["Vite", "NPM Packages"],
+  },
+  {
+    title: "Design",
+    description: "Product/visual design and communication.",
+    items: ["Figma", "SEO"],
+  },
+  {
+    title: "Languages",
+    description: "Programming languages used across projects.",
+    items: ["C++", "Java", "Python", "PyGame"],
+  },
+]
+
+export const allExperiences = Array.from(new Set(experienceCategories.flatMap((c) => c.items)))
