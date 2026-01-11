@@ -24,43 +24,77 @@ export const tutorials = [
   {title: "Animated Theme Switcher", description: "Build an animated theme switcher with JavaScript and CSS", imageUrl: "/tutorials/animated-theme-switcher-tutorial.png", link: "/tutorials/animated-theme-switcher-tutorial", date: "2025", color: "#abafff"},
 ]
 
-export const selectedProjects = [
-  projects[0],
-  projects[1],
-  projects[2],
-  tutorials[0]
+export const selectedProjects = [projects[0], projects[1], projects[2], tutorials[0]]
+
+export const knowledgeAreas = ["Web Development", "3D Modeling", "Automation", "Hardware Design", "PCB", "Server"]
+
+
+export const imageSections = [
+  {
+    title: "Web Development",
+    description: "Building modern, performant web experiences with React, Next.js, and motion design.",
+    images: ["/interests/websites3.png", "/interests/websites2.png", "/interests/websites1.png"],
+  },
+  {
+    title: "Server Infrastructure",
+    description: "Managing Linux servers, databases, and automation workflows for reliable deployment.",
+    images: ["/interests/server1.png", "/interests/server2.png", "/interests/server3.png"],
+  },
+  {
+    title: "Hardware & PCB Design",
+    description: "Prototyping circuits, designing PCBs, and creating physical interfaces.",
+    images: ["/interests/hardware1.png", "/interests/hardware2.png", "/interests/hardware3.png"],
+  },
+  {
+    title: "3D Modeling & Printing",
+    description: "Designing, rendering, printing custom components using CAD software.",
+    images: ["/interests/3d1.png", "/interests/3d2.png", "/interests/3d3.png"],
+  },
+  {
+    title: "Creative Coding",
+    description: "Mobile app development and interactive experiences through code.",
+    images: ["/interests/creative1.png", "/interests/creative2.png", "/interests/creative3.png"],
+  },
+  {
+    title: "Automation & Scripting",
+    description: "Creating scripts and automations in n8n to streamline workflows and increase efficiency.",
+    images: ["/interests/automation1.png", "/interests/automation2.png", "/interests/automation3.png"],
+  },
 ]
 
-export const knowledgeAreas = [
-  "Web Development",
-  "3D Modeling",
-  "Automation",
-  "Hardware Design",
-  "PCB",
-  "Server",
+export const about = [
+  {
+    title: "age",
+    description: "17",
+    icon: "🎂",
+  },
+  {
+    title: "location",
+    description: "Stuttgart, Germany",
+    icon: "📍",
+  },
+  {
+    title: "education",
+    description: "High School Student",
+    icon: "🎓",
+  },
 ]
 
-export type ExperienceCategory = {
-  title: string
-  description?: string
-  items: string[]
-}
-
-export const experienceCategories: ExperienceCategory[] = [
+export const experienceCategories = [
   {
     title: "Frontend",
     description: "UI, frameworks, animation, and styling.",
-    items: ["React", "Next.js", "TypeScript", "JavaScript", "CSS", "Tailwind CSS", "Angular", "motion", "GSAP", "Zustand"],
+    items: ["React", "Next.js", "TypeScript", "JavaScript", "CSS", "Tailwind CSS", "Angular", "motion", "GSAP", "Zustand", "SEO", "Responsive Design"],
   },
   {
     title: "Backend",
     description: "APIs, servers, databases, and authentication.",
-    items: ["Node.js", "Express.js", "PostgreSQL", "MySQL", "JWT Web Tokens", "2FA Authentication", "Auth0"],
+    items: ["Node.js", "Express.js", "PostgreSQL", "MySQL", "JWT Web Tokens", "2FA Authentication", "Auth0", "NPM Packages"],
   },
   {
     title: "3D & Graphics",
     description: "Real-time graphics, shaders, and 3D pipelines.",
-    items: ["Three.js", "React Three Fiber", "WebGPU", "WGSL", "Blender", "Plasticity", "3D Rigging"],
+    items: ["Three.js", "React Three Fiber", "WebGPU", "WGSL", "Blender", "Plasticity", "Figma", "3D Rigging"],
   },
   {
     title: "DevOps & Infra",
@@ -80,23 +114,11 @@ export const experienceCategories: ExperienceCategory[] = [
   {
     title: "ML & Data",
     description: "Machine learning + learning projects.",
-    items: ["Reinforcement Learning", "PyTorch"],
-  },
-  {
-    title: "Tooling & DX",
-    description: "Build tools and developer experience.",
-    items: ["Vite", "NPM Packages"],
-  },
-  {
-    title: "Design",
-    description: "Product/visual design and communication.",
-    items: ["Figma", "SEO"],
+    items: ["Reinforcement Learning", "PyTorch", "PyGame"],
   },
   {
     title: "Languages",
     description: "Programming languages used across projects.",
-    items: ["C++", "Java", "Python", "PyGame"],
+    items: ["C++", "Java", "Python", "TypeScript", "JavaScript", "HTML", "CSS"],
   },
 ]
-
-export const allExperiences = Array.from(new Set(experienceCategories.flatMap((c) => c.items)))

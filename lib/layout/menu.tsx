@@ -13,20 +13,17 @@ import {usePathname} from "next/navigation"
 import tabs from "@/lib/data/tabs"
 
 export default function Menu() {
-
   const containerRef = useRef<HTMLDivElement | null>(null)
   const hoverData = useRef<Map<HTMLElement, {topSplit: SplitText; bottomSplit: SplitText; tl?: gsap.core.Timeline}>>(new Map())
   const {theme, resolvedTheme, setTheme} = useTheme()
   const [mounted, setMounted] = React.useState(false)
   const pathname = usePathname()
 
-
   gsap.registerPlugin(ScrollTrigger, SplitText)
 
   useEffect(() => {
     setMounted(true)
     gsap.from(containerRef.current, {duration: 1, ease: "power2.out", yPercent: -50, onComplete: () => initScollAnimation()})
-
   }, [])
 
   // there needs to be an option to manually set the theme because
@@ -38,7 +35,7 @@ export default function Menu() {
       containerRef.current,
       {maxWidth: "80rem", paddingInline: "0rem", border: "none"},
       {
-        maxWidth: "38rem",
+        maxWidth: "42rem",
         paddingInline: "1.5rem",
         border: (newTheme ?? theme) == "dark" ? "1px solid rgba(255, 255, 255, 0.05)" : "1px solid rgba(0, 0, 0, 0.05)",
         scrollTrigger: {
@@ -121,10 +118,10 @@ export default function Menu() {
               href={tab.link}
               className={`flex items-center justify-center gap-2 cursor-pointer relative ${pathname === tab.link ? "text-white light:text-black" : "text-white/70 light:text-black/70 hover:text-white light:hover:text-black"}`}>
               {pathname === tab.link && <motion.div initial={{scale: 0}} animate={{scale: 1}} exit={{scale: 0}} className="rounded-full size-1.5 bg-lime" />}
-              <motion.span layout layoutId={tab.label} className="text-sm flex flex-col">
+              <span className="text-sm flex flex-col">
                 <span className="text-top">{tab.label}</span>
                 <span className="text-bottom absolute hidden">{tab.label}</span>
-              </motion.span>
+              </span>
             </Link>
           ))}
         </div>

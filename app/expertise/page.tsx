@@ -1,71 +1,62 @@
 "use client"
-
-import React, {useMemo, useState} from "react"
-import {experienceCategories} from "@/lib/data/data"
-import {AnimatePresence, motion} from "motion/react"
-
-function Chip({label}: {label: string}) {
-  return <div className="rounded-full border border-white/10 light:border-black/10 bg-white/5 light:bg-black/5 px-4 py-2 text-sm text-white/90 light:text-black/90 hover:bg-white/10 light:hover:bg-black/10 transition-colors">{label}</div>
-}
+import {experienceCategories, imageSections} from "@/lib/data/data"
+import React, { useRef } from "react"
+import Image from "next/image"
+import { useGSAP } from "@gsap/react"
+import gsap from "gsap"
+import { SplitText } from "gsap/all"
+import { motion } from "motion/react"
 
 export default function Page() {
-  const categories = useMemo(() => experienceCategories.map((c) => c.title), [])
-  const [selectedCategory, setSelectedCategory] = useState<string>("All")
+  
+  const titleRef = useRef(null)
+  const descriptionRef = useRef(null)
 
-  const flattened = useMemo(() => {
-    return experienceCategories.flatMap((c) => c.items.map((name) => ({name, category: c.title})))
+  gsap.registerPlugin(SplitText)
+
+  useGSAP(() => {
+    if (!titleRef.current || !descriptionRef.current) return
+    const titleSplit = new SplitText(titleRef.current, {type: "words, chars", mask: "chars"})
+    const descriptionSplit = new SplitText(descriptionRef.current, {type: "words, chars", mask: "chars"})
+    gsap.from(titleSplit.chars, {opacity: 0, yPercent: 100, stagger: 0.02, ease: "back.inOut"})
+    gsap.from(descriptionSplit.words, {opacity: 0, xPercent: 0, stagger: {amount: 0.2}, ease: "power4.inOut", delay: 0.3})
   }, [])
 
-  const filtered = useMemo(() => {
-    if (selectedCategory === "All") return flattened
-    return flattened.filter((x) => x.category === selectedCategory)
-  }, [flattened, selectedCategory])
-
   return (
-    <main className="min-h-screen max-w-7xl mx-auto w-full pb-24">
-      <section className="pt-32 px-6 md:px-0">
-        <h1 className="text-6xl font-clash font-semibold leading-tight mb-6">Expertise</h1>
-        <p className="text-xl text-white/80 light:text-black/80 leading-relaxed max-w-3xl">A breakdown of the tools, technologies, and domains I use most — grouped so it’s easy to scan.</p>
-      </section>
+    <main className="pt-32 max-w-7xl mx-auto px-6 md:px-0">
+      <h1 ref={titleRef} className="text-6xl leading-tight font-clash font-semibold">Expertise</h1>
+      <h2 ref={descriptionRef} className="text-white/70 light:text-black/70 font-light text-lg">All of my knowledge in one place</h2>
 
-      <section className="px-6 md:px-0 mt-10 flex flex-wrap gap-2">
-        {["All", ...categories].map((category) => (
-          <button onClick={() => setSelectedCategory(category)} key={category} className="relative px-4 md:px-6 py-2 rounded-full cursor-pointer text-sm md:text-base">
-            {category}
-            {selectedCategory === category && <motion.div style={{borderRadius: 9999}} transition={{type: "spring", stiffness: 420, damping: 24}} className="bg-white/10 light:bg-black/10 absolute inset-0 -z-1" layoutId="backGround_experience_category" />}
-          </button>
-        ))}
-      </section>
-
-      {selectedCategory === "All" ? (
-        <section className="px-6 md:px-0 mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-          {experienceCategories.map((category) => (
-            <div key={category.title} className="rounded-2xl border border-white/10 light:border-black/10 bg-white/5 light:bg-black/5 p-6">
-              <div className="flex flex-col gap-1 mb-4">
-                <h2 className="text-2xl font-clash font-semibold">{category.title}</h2>
-                {category.description && <p className="text-sm text-white/70 light:text-black/70">{category.description}</p>}
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {category.items.map((item) => (
-                  <Chip key={`${category.title}-${item}`} label={item} />
-                ))}
-              </div>
-            </div>
-          ))}
-        </section>
-      ) : (
-        <section className="px-6 md:px-0 mt-12">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            <AnimatePresence>
-              {filtered.map((item) => (
-                <motion.div key={`${item.category}-${item.name}`} initial={{opacity: 0, scale: 0.9}} animate={{opacity: 1, scale: 1, transition: {duration: 0.25}}} exit={{opacity: 0, scale: 0.9, transition: {duration: 0.1}}}>
-                  <Chip label={item.name} />
-                </motion.div>
+      <div className="grid grid-cols-2 gap-6 pt-10">
+        {experienceCategories.map((category, index) => (
+          <motion.div  initial={{opacity: 0, scale: 0.5}} animate={{opacity: 1, scale: 1, transition: {duration: 1, type: "spring", delay: index * 0.2 + 0.4}}} className="border border-white/5 light:border-black/5 bg-white/5 light:bg-black/5 cursor-pointer rounded-3xl p-6" key={category.title}>
+            <h3 className="font-semibold font-clash text-2xl">{category.title}</h3>
+            <p className="text-white/70 light:text-black/70 font-light pb-10">{category.description}</p>
+            <div className="flex gap-x-6 gap-y-2 flex-wrap">
+              {category.items.map((item) => (
+                <div className="" key={item}>
+                  {item}
+                </div>
               ))}
-            </AnimatePresence>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {imageSections.map((section, idx) => (
+        <section key={section.title} className="px-6 md:px-0 mt-24">
+          <h2 className="text-4xl md:text-5xl font-clash font-semibold mb-4">{section.title}</h2>
+          <p className="text-lg text-white/70 light:text-black/70 mb-8 max-w-2xl">{section.description}</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {section.images.map((img, imgIdx) => (
+              <div key={imgIdx} className="relative aspect-3/2 group rounded-2xl overflow-hidden cursor-pointer bg-white/5 light:bg-black/5 border border-white/10 light:border-black/10">
+                <Image src={img} alt={`${section.title} ${imgIdx + 1}`} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+              </div>
+            ))}
           </div>
         </section>
-      )}
+      ))}
     </main>
   )
 }
