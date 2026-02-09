@@ -14,6 +14,7 @@ export const applications = [
   {title: "Image Editor", description: "An online image editor", imageUrl: "/applications/images.png", link: "/projects/images", date: "2025", color: "#2a252d"},
   {title: "Markdown To PDF", description: "Convert Markdown files to PDF format", imageUrl: "/applications/markdown-to-pdf.png", link: "/projects/markdown-to-pdf", date: "2025", color: "#2a2d25"},
   {title: "Sound Generator", description: "Generate sounds and music", imageUrl: "/applications/sound-generator.png", link: "/projects/sound-generator", date: "2025", color: "#26252d"},
+  {title: "Wiki Route", description: "Find the shortest path between Wikipedia articles", imageUrl: "/applications/sorting.png", link: "/applications/wiki", date: "2026", color: "#252d2c"},
 ]
 
 export const tutorials = [
@@ -27,7 +28,6 @@ export const tutorials = [
 export const selectedProjects = [projects[0], projects[1], projects[2], tutorials[0]]
 
 export const knowledgeAreas = ["Web Development", "3D Modeling", "Automation", "Hardware Design", "PCB", "Server"]
-
 
 export const imageSections = [
   {

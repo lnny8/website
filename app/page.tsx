@@ -64,9 +64,7 @@ export default function Page() {
             to hardware
           </span>
           <div className="flex-1 relative -z-1">
-            {/* <Suspense fallback={"loading robot..."}> */}
             <Robot />
-            {/* </Suspense> */}
           </div>
         </h2>
 
