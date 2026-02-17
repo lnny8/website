@@ -34,7 +34,7 @@ export default function Page() {
 
       <section className="px-6 md:px-0 mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 pb-12">
         {about.map((item) => (
-          <div key={item.title} className="rounded-3xl border border-white/5 light:border-black/5 bg-white/5 light:bg-black/5 p-4 flex flex-col items-center text-center gap-3">
+          <div key={item.title} className="rounded-3xl shadow-(--inset_shadow) bg-woodsmoke-light light:bg-athensgray-light p-4 flex flex-col items-center text-center gap-3">
             <div className="text-3xl">{item.icon}</div>
             <h3 className="text-xl font-clash font-semibold">{item.description}</h3>
             <p className="text-white/70 light:text-black/70 text-sm capitalize">{item.title}</p>

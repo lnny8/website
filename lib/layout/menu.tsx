@@ -37,7 +37,8 @@ export default function Menu() {
       {
         maxWidth: "42rem",
         paddingInline: "1.5rem",
-        border: (newTheme ?? theme) == "dark" ? "1px solid rgba(255, 255, 255, 0.05)" : "1px solid rgba(0, 0, 0, 0.05)",
+        boxShadow: "var(--inset_shadow)",
+        backgroundColor: (newTheme || resolvedTheme) === "light" ? "var(--color-athensgray-light)" : "var(--color-woodsmoke-light)",
         scrollTrigger: {
           trigger: document.documentElement,
           start: "top top",
@@ -105,7 +106,7 @@ export default function Menu() {
 
   return (
     <nav className="w-full hidden md:flex fixed h-20 items-center justify-center z-10">
-      <div ref={containerRef} className="w-full max-w-7xl flex items-center justify-between backdrop-blur-xl light:bg-athensgray bg-woodsmoke/80 rounded-full py-2.5">
+      <div ref={containerRef} className="w-full max-w-7xl flex items-center justify-between rounded-full py-3">
         <Link href="/" className="text-white font-clash light:text-black font-medium text-lg">
           LM
         </Link>

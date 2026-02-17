@@ -70,22 +70,22 @@ export default function Page() {
             onChange={(e) => setFormData({...formData, name: e.target.value})}
             type="text"
             id="contact-fullName"
-            className="border border-white/10 light:border-black/10 rounded-xl light:border-black/10-xl mt-2 px-4 py-2 focus:outline-none focus:ring-2 ring-lime"
+            className="borderf bg-white/5 shadow-(--inset_shadow) border-white/10 light:border-black/10 rounded-xl light:border-black/10-xl mt-2 px-4 py-2 focus:outline-none focus:ring-2 ring-lime"
           />
           <label className="text-sm font-medium mt-5" htmlFor="contact-email">
             Email
           </label>
-          <input value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} type="email" id="contact-email" className="border border-white/10 light:border-black/10 rounded-xl mt-2 px-4 py-2 focus:outline-none focus:ring-2 ring-lime" />
+          <input value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} type="email" id="contact-email" className="borderf bg-white/5 shadow-(--inset_shadow) border-white/10 light:border-black/10 rounded-xl mt-2 px-4 py-2 focus:outline-none focus:ring-2 ring-lime" />
           <label className="text-sm font-medium mt-5" htmlFor="contact-message">
             Message
           </label>
-          <textarea value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} rows={4} id="contact-message" className="border border-white/10 light:border-black/10 rounded-xl mt-2 px-4 py-2 focus:outline-none focus:ring-2 ring-lime" />
+          <textarea value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} rows={4} id="contact-message" className="borderf bg-white/5 shadow-(--inset_shadow) border-white/10 light:border-black/10 rounded-xl mt-2 px-4 py-2 focus:outline-none focus:ring-2 ring-lime" />
           <button disabled={loading} onClick={() => sendMessage()} className="mt-10 relative w-42 h-12">
             <HoverButton loading={loading} text1="Submit" text2="I'm curious" />
           </button>
         </div>
 
-        <div className="bg-woodsmoke-light rounded-3xl p-5 flex flex-col gap-7 light:bg-white h-max">
+        <div className="bg-white/5 shadow-(--inset_shadow) rounded-3xl p-5 flex flex-col gap-7 light:bg-white h-max">
           <span className="px-4 py-2 flex gap-3 items-center justify-center rounded-full bg-lime/10 w-max">
             <div className="rounded-full size-2 bg-lime relative">
               <div className="bg-lime rounded-full absolute inset-0 animate-[blink_1s_infinite]" />

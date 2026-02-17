@@ -1,3 +1,4 @@
+"use client"
 import {ArrowUpRight, Code, Code2, Hand, Pen, PenTool, Sparkle, SwatchBook} from "lucide-react"
 import Link from "next/link"
 import React, {Suspense} from "react"
@@ -9,6 +10,9 @@ import Accordion from "@/lib/components/accordion"
 import ShineText from "@/lib/components/shineText"
 import {projects, selectedProjects} from "@/lib/data/data"
 import Robot from "@/lib/robot/robot"
+import { useGSAP } from "@gsap/react"
+import gsap from "gsap"
+import Grainient from "@/lib/components/gradient"
 
 export default function Page() {
   const socialLinks = [
@@ -45,6 +49,22 @@ export default function Page() {
     },
   ]
 
+  useGSAP(() => {
+    gsap.from(".hero-text-fill", {
+      opacity: 0,
+      delay: 0.42,
+      duration: 0.8,
+      ease: "power4.inOut",
+    })
+    gsap.from(".hero-text-stroke", {
+      opacity: 1,
+      delay: 0.62,
+      duration: 0.4,
+      ease: "power4.inOut",
+    })
+    
+  }, [])
+
   return (
     <main className="min-h-screen w-full">
       <section className="max-w-7xl mx-auto pt-40 px-6 md:px-0">
@@ -53,16 +73,44 @@ export default function Page() {
           Hey! I'm Lenny
         </h1>
 
-        <h2 className="md:text-7xl text-5xl font-clash font-medium md:flex-row flex-col flex">
-          <span>
+
+      {/* blobs */}
+        {/* <div className="w-300 h-200 absolute top-0 right-0 -z-1 md:scale-100 scale-42" style={{transformOrigin: "top right"}}>
+          <Image src={"/graphics/top.svg"} alt="background graphic" fill className="object-contain light:hidden" />
+          <Image src={"/graphics/top_light.svg"} alt="background graphic" fill className="object-contain hidden light:block" />
+        </div>
+        <div className="w-300 h-200 absolute top-150 left-0 -z-1 md:scale-100 scale-42" style={{transformOrigin: "top left"}}>
+          <Image src={"/graphics/bottom.svg"} alt="background graphic" fill className="object-contain light:hidden" />
+          <Image src={"/graphics/bottom_light.svg"} alt="background graphic" fill className="object-contain hidden light:block" />
+        </div> */}
+        {/* <div className="w-300 h-200 absolute md:top-350 top-318 left-0 -z-1 md:scale-y-[-1] md:scale-100 scale-x-42 scale-y-[-0.42] scale-z-42" style={{transformOrigin: "top left"}}>
+          <Image src={"/graphics/bottom.svg"} alt="background graphic" fill className="object-contain light:hidden" />
+          <Image src={"/graphics/bottom_light.svg"} alt="background graphic" fill className="object-contain hidden light:block" />
+        </div> */}
+
+        <h2 className="relative md:text-7xl text-[42px] leading-10 md:leading-17 font-clash font-medium md:flex-row flex-col flex">
+          <span className="hero-text-stroke opacity-0 [-webkit-text-stroke:0.3px_#fff] light:[-webkit-text-stroke:0.3px_#000] [-webkit-text-fill-color:transparent]">
             Building{" "}
-            <span className="bg-linear-to-r from-lime to-blue-400 bg-clip-text text-transparent">
-              innovative <br />
-              projects{" "}
+            <span className="bg-[linear-gradient(90deg,#0af,#65F)]f bg-clip-text text-transparent">
+              innovative
+              <br />
             </span>
+            <span className="bg-[linear-gradient(90deg,#65F,#f772c2)]f bg-clip-text text-transparent">projects </span>
             from code <br />
             to hardware
           </span>
+
+          <span className="hero-text-fill absolute inset-0 [-webkit-text-stroke:0.3px_#fff]f flight:[-webkit-text-stroke:0.3px_#000]">
+            Building{" "}
+            <span className="bg-[linear-gradient(90deg,#0af,#95F)] bg-clip-text text-transparent">
+              innovative
+              <br />
+            </span>
+            <span className="bg-[linear-gradient(90deg,#95F,#f772c2)] bg-clip-text text-transparent">projects </span>
+            from code <br />
+            to hardware
+          </span>
+
           <div className="flex-1 relative -z-1">
             <Robot />
           </div>

@@ -37,7 +37,7 @@ export default function Robot() {
       <Canvas>
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} intensity={2} castShadow />
-        <directionalLight position={[0, 3, 10]} intensity={0.2} color="#ffffff" />
+        <directionalLight position={[0, 3, 10]} intensity={4} color="#ffffff" />
         <RobotModel mousePos={mousePos} />
       </Canvas>
     </div>

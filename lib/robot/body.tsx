@@ -26,22 +26,21 @@ export function Body() {
   const nodes = result.nodes as any
 
   const bodyMaterial = new THREE.MeshStandardMaterial({
-    color: theme === "light" ? new THREE.Color("#ffffff") : new THREE.Color("#494949"),
-    metalness: 0.5,
+    color: new THREE.Color("#222"),
+    metalness: 0.4,
     roughness: 1.0,
   })
 
   const bodyMaterialLight = new THREE.MeshStandardMaterial({
-    color: new THREE.Color("#ffffff"),
-    metalness: 0.0,
+    color: new THREE.Color("#ddd"),
+    metalness: 0.4,
     roughness: 1.0,
   })
 
   const screenMaterial = new THREE.MeshStandardMaterial({
     color: new THREE.Color("#000000"),
-    emissiveIntensity: 0.6,
-    metalness: 0.1,
-    roughness: 0.9,
+    metalness: 1.0,
+    roughness: 0.2,
   })
 
   const lightMaterial = new THREE.MeshStandardMaterial({

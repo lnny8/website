@@ -20,7 +20,7 @@ export default function Marquee() {
   }, [])
 
   return (
-    <div className="border-t border-b relative border-white/10 light:border-black/10 mt-20 h-30 w-full overflow-hidden flex">
+    <div className="border-tf border-bf relative border-white/10 light:border-black/10 mt-20 h-30 w-full overflow-hidden flex -z-2">
       <div className="flow-track flex items-center whitespace-nowrap">
         {themes.map((theme, index) => (
           <span key={index} className="flow-item font-clash text-[#2c2c35] light:text-[#cbd5e1] font-medium text-5xl flex items-center">

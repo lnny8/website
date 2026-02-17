@@ -10,12 +10,12 @@ import MobileMenu from "@/lib/layout/mobileMenu"
 import { metadata as siteMetadata } from "./metadata"
 
 const satoshi = localFont({
-  src: "/satoshi.ttf",
+  src: "/fonts/satoshi.ttf",
   variable: "--font-satoshi",
 })
 
 export const clash = localFont({
-  src: "/clashdisplay.ttf",
+  src: "/fonts/clashdisplay.ttf",
   variable: "--font-clash",
 })
 

@@ -37,7 +37,7 @@ export default function Collection({title, description, data, categories}: {titl
             {["All", ...categories].map((category) => (
               <button onClick={() => setSelectedCategory(category)} key={category} className="relative md:px-6 px-4 py-2 rounded-full cursor-pointer">
                 {category}
-                {selectedCategory === category && <motion.div style={{borderRadius: 9999}} transition={{type: "spring", stiffness: 420, damping: 24}} className="bg-white/10 light:bg-black/10 absolute inset-0 -z-1" layoutId="backGround_category" />}
+                {selectedCategory === category && <motion.div style={{borderRadius: 9999, boxShadow: "var(--inset_shadow)"}} transition={{type: "spring", stiffness: 420, damping: 24}} className="bg-white/10 light:bg-black/10 absolute inset-0 -z-1" layoutId="backGround_category" />}
               </button>
             ))}
           </motion.div>
@@ -51,7 +51,7 @@ export default function Collection({title, description, data, categories}: {titl
             .map((project, index) => (
               <motion.div initial={{opacity: 0, scale: 0.5}} animate={{opacity: 1, scale: 1, transition: {duration: 1, type: "spring", delay: index * 0.2 + 0.4}}} exit={{opacity: 0, scale: 0.5, transition: {duration: 0.1}}} layoutId={project.title} key={project.title}>
                 <Link href={project.link} className={`flex flex-col group md:hover:opacity-100 transition-opacity duration-300 ${index % 2 === 1 ? "md:translate-y-14" : ""}`}>
-                  <div className="rounded-3xl relative flex items-center aspect-3/2 justify-center mb-3 overflow-hidden" style={{backgroundColor: theme == "light" ? getBackgroundColor(project.title, 84, 50) : getBackgroundColor(project.title, 16, 10)}}>
+                  <div className="rounded-3xl relative flex items-center aspect-3/2 justify-center mb-3 overflow-hidden" style={{boxShadow: "var(--inset_shadow)", backgroundColor: theme == "light" ? getBackgroundColor(project.title, 84, 50) : getBackgroundColor(project.title, 8, 0)}}>
                     <Image src={project.imageUrl} fill className="group-hover:scale-105 z-1 transition-transform duration-300" alt={"Image of " + project.description} />
                     <div
                       style={{

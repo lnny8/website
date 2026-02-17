@@ -62,7 +62,7 @@ export default function Footer() {
 
   return (
     <footer ref={footerRef} className="w-full md:px-0 px-6 bg-woodsmoke light:bg-athensgray light:text-black pt-20">
-      <div className="rounded-4xl bg-woodsmoke-light light:bg-white w-full max-w-7xl mx-auto py-20 flex flex-col items-center justify-center">
+      <div className="rounded-4xl bg-woodsmoke-light shadow-(--inset_shadow) light:bg-white w-full max-w-7xl mx-auto py-20 flex flex-col items-center justify-center">
         <div className="px-4 py-2 flex gap-3 items-center justify-center rounded-full bg-lime/10">
           <div className="rounded-full size-2 bg-lime relative">
             <div className="bg-lime rounded-full absolute inset-0 animate-[blink_1s_infinite]" />

@@ -13,15 +13,28 @@
 
 :root {
   scrollbar-width: none;
+
+  
+--inset_shadow:
+inset 0 1px 2px #ffffff30, /* top highlight */
+0 1px 2px #00000030,/* dark shadow */
+0 2px 4px #00000015; /* soft shadow */
+
 }
+
+
+
 
 @theme {
   --font-clash: "--font-clash";
   --color-lime: #f772c2;
+  /* --color-lime: #e0f; */
   --color-darklime: #b53c85;
   --color-woodsmoke: #0b0b0d;
-  --color-woodsmoke-light: #111116;
+  /* --color-woodsmoke: #000; */
+  --color-woodsmoke-light: #111111;
   --color-athensgray: #f7f8fa;
+  --color-athensgray-light: #fff;
   --animate-wave: wave 2.1s 0.6s infinite;
 }
 
@@ -85,3 +98,4 @@
     background-position-x: 0%;
   }
 }
+

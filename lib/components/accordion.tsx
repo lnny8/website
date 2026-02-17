@@ -39,7 +39,7 @@ export default function Accordion({items = []}: {items: AccordionItem[]}) {
       <div className="">
         <div className="flex flex-col gap-4">
           {items.map((item, index) => (
-            <motion.div animate={{height: "auto"}} key={index} className="bg-woodsmoke-light light:bg-white border border-white/5 light:border-black/5 rounded-xl relative">
+            <motion.div animate={{height: "auto"}} key={index} className="bg-woodsmoke-light light:bg-white shadow-(--inset_shadow) light:border-black/5 rounded-3xl relative">
               <button onClick={() => setOpenedIndex(openedIndex === index ? null : index)} className="w-full h-full flex cursor-pointer font-medium items-center px-6 py-4">
                 <span className="flex gap-2">
                   {item.icon}
