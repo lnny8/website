@@ -71,7 +71,7 @@ export default function Collection({title, description, data, categories}: {titl
               <motion.div
                 initial={{opacity: 0, scale: 0.5}}
                 whileInView={{opacity: 1, scale: 1, transition: {duration: 1, type: "spring", delay: 0}}}
-                viewport={{once: false, amount: 0.35, margin: "-10% 0px -10% 0px"}}
+                viewport={{once: false}}
                 exit={{opacity: 0, scale: 0.5, transition: {duration: 0.1}}}
                 layoutId={project.title}
                 key={project.title}>

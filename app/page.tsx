@@ -15,6 +15,8 @@ import gsap from "gsap"
 import {ScrollTrigger, SplitText} from "gsap/all"
 import Collection from "@/lib/pages/collection"
 import {image} from "motion/react-client"
+import ImageTrail from "@/lib/components/imageTrail"
+import {images} from "./art/page"
 
 export default function Page() {
   const socialLinks = [
@@ -57,6 +59,10 @@ export default function Page() {
   const specialityRef = useRef(null)
   const expertiseTitleRef = useRef(null)
   const expertiseDescriptionRef = useRef(null)
+  const aiArtTitleRef = useRef(null)
+  const aiArtDescriptionRef = useRef(null)
+  const aiArtContentRef = useRef(null)
+  const aiArtButtonRef = useRef(null)
 
   useGSAP(() => {
     gsap.from(".hero-text-fill", {
@@ -108,7 +114,6 @@ export default function Page() {
       y: 10,
       filter: "blur(12px)",
       stagger: 0.05,
-      delay: 0.8,
       duration: 0.6,
       ease: "power4.out",
       scrollTrigger: {
@@ -123,12 +128,68 @@ export default function Page() {
       y: 10,
       filter: "blur(12px)",
       stagger: 0.05,
-      delay: 0.8,
       duration: 0.6,
       ease: "power4.out",
       scrollTrigger: {
         trigger: expertiseDescriptionRef.current,
         start: "top 80%",
+        toggleActions: "play reverse restart reverse",
+      },
+    })
+
+    const aiArtTitleSplit = new SplitText(aiArtTitleRef.current, {type: "words"})
+    const aiArtDescriptionSplit = new SplitText(aiArtDescriptionRef.current, {type: "words"})
+
+    gsap.from(aiArtTitleSplit.words, {
+      opacity: 0,
+      y: 10,
+      filter: "blur(12px)",
+      stagger: 0.05,
+      duration: 0.6,
+      ease: "power4.out",
+      scrollTrigger: {
+        trigger: aiArtTitleRef.current,
+        start: "top 80%",
+        toggleActions: "play reverse restart reverse",
+      },
+    })
+
+    gsap.from(aiArtDescriptionSplit.words, {
+      opacity: 0,
+      y: 10,
+      filter: "blur(12px)",
+      stagger: 0.05,
+      duration: 0.6,
+      ease: "power4.out",
+      scrollTrigger: {
+        trigger: aiArtDescriptionRef.current,
+        start: "top 80%",
+        toggleActions: "play reverse restart reverse",
+      },
+    })
+
+    gsap.from(aiArtContentRef.current, {
+      opacity: 0,
+      y: 10,
+      filter: "blur(12px)",
+      duration: 0.6,
+      ease: "power4.out",
+      scrollTrigger: {
+        trigger: aiArtContentRef.current,
+        start: "top 80%",
+        toggleActions: "play reverse restart reverse",
+      },
+    })
+
+    gsap.from(aiArtButtonRef.current, {
+      opacity: 0,
+      y: 10,
+      filter: "blur(12px)",
+      duration: 0.6,
+      ease: "power4.out",
+      scrollTrigger: {
+        trigger: aiArtButtonRef.current,
+        start: "top 85%",
         toggleActions: "play reverse restart reverse",
       },
     })
@@ -198,8 +259,12 @@ export default function Page() {
           </div>
         </h2>
 
-      <div className="md:hidden -translate-y-20"><Marquee direction="right"/></div>
-      <div className="md:hidden -translate-y-35"><Marquee direction="left"/></div>
+        <div className="md:hidden -translate-y-20">
+          <Marquee direction="right" />
+        </div>
+        <div className="md:hidden -translate-y-35">
+          <Marquee direction="left" />
+        </div>
 
         <div className="flex flex-col md:flex-row items-center justify-center md:gap-15 gap-10 md:mt-10 -mt-40">
           <div className="md:w-1/2 w-full bg-white/10 light:bg-black/10 h-px" />
@@ -222,7 +287,9 @@ export default function Page() {
         </div>
       </section>
 
-      <div className="md:block hidden mt-20"><Marquee /></div>
+      <div className="md:block hidden mt-20">
+        <Marquee />
+      </div>
 
       <section className="max-w-7xl md:px-0 px-6 mx-auto flex flex-col items-center mt-20">
         {/* <span className="text-lime flex gap-3 text-sm tracking-wider items-center font-clash">
@@ -240,6 +307,22 @@ export default function Page() {
         <Collection data={selectedProjects} title={"Selected Work"} description={"Some cool projects, Applications and Tutorials"} />
         <Link ref={viewAllButtonRef} href={"/projects"} className="relative md:mt-30 mt-10 w-42 h-12 mx-auto">
           <HoverButton text1="View All Projects" text2="View All Projects" />
+        </Link>
+      </section>
+
+      <section className="max-w-7xl md:px-0 px-6 mx-auto items-center mt-20">
+        <h1 ref={aiArtTitleRef} className="text-5xl font-clash font-medium">
+          AI Art
+        </h1>
+        <p ref={aiArtDescriptionRef} className="text-lg text-white/70 light:text-black/70 mt-3 max-w-2xl">
+          Some interesting AI-generated images
+        </p>
+        <div ref={aiArtContentRef} className="mt-10 w-full h-142 shadow-(--inset_shadow) rounded-2xl bg-woodsmoke-light light:bg-athensgray-light flex items-center justify-center overflow-hidden relative">
+          <span className="text-center w-full absolute text-4xl font-clash font-medium text-white/8">Hover me</span>
+          <ImageTrail variant={1} key={"imageTrail"} items={images} />
+        </div>
+        <Link ref={aiArtButtonRef} href={"/art"} className="z-5 block mt-10 w-42 h-12 mx-auto md:col-span-4">
+          <HoverButton text1="View All Art" text2="Enter my Museum" />
         </Link>
       </section>
 

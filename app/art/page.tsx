@@ -1,10 +1,10 @@
 "use client"
 import {Canvas, useFrame} from "@react-three/fiber"
-import {Environment, Image as DreiImage, MeshReflectorMaterial} from "@react-three/drei"
+import {Environment, Image as DreiImage, MeshReflectorMaterial, OrbitControls} from "@react-three/drei"
 import {Suspense, useEffect, useMemo, useRef, useState} from "react"
 import * as THREE from "three"
 
-const images = ["/art/1.jpeg", "/art/2.jpeg", "/art/3.jpeg", "/art/4.jpeg", "/art/5.jpeg", "/art/6.jpeg", "/art/7.jpeg", "/art/8.jpeg", "/art/9.jpeg", "/art/10.jpeg", "/art/11.jpeg", "/art/12.jpeg", "/art/13.jpeg", "/art/14.jpeg", "/art/15.jpeg", "/art/16.jpeg"]
+export const images = ["/art/1.jpeg", "/art/2.jpeg", "/art/3.jpeg", "/art/4.jpeg", "/art/5.jpeg", "/art/6.jpeg", "/art/7.jpeg", "/art/8.jpeg", "/art/9.jpeg", "/art/10.jpeg", "/art/11.jpeg", "/art/12.jpeg", "/art/13.jpeg", "/art/14.jpeg", "/art/15.jpeg", "/art/16.jpeg"]
 
 function GalleryCard({url, angle, radius}: {url: string; angle: number; radius: number}) {
   const cardRef = useRef<THREE.Group>(null)
@@ -49,7 +49,7 @@ function GalleryScene() {
 
     const handlePointerMove = (event: PointerEvent) => {
       if (!dragging) return
-      rotationTarget.current += event.movementX * 0.006
+      rotationTarget.current += event.movementX * -0.006
     }
 
     window.addEventListener("wheel", handleWheel, {passive: true})
@@ -75,10 +75,12 @@ function GalleryScene() {
 
   return (
     <>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.2, 0]}>
-        <planeGeometry args={[40, 40]} />
-        <MeshReflectorMaterial resolution={1024} mirror={1} color="#555" metalness={1.0} roughness={0.0} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[100, -2.3, 100]}>
+        <planeGeometry args={[400, 400]} />
+        {/* <meshBasicMaterial color="#FF0000" /> */}
+        <MeshReflectorMaterial resolution={1024} mirror={1} color="#FFFFFF" metalness={1.0} roughness={0.0} />
       </mesh>
+      {/* <OrbitControls enableZoom={false} enablePan={false} maxPolarAngle={Math.PI / 2.1} minPolarAngle={Math.PI / 3} /> */}
       <group ref={groupRef}>
         {images.map((url, index) => (
           <GalleryCard key={url} url={url} angle={angles[index]} radius={6} />
@@ -89,11 +91,13 @@ function GalleryScene() {
 }
 
 export default function Page() {
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768
   return (
-    <main className="h-screen w-full fixed z-5 bg-black">
-      <Canvas camera={{position: [0, 0, 12], fov: 45}}>
+    <main className="h-screen w-full fixed z-5" style={{background: "#0b0b0d"}}>
+      <Canvas camera={{position: isMobile ? [0, 0, 6] : [0, 0, 4], fov: 45}}>
         <Suspense fallback={null}>
-          <fog attach="fog" args={["#000000", 9, 20]} />
+          <color attach="background" args={["#0b0b0d"]} />
+          <fog attach="fog" args={["#0b0b0d", 9, 20]} />
           <GalleryScene />
           <Environment preset="studio" />
         </Suspense>
