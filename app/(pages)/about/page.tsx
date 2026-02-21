@@ -1,17 +1,91 @@
 "use client"
 import MoreSoon from "@/lib/components/moreSoon"
+import {Timeline} from "@/lib/components/timeline"
 import {about} from "@/lib/data/data"
 import {useGSAP} from "@gsap/react"
 import Image from "next/image"
 import {useRef} from "react"
 import {SplitText} from "gsap/all"
 import gsap from "gsap"
-import { motion } from "motion/react"
+import {motion} from "motion/react"
 
 export default function Page() {
   const titleRef = useRef(null)
   const descriptionRef = useRef(null)
   const cardsRef = useRef<HTMLElement>(null)
+
+  const timelineTextClass = "mb-3 font-clash text-2xl text-white light:text-black/80"
+  const timelineListClass = "mb-4 list-disc pl-5 space-y-1 text-sm md:text-base text-white/70 light:text-black/70"
+
+  const timelineData = [
+    {
+      title: "2024",
+      content: (
+        <div>
+          <p className={timelineTextClass}>Early projects and game engines.</p>
+          <ul className={timelineListClass}>
+            <li>First time creating a website with WordPress</li>
+            <li>Started learning HTML and CSS</li>
+            <li>Built projects with Scratch</li>
+            <li>Built projects with Unity</li>
+            <li>Continued building with Scratch and Unity</li>
+            <li>Learned JavaScript and TypeScript</li>
+            <li>Started learning Git and GitHub</li>
+          </ul>
+        </div>
+      ),
+    },
+    {
+      title: "2025",
+      content: (
+        <div>
+          <p className={timelineTextClass}>Big growth year across frontend, backend, infrastructure, and hardware.</p>
+          <ul className={timelineListClass}>
+            <li>Learned React and Next.js</li>
+            <li>Hosted Hetzner servers with Coolify and learned Docker</li>
+            <li>Learned Tailwind CSS</li>
+            <li>Replicated award-winning websites with GSAP</li>
+            <li>Learned Three.js and React Three Fiber for these replicas</li>
+            <li>Designed UI/UX in Figma and built interactive prototypes</li>
+            <li>Learned Framer Motion</li>
+            <li>Published first npm package: animated React dark mode toggle</li>
+            <li>Built an own server with an old PC and learned Linux server management</li>
+            <li>Hosted an n8n instance on own server</li>
+            <li>Built mobile app with Expo and Zustand</li>
+            <li>Built n8n app “clipshot” with Auth0, JWT, Stripe, and complex Replicate webhook workflows for cost-efficient AI video generation</li>
+            <li>Hosted PostgreSQL on own server, got hacked due to open port/weak password, and learned server/database security hardening</li>
+            <li>Learned Angular during an internship</li>
+            <li>Learned Blender (3D modeling, rigging, weight painting) to create assets like the homepage robot</li>
+            <li>Learned HTTPS and domain management</li>
+            <li>Learned Caddy and Nginx for reverse proxy and SSL management</li>
+            <li>Learned Python for n8n custom nodes/scripts and fun projects with Pygame and CustomTkinter</li>
+            <li>Learned reinforcement learning and built a Snake game AI with PyTorch</li>
+            <li>Learned Arduino and microcontrollers</li>
+            <li>Published sites on own server and Vercel with focus on performance and SEO</li>
+            <li>Continued building with Scratch and Unity</li>
+            <li>Learned CAD with Plasticity</li>
+            <li>Learned PCB design with KiCad</li>
+            <li>Built custom contact form with Resend</li>
+          </ul>
+        </div>
+      ),
+    },
+    {
+      title: "2026",
+      content: (
+        <div>
+          <p className={timelineTextClass}>Expanding into product, content, and real-time creative workflows.</p>
+          <ul className={timelineListClass}>
+            <li>Learning Framer for faster prototyping and design</li>
+            <li>Doing clothing design and running a Shopify print-on-demand store</li>
+            <li>Generating AI videos with Higgsfield, Weavy.ai, and ElevenLabs and learning DaVinci Resolve</li>
+            <li>Building this portfolio</li>
+            <li>Learning Unreal Engine</li>
+          </ul>
+        </div>
+      ),
+    },
+  ]
 
   gsap.registerPlugin(SplitText)
 
@@ -51,12 +125,20 @@ export default function Page() {
 
       <section ref={cardsRef} className="px-6 md:px-0 mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 pb-12f">
         {about.map((item) => (
-          <motion.div initial={{opacity: 0, scale: 0.5}} whileInView={{opacity: 1, scale: 1, transition: {duration: 1, type: "spring", delay: 0.3}}} key={item.title} className="rounded-3xl shadow-(--inset_shadow) bg-woodsmoke-light light:bg-athensgray-light p-4 flex flex-col items-center text-center gap-3">
+          <motion.div
+            initial={{opacity: 0, scale: 0.5}}
+            whileInView={{opacity: 1, scale: 1, transition: {duration: 1, type: "spring", delay: 0.3}}}
+            key={item.title}
+            className="rounded-3xl shadow-(--inset_shadow) bg-woodsmoke-light light:bg-athensgray-light p-4 flex flex-col items-center text-center gap-3">
             <div className="text-3xl">{item.icon}</div>
             <h3 className="text-xl font-clash font-semibold">{item.description}</h3>
             <p className="text-white/70 light:text-black/70 text-sm capitalize">{item.title}</p>
           </motion.div>
         ))}
+      </section>
+
+      <section className="mt-8">
+        <Timeline data={timelineData} />
       </section>
 
       <MoreSoon />

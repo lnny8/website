@@ -318,7 +318,7 @@ export default function Page() {
           Some interesting AI-generated images
         </p>
         <div ref={aiArtContentRef} className="mt-10 w-full h-142 shadow-(--inset_shadow) rounded-2xl bg-woodsmoke-light light:bg-athensgray-light flex items-center justify-center overflow-hidden relative">
-          <span className="text-center w-full absolute text-4xl font-clash font-medium text-white/8">Hover me</span>
+          <span className="text-center w-full absolute text-4xl font-clash font-medium text-white/8 light:text-black/8">Hover me</span>
           <ImageTrail variant={1} key={"imageTrail"} items={images} />
         </div>
         <Link ref={aiArtButtonRef} href={"/art"} className="z-5 block mt-10 w-42 h-12 mx-auto md:col-span-4">
