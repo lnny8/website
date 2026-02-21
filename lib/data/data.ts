@@ -18,7 +18,7 @@ export const applications = [
 ]
 
 export const tutorials = [
-  {title: "Hover Button", description: "Create a stylish hover button with HTML and CSS", imageUrl: "/tutorials/hover-button-tutorial.png", link: "/tutorials/hover-button-tutorial", date: "2025", color: "#7fb086"},
+  {title: "Hover Button", description: "Create a stylish hover button with HTML and CSS", imageUrl: "/tutorials/hover-button.png", link: "/tutorials/hover-button-tutorial", date: "2025", color: "#7fb086"},
   {title: "Blob Shader", description: "Learn how to create a blob shader using Three.js", imageUrl: "/tutorials/blob-shader-tutorial.png", link: "/tutorials/blob-shader-tutorial", date: "2025", color: "#b795ed"},
   {title: "Horizontal Scroll", description: "Implement horizontal scrolling using JavaScript", imageUrl: "/tutorials/horizontal-scroll-tutorial.png", link: "/tutorials/horizontal-scroll-tutorial", date: "2025", color: "#f88"},
   {title: "Fill Button", description: "Design a fill button animation with CSS", imageUrl: "/tutorials/fill-button-tutorial.png", link: "/tutorials/fill-button-tutorial", date: "2025", color: "#dcabff"},
@@ -27,7 +27,7 @@ export const tutorials = [
 
 export const selectedProjects = [projects[0], projects[1], projects[2], tutorials[0]]
 
-export const knowledgeAreas = ["Web Development", "3D Modeling", "Automation", "Hardware Design", "PCB", "Server"]
+export const knowledgeAreas = ["Web Development", "3D Modeling", "Automation", "Hardware Design", "PCB", "Server", "UI/UX", "Game Development"]
 
 export const imageSections = [
   {

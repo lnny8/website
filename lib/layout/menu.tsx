@@ -35,7 +35,7 @@ export default function Menu() {
       containerRef.current,
       {maxWidth: "80rem", paddingInline: "0rem", border: "none"},
       {
-        maxWidth: "42rem",
+        maxWidth: "46rem",
         paddingInline: "1.5rem",
         boxShadow: "var(--inset_shadow)",
         backgroundColor: (newTheme || resolvedTheme) === "light" ? "var(--color-athensgray-light)" : "var(--color-woodsmoke-light)",
@@ -45,7 +45,7 @@ export default function Menu() {
           end: "+=240",
           scrub: true,
         },
-      }
+      },
     )
   }
 
@@ -94,6 +94,41 @@ export default function Menu() {
     data.tl = tl
   }
 
+  async function handleThemeToggle() {
+    if (!mounted) return
+    const newTheme = theme === "dark" ? "light" : "dark"
+    const button = containerRef.current?.querySelector("button") as HTMLButtonElement | null
+
+    if (!button || typeof document.startViewTransition !== "function") {
+      setTheme(newTheme)
+      initScollAnimation(newTheme)
+      return
+    }
+
+    const transition = document.startViewTransition(() => {
+      setTheme(newTheme)
+      initScollAnimation(newTheme)
+    })
+
+    await transition.ready
+
+    const {top, left, width, height} = button.getBoundingClientRect()
+    const x = left + width / 2
+    const y = top + height / 2
+    const maxRadius = Math.hypot(Math.max(left, window.innerWidth - left), Math.max(top, window.innerHeight - top))
+
+    document.documentElement.animate(
+      {
+        clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${maxRadius}px at ${x}px ${y}px)`],
+      },
+      {
+        duration: 400,
+        easing: "ease-in-out",
+        pseudoElement: "::view-transition-new(root)",
+      },
+    )
+  }
+
   // useEffect(() => {
   //   return () => {
   //     hoverData.current.forEach((data) => {
@@ -126,16 +161,7 @@ export default function Menu() {
             </Link>
           ))}
         </div>
-        <motion.button
-          animate={mounted ? {rotate: theme === "dark" ? 0 : 90, transition: {duration: 0.5, type: "spring"}} : {rotate: 0}}
-          whileTap={{scale: 0.9}}
-          className="cursor-pointer"
-          onClick={() => {
-            if (!mounted) return
-            const newTheme = theme === "dark" ? "light" : "dark"
-            setTheme(newTheme)
-            initScollAnimation(newTheme)
-          }}>
+        <motion.button animate={mounted ? {rotate: theme === "dark" ? 0 : 90, transition: {duration: 0.5, type: "spring"}} : {rotate: 0}} whileTap={{scale: 0.9}} className="cursor-pointer" onClick={handleThemeToggle}>
           {mounted ? theme === "dark" ? <Moon className="size-5 text-white/70 hover:text-white transition-all duration-300" /> : <Sun className="size-5 text-black/70 hover:text-black transition-all duration-300" /> : <span className="block size-5" />}
         </motion.button>
       </div>

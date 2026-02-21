@@ -69,7 +69,7 @@ export default function Footer() {
           </div>
           <span className="text-sm">Available for work</span>
         </div>
-        <span ref={textRef} className="text md:text-5xl text-4xl px-4 md:px-0 max-w-md font-clash font-medium tracking-wide text-center mt-5">
+        <span ref={textRef} className="text md:text-5xl text-4xl px-4 md:px-0 max-w-sm md:max-w-md font-clash font-medium tracking-wide text-center mt-5">
           Let's create your next big idea
         </span>
         <Link href="/contact" className="mt-10 h-12 w-42">

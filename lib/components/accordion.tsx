@@ -39,7 +39,13 @@ export default function Accordion({items = []}: {items: AccordionItem[]}) {
       <div className="">
         <div className="flex flex-col gap-4">
           {items.map((item, index) => (
-            <motion.div animate={{height: "auto"}} key={index} className="bg-woodsmoke-light light:bg-white shadow-(--inset_shadow) light:border-black/5 rounded-3xl relative">
+            <motion.div
+              initial={{opacity: 0, scale: 0.5}}
+              whileInView={{opacity: 1, scale: 1, transition: {duration: 1, type: "spring", delay: 0}}}
+              viewport={{once: false, amount: 0.35, margin: "-10% 0px -10% 0px"}}
+              animate={{height: "auto"}}
+              key={index}
+              className="bg-woodsmoke-light light:bg-white shadow-(--inset_shadow) light:border-black/5 rounded-3xl relative">
               <button onClick={() => setOpenedIndex(openedIndex === index ? null : index)} className="w-full h-full flex cursor-pointer font-medium items-center px-6 py-4">
                 <span className="flex gap-2">
                   {item.icon}
@@ -59,7 +65,11 @@ export default function Accordion({items = []}: {items: AccordionItem[]}) {
           ))}
         </div>
       </div>
-      <div className="relative rounded-3xl group overflow-hidden w-full h-full aspect-3/2 bg-linear-to-br from-lime to-blue-400 flex items-center justify-center">
+      <motion.div
+        initial={{opacity: 0, scale: 0.5}}
+        whileInView={{opacity: 1, scale: 1, transition: {duration: 1, type: "spring", delay: 0}}}
+        viewport={{once: false, amount: 0.35, margin: "-10% 0px -10% 0px"}}
+        className="relative rounded-3xl group overflow-hidden w-full h-full aspect-3/2 bg-linear-to-br from-lime to-blue-400 flex items-center justify-center">
         <AnimatePresence initial={false}>
           <motion.img
             key={activeIndex}
@@ -77,7 +87,7 @@ export default function Accordion({items = []}: {items: AccordionItem[]}) {
             onMouseLeave={(e) => handleImageLeave(e)}
           />
         </AnimatePresence>
-      </div>
+      </motion.div>
     </div>
   )
 }

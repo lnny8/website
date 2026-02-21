@@ -1,9 +1,8 @@
 "use client"
 import Link from "next/link"
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import {AnimatePresence, motion} from "motion/react"
-import Image from "next/image"
-import {Mail, Moon, Phone, Sun} from "lucide-react"
+import {Mail, Moon, Sun} from "lucide-react"
 import {useTheme} from "next-themes"
 import tabs from "@/lib/data/tabs"
 
@@ -12,6 +11,8 @@ export default function MobileMenu() {
   const [menuKey, setMenuKey] = useState(0)
   const {theme, resolvedTheme, setTheme} = useTheme()
   const [mounted, setMounted] = useState(false)
+  const themeButtonRef = useRef<HTMLButtonElement | null>(null)
+  const currentTheme = resolvedTheme || theme
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen)
@@ -23,6 +24,40 @@ export default function MobileMenu() {
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  async function handleThemeToggle() {
+    if (!mounted) return
+
+    const newTheme = currentTheme === "dark" ? "light" : "dark"
+    const button = themeButtonRef.current
+
+    if (!button || typeof document.startViewTransition !== "function") {
+      setTheme(newTheme)
+      return
+    }
+
+    const transition = document.startViewTransition(() => {
+      setTheme(newTheme)
+    })
+
+    await transition.ready
+
+    const {top, left, width, height} = button.getBoundingClientRect()
+    const x = left + width / 2
+    const y = top + height / 2
+    const maxRadius = Math.hypot(Math.max(left, window.innerWidth - left), Math.max(top, window.innerHeight - top))
+
+    document.documentElement.animate(
+      {
+        clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${maxRadius}px at ${x}px ${y}px)`],
+      },
+      {
+        duration: 400,
+        easing: "ease-in-out",
+        pseudoElement: "::view-transition-new(root)",
+      },
+    )
+  }
 
   return (
     <nav className="fixed md:hidden not-sr-only z-80 w-full">
@@ -82,15 +117,12 @@ export default function MobileMenu() {
               </motion.a>
 
               <motion.button
-                animate={mounted ? {rotate: theme === "dark" ? 0 : 90, transition: {duration: 0.5, type: "spring"}} : {rotate: 0}}
+                ref={themeButtonRef}
+                animate={mounted ? {rotate: currentTheme === "dark" ? 0 : 90, transition: {duration: 0.5, type: "spring"}} : {rotate: 0}}
                 whileTap={{scale: 0.9}}
                 className="w-12 h-12 flex items-center justify-center border border-white/5 light:border-black/5 rounded-full"
-                onClick={() => {
-                  if (!mounted) return
-                  const newTheme = theme === "dark" ? "light" : "dark"
-                  setTheme(newTheme)
-                }}>
-                {mounted ? theme === "dark" ? <Moon className="size-5 text-white/70" /> : <Sun className="size-5 text-black/70" /> : <span className="block size-5" />}
+                onClick={handleThemeToggle}>
+                {mounted ? currentTheme === "dark" ? <Moon className="size-5 text-white/70" /> : <Sun className="size-5 text-black/70" /> : <span className="block size-5" />}
               </motion.button>
             </motion.div>
           </motion.div>

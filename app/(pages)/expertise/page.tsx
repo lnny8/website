@@ -19,20 +19,20 @@ export default function Page() {
     const titleSplit = new SplitText(titleRef.current, {type: "words, chars", mask: "chars"})
     const descriptionSplit = new SplitText(descriptionRef.current, {type: "words, chars", mask: "chars"})
     gsap.from(titleSplit.chars, {opacity: 0, yPercent: 100, stagger: 0.02, ease: "back.inOut"})
-    gsap.from(descriptionSplit.words, {opacity: 0, xPercent: 0, stagger: {amount: 0.2}, ease: "power4.inOut", delay: 0.3})
+    gsap.from(descriptionSplit.words, {opacity: 0, xPercent: 0, filter: "blur(12px)", stagger: {amount: 0.2}, ease: "power4.inOut", delay: 0.3})
   }, [])
 
   return (
     <main className="pt-32 max-w-7xl mx-auto px-6 md:px-0">
-      <h1 ref={titleRef} className="text-6xl leading-tight font-clash font-semibold">Expertise</h1>
+      <h1 ref={titleRef} className="text-5xl leading-tight font-clash font-medium">Expertise</h1>
       <h2 ref={descriptionRef} className="text-white/70 light:text-black/70 font-light text-lg">All of my knowledge in one place</h2>
 
       <div className="grid grid-cols-2 gap-6 pt-10">
         {experienceCategories.map((category, index) => (
-          <motion.div  initial={{opacity: 0, y: 120}} animate={{opacity: 1, y: 0, transition: {duration: 1, type: "spring", delay: index * 0.1 + 0.4}}} className="shadow-(--inset_shadow) border-white/5 light:border-black/5 bg-white/5 light:bg-black/5 cursor-pointer rounded-3xl p-6" key={category.title}>
+          <motion.div  initial={{opacity: 0, y: 120}} animate={{opacity: 1, y: 0, transition: {duration: 1, type: "spring", delay: index * 0.1 + 0.4}}} className="shadow-(--inset_shadow) bg-woodsmoke-light light:bg-black/5 cursor-pointer rounded-3xl p-6" key={category.title}>
             <h3 className="font-semibold font-clash text-2xl">{category.title}</h3>
             <p className="text-white/70 light:text-black/70 font-light pb-10">{category.description}</p>
-            <div className="flex gap-x-6 gap-y-2 flex-wrap">
+            <div className="flex gap-x-2 gap-y-2 flex-wrap">
               {category.items.map((item) => (
                 <div className="" key={item}>
                   {item}
