@@ -291,9 +291,7 @@ export default function MarkdownAppPage() {
               </label>
 
               <div className="sm:col-span-2 flex flex-wrap gap-2">
-                <button type="button" onClick={clearBackgroundImage} className="rounded-xl bg-woodsmoke px-4 py-2 text-sm font-medium border border-white/10 light:border-black/10 hover:opacity-90">
-                  Remove background image
-                </button>
+               
 
                 <button type="button" onClick={exportPdf} disabled={isExporting} className="relative w-44 h-11 disabled:opacity-70 disabled:cursor-not-allowed">
                   <HoverButton loading={isExporting} disabled={isExporting} text1="Create PDF" text2="Export now" />

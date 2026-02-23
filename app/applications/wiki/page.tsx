@@ -96,7 +96,7 @@ function WikiAutocomplete({id, label, value, onChange, placeholder, lang}: {id: 
           }
         }}
         placeholder={placeholder}
-        className="border border-white/10 light:border-black/10 rounded-xl mt-2 px-4 py-2 focus:outline-none focus:ring-2 ring-lime"
+        className="bg-woodsmoke-light shadow-(--inset_shadow) border-white/10 light:border-black/10 rounded-xl light:border-black/10-xl mt-2 px-4 py-2 focus:outline-none focus:ring-2 ring-lime"
       />
 
       {open && (
@@ -175,7 +175,7 @@ export default function Page() {
     <main className="min-h-screen max-w-7xl mx-auto md:px-0 px-6">
       <div className="pt-40">
         <h1 className="text-5xl font-clash font-medium">Wiki Route</h1>
-        <p className="text-white/70 light:text-black/70 font-light text-lg mt-3 max-w-2xl">Gib zwei Wikipedia-Artikel an und ich finde die kürzeste Klick-Route zwischen ihnen.</p>
+        <p className="text-white/70 light:text-black/70 font-light text-lg mt-3 max-w-2xl">Enter two Wikipedia article titles to find the shortest click path between them.</p>
       </div>
 
       <section className="mt-10 grid md:grid-cols-3 gap-6 items-end">
@@ -188,13 +188,13 @@ export default function Page() {
             <label className="text-sm font-medium" htmlFor="wiki-lang">
               Language
             </label>
-            <select id="wiki-lang" value={lang} onChange={(e) => setLang(e.target.value as "de" | "en")} className="border border-white/10 light:border-black/10 rounded-xl mt-2 px-4 py-2 bg-transparent focus:outline-none focus:ring-2 ring-lime">
+            <select id="wiki-lang" value={lang} onChange={(e) => setLang(e.target.value as "de" | "en")} className="bg-woodsmoke-light shadow-(--inset_shadow) border-white/10 light:border-black/10 rounded-xl light:border-black/10-xl mt-2 px-4 py-2 focus:outline-none focus:ring-2 ring-lime">
               <option value="de">de.wikipedia.org</option>
               <option value="en">en.wikipedia.org</option>
             </select>
           </div>
 
-          <button type="button" onClick={swap} className="h-11 px-4 rounded-xl border border-white/10 light:border-black/10 hover:border-white/40 transition">
+          <button type="button" onClick={swap} className="h-11 px-4 rounded-xl shadow-(--inset_shadow) bg-woodsmoke-light light:bg-athensgray-light transition">
             Swap
           </button>
         </div>
@@ -208,7 +208,7 @@ export default function Page() {
       </div>
 
       {result && (
-        <section className="mt-10 rounded-3xl border border-white/10 light:border-black/10 bg-white/5 p-6">
+        <section className="mt-10 rounded-3xl bg-woodsmoke-light shadow-(--inset_shadow) light:bg-athensgray-light p-6">
           {result.ok && result.path ? (
             <>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
