@@ -18,9 +18,7 @@ export const socials = {
 
 export const applications = [
   {title: "Sorting Visualizer", description: "Visualize sorting algorithms", imageUrl: "/applications/sorting.png", link: "/projects/sorting-visualizer", date: "2025", color: "#2d2825"},
-  {title: "Image Editor", description: "An online image editor", imageUrl: "/applications/images.png", link: "/projects/images", date: "2025", color: "#2a252d"},
   {title: "Markdown To PDF", description: "Convert Markdown files to PDF format", imageUrl: "/applications/markdown-to-pdf.png", link: "/projects/markdown-to-pdf", date: "2025", color: "#2a2d25"},
-  {title: "Sound Generator", description: "Generate sounds and music", imageUrl: "/applications/sound-generator.png", link: "/projects/sound-generator", date: "2025", color: "#26252d"},
   {title: "Wiki Route", description: "Find the shortest path between Wikipedia articles", imageUrl: "/applications/sorting.png", link: "/applications/wiki", date: "2026", color: "#252d2c"},
 ]
 
