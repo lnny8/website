@@ -1,5 +1,5 @@
 "use client"
-import React, {useRef, useState, useEffect} from "react"
+import React, {useRef, useState, useEffect, Suspense} from "react"
 import {Canvas, useFrame} from "@react-three/fiber"
 import * as THREE from "three"
 import gsap from "gsap"
@@ -7,9 +7,9 @@ import {Body} from "../robot/body"
 import {Eyes} from "../robot/eyes"
 import { smoothNoise } from "@/lib/data/smoothNoise"
 import { Environment } from "@react-three/drei"
+import { Loader2 } from "lucide-react"
 
 type MousePos = {x: number; y: number}
-
 
 
 export default function Robot() {
@@ -56,6 +56,7 @@ function RobotModel({mousePos}: {mousePos: MousePos}) {
     groupRef.current.rotation.z = THREE.MathUtils.lerp(groupRef.current.rotation.z, mousePos.y * 0.1, 0.1)
   })
   return (
+    <Suspense fallback={null}>
     <group
       onClick={() => {
         if (!groupRef.current) return
@@ -71,5 +72,6 @@ function RobotModel({mousePos}: {mousePos: MousePos}) {
       <Body />
       <Eyes mousePos={mousePos} />
     </group>
+    </Suspense>
   )
 }

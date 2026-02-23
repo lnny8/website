@@ -8,16 +8,16 @@ export default function SocialSpan() {
   return (
     <div className="flex gap-4 group">
       <Link href={socials.linkedin} target="_blank" aria-label="LinkedIn">
-        <Linkedin className="size-5 text-white/70 light:text-black/70 hover:text-white group-hover:opacity-50 hover:opacity-100 transition-opacity duration-300" />
+        <Linkedin className="size-5 text-white/70 light:text-black/70 hover:text-white light:hover:text-black group-hover:opacity-50 hover:opacity-100 transition-opacity duration-300" />
       </Link>
       <Link href={socials.github} target="_blank" aria-label="GitHub">
-        <Github className="size-5 text-white/70 light:text-black/70 hover:text-white group-hover:opacity-50 hover:opacity-100 transition-opacity duration-300" />
+        <Github className="size-5 text-white/70 light:text-black/70 hover:text-white light:hover:text-black group-hover:opacity-50 hover:opacity-100 transition-opacity duration-300" />
       </Link>
       <Link href={socials.instagram} target="_blank" aria-label="Instagram">
-        <Instagram className="size-5 text-white/70 light:text-black/70 hover:text-white group-hover:opacity-50 hover:opacity-100 transition-opacity duration-300" />
+        <Instagram className="size-5 text-white/70 light:text-black/70 hover:text-white light:hover:text-black group-hover:opacity-50 hover:opacity-100 transition-opacity duration-300" />
       </Link>
       <Link href={socials.email} target="_blank" aria-label="Email">
-        <Mail className="size-5 text-white/70 light:text-black/70 hover:text-white group-hover:opacity-50 hover:opacity-100 transition-opacity duration-300" />
+        <Mail className="size-5 text-white/70 light:text-black/70 hover:text-white light:hover:text-black group-hover:opacity-50 hover:opacity-100 transition-opacity duration-300" />
       </Link>
     </div>
   )
