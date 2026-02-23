@@ -7,11 +7,18 @@ A modern, interactive portfolio website showcasing creative coding projects, int
 ## ✨ Features
 
 - **Interactive Projects** - Collection of creative coding projects including games, visualizers, and WebGL shaders
+- **Applications** - Utility apps and tools like Wiki and Color Generator
 - **Tutorials** - Step-by-step guides for animations and UI effects
 - **Dark Mode** - Theme switching support
 - **Smooth Animations** - GSAP and Framer Motion powered transitions
 - **Responsive Design** - Mobile-first approach
 - **Contact Form** - Email integration
+
+## 🧩 Applications
+
+- **Color Generator** - Color utility app
+- **Flowline** - Interactive puzzle app
+- **Wiki** - Search and suggestion based wiki app to find shortest route between articles
 
 ## 🎮 Projects
 
@@ -20,6 +27,9 @@ A modern, interactive portfolio website showcasing creative coding projects, int
 - **Bubble Shooter** - Classic arcade game
 - **Connect Four** - Strategy game
 - **Fibonacci Visualizer** - Mathematical visualization
+- **Images** - Visual/image-based project
+- **Lonui** - UI-focused project
+- **Markdown** - Markdown-focused project
 - **Flowline** - Puzzle game
 - **Sorting Visualizer** - Algorithm visualization
 - **WebGPU Shader** - Modern GPU compute
