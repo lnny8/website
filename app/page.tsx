@@ -8,7 +8,7 @@ import AnimationText from "@/lib/components/animationText"
 import Image from "next/image"
 import Accordion from "@/lib/components/accordion"
 import ShineText from "@/lib/components/shineText"
-import {projects, selectedProjects} from "@/lib/data/data"
+import {projects, selectedProjects, socials} from "@/lib/data/data"
 import Robot from "@/lib/robot/robot"
 import {useGSAP} from "@gsap/react"
 import gsap from "gsap"
@@ -20,10 +20,10 @@ import {images} from "./art/page"
 
 export default function Page() {
   const socialLinks = [
-    {name: "LinkedIn", url: "https://linkedin.com/in/lennymuffler"},
-    {name: "GitHub", url: "https://github.com/lnny8"},
-    {name: "Instagram", url: "https://instagram.com/lnny.8"},
-    {name: "Email", url: "mailto:lenny@lnny.dev"},
+    {name: "LinkedIn", url: socials.linkedin},
+    {name: "GitHub", url: socials.github},
+    {name: "Instagram", url: socials.instagram},
+    {name: "Email", url: socials.email},
   ]
 
   const expertise = [

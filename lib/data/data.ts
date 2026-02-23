@@ -9,6 +9,13 @@ export const projects = [
 ]
 export const projectCategories = ["Website", "Hardware", "Game"]
 
+export const socials = {
+  github: "https://github.com/lnny8",
+  linkedin: "https://www.linkedin.com/in/lennymuffler",
+  instagram: "https://www.instagram.com/lnny.8",
+  email: "mailto:lenny.muffler@gmail.com"
+}
+
 export const applications = [
   {title: "Sorting Visualizer", description: "Visualize sorting algorithms", imageUrl: "/applications/sorting.png", link: "/projects/sorting-visualizer", date: "2025", color: "#2d2825"},
   {title: "Image Editor", description: "An online image editor", imageUrl: "/applications/images.png", link: "/projects/images", date: "2025", color: "#2a252d"},
