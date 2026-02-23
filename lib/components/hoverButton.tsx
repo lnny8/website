@@ -92,7 +92,7 @@ export default function HoverButton({text1, text2, className, disabled, loading}
       id={id}
       onMouseEnter={() => !disabled && !loading && handleEnter()}
       onMouseLeave={() => handleLeave()}
-      className={`relative flex items-center justify-center w-full bg-woodsmoke-light light:bg-athensgray-light overflow-hidden h-full cursor-pointer shadow-(--inset_shadow) border-white light:border-black px-4 py-2 rounded-full ${className}`}>
+      className={`relative flex items-center justify-center w-full bg-woodsmoke-light light:bg-athensgray-light overflow-hidden h-full cursor-pointer shadow-(--inset_shadow) border-white light:border-black px-4 py-2 rounded-2xl ${className}`}>
       <svg className="svg absolute inset-0 w-full h-full fill-white light:fill-black" viewBox="0 0 100 100" preserveAspectRatio="none">
         <rect width="300" x={"-100"} y={200} height="100" className="fill-white light:fill-black" />
         <path d={initialPath} />

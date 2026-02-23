@@ -14,8 +14,9 @@ import tabs from "@/lib/data/tabs"
 
 export default function Menu() {
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const backgroundRef = useRef<HTMLDivElement | null>(null)
   const hoverData = useRef<Map<HTMLElement, {topSplit: SplitText; bottomSplit: SplitText; tl?: gsap.core.Timeline}>>(new Map())
-  const {theme, resolvedTheme, setTheme} = useTheme()
+  const {theme, setTheme} = useTheme()
   const [mounted, setMounted] = React.useState(false)
   const pathname = usePathname()
 
@@ -23,22 +24,36 @@ export default function Menu() {
 
   useEffect(() => {
     setMounted(true)
-    gsap.from(containerRef.current, {duration: 1, ease: "power2.out", yPercent: -50, onComplete: () => initScollAnimation()})
   }, [])
 
-  // there needs to be an option to manually set the theme because
-  // next themes / useState isnt fast enough to update the theme variable
-  function initScollAnimation(newTheme?: "light" | "dark") {
+  useEffect(() => {
+    if(theme) initScollAnimation(theme)
+  }, [theme])
+
+  function initScollAnimation(theme: string) {
     if (!containerRef.current) return
+    if (!backgroundRef.current) return
     gsap.killTweensOf(containerRef.current)
+    gsap.killTweensOf(backgroundRef.current)
     gsap.fromTo(
       containerRef.current,
-      {maxWidth: "80rem", paddingInline: "0rem", border: "none"},
+      {maxWidth: "80rem", paddingInline: "0rem"},
       {
         maxWidth: "46rem",
         paddingInline: "1.5rem",
-        boxShadow: "var(--inset_shadow)",
-        backgroundColor: (newTheme || resolvedTheme) === "light" ? "var(--color-athensgray-light)" : "var(--color-woodsmoke-light)",
+        scrollTrigger: {
+          trigger: document.documentElement,
+          start: "top top",
+          end: "+=240",
+          scrub: true,
+        },
+      },
+    )
+    gsap.fromTo(
+      backgroundRef.current,
+      {opacity: 0},
+      {
+        opacity: 1,
         scrollTrigger: {
           trigger: document.documentElement,
           start: "top top",
@@ -129,19 +144,10 @@ export default function Menu() {
     )
   }
 
-  // useEffect(() => {
-  //   return () => {
-  //     hoverData.current.forEach((data) => {
-  //       data.tl?.kill()
-  //       data.topSplit.revert()
-  //       data.bottomSplit.revert()
-  //     })
-  //   }
-  // }, [])
-
   return (
     <nav className="w-full hidden md:flex fixed h-20 items-center justify-center z-10">
-      <div ref={containerRef} className="w-full max-w-7xl flex items-center justify-between rounded-full py-3">
+      <div ref={containerRef} className="w-full max-w-7xl flex items-center justify-between py-3 relative">
+        <div ref={backgroundRef} className="bg-woodsmoke-light light:bg-athensgray-light rounded-2xl shadow-(--inset_shadow) opacity-0 absolute inset-0 -z-1" />
         <Link href="/" className="text-white font-clash light:text-black font-medium text-lg">
           LM
         </Link>

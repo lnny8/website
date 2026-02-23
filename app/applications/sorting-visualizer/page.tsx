@@ -20,6 +20,12 @@ export default function Page() {
     }
     arrayRef.current = newArray
     changeState(!prevChangeState)
+
+    return () => {
+      runningRef.current = false
+      audioCtxRef.current?.close()
+      audioCtxRef.current = null
+    }
   }, [])
 
   async function randomize() {
