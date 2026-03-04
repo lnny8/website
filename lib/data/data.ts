@@ -16,10 +16,11 @@ export const socials = {
 }
 
 export const applications = [
-  {title: "Flowline", description: "Logical Simulator", imageUrl: "/applications/flowline.png", link: "https://flowline.app", date: "2024", category: "Hardware", color: "#252d29"},
-  {title: "Sorting Visualizer", description: "Visualize sorting algorithms", imageUrl: "/applications/sorting.png", link: "/applications/sorting-visualizer", date: "2025", color: "#2d2825"},
-  {title: "Markdown Exporter", description: "Convert Markdown files to PDF or PNG", imageUrl: "/applications/markdown.png", link: "/applications/markdown", date: "2025", color: "#2a2d25"},
-  {title: "Wiki Route", description: "Find the shortest path between Wikipedia articles", imageUrl: "/applications/wiki.png", link: "/applications/wiki", date: "2026", color: "#252d2c"},
+  {title: "Flowline", description: "Logical Simulator", imageUrl: "/applications/flowline.png", link: "https://flowline.app", date: "2024", category: "Hardware"},
+  {title: "Sorting Visualizer", description: "Visualize sorting algorithms", imageUrl: "/applications/sorting.png", link: "/applications/sorting-visualizer", date: "2025"},
+  {title: "Markdown Exporter", description: "Convert Markdown files to PDF or PNG", imageUrl: "/applications/markdown.png", link: "/applications/markdown", date: "2025"},
+  {title: "Wiki Route", description: "Find the shortest path between Wikipedia articles", imageUrl: "/applications/wiki.png", link: "/applications/wiki", date: "2026"},
+  {title: "ASCII Generator", description: "Convert text to ASCII art", imageUrl: "/applications/ascii.png", link: "/applications/ascii", date: "2026"},
 ]
 
 export const tutorials = [
