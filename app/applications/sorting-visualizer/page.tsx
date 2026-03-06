@@ -182,7 +182,7 @@ export default function Page() {
         <div className="flex items-center justify-center mt-10">
           <div className="mr-10 flex flex-col items-center justify-center">
             <label>wait time: {sleepTime}ms</label>
-            <input type="range" min="0" max="100" value={sleepTime} onChange={(e) => setSleepTime(Number(e.target.value))} className="ml-5 cursor-pointer" />
+            <input type="range" min="0" max="100" value={sleepTime} onChange={(e) => setSleepTime(Number(e.target.value))} className="ui-range ml-5" />
           </div>
           <div className="mr-10 flex flex-col items-center justify-center">
             <label>array size: {arraySize}</label>
@@ -197,7 +197,7 @@ export default function Page() {
                 setArraySize(newSize)
                 arrayRef.current = Array.from({length: newSize}, () => Math.ceil(Math.random() * maxValue))
               }}
-              className="ml-5 cursor-pointer"
+              className="ui-range ml-5"
             />
           </div>
           <div className="mr-10 flex flex-col items-center justify-center">
@@ -213,7 +213,7 @@ export default function Page() {
                 setMaxValue(newMax)
                 arrayRef.current = arrayRef.current.map(() => Math.ceil(Math.random() * newMax))
               }}
-              className="ml-5 cursor-pointer slider-thumb-blue slider-track-blue"
+              className="ui-range ml-5"
             />
           </div>
         </div>

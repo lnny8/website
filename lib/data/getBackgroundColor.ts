@@ -1,5 +1,5 @@
-export function getBackgroundColor(seed: string | number, brightness: number, saturation: number) {
-  const seedString = seed.toString()
+export function getBackgroundColor(seed: string | number | null | undefined, brightness: number, saturation: number) {
+  const seedString = String(seed ?? "default")
   let hash = 0
 
   for (let i = 0; i < seedString.length; i++) {

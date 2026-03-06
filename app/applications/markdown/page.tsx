@@ -243,12 +243,12 @@ export default function MarkdownAppPage() {
 
               <label className="block">
                 <span className="mb-1 block text-sm font-medium">Font size ({fontSize}px)</span>
-                <input type="range" min={1} max={28} value={fontSize} onChange={(event) => setFontSize(Number(event.target.value))} className="w-full mt-2 accent-lime" />
+                <input type="range" min={1} max={28} value={fontSize} onChange={(event) => setFontSize(Number(event.target.value))} className="ui-range w-full mt-2" />
               </label>
 
               <label className="block">
                 <span className="mb-1 block text-sm font-medium">A4 margin ({pagePadding}px)</span>
-                <input type="range" min={1} max={80} value={pagePadding} onChange={(event) => setPagePadding(Number(event.target.value))} className="w-full mt-2 accent-lime" />
+                <input type="range" min={1} max={80} value={pagePadding} onChange={(event) => setPagePadding(Number(event.target.value))} className="ui-range w-full mt-2" />
               </label>
 
               <label className="block">
@@ -291,8 +291,6 @@ export default function MarkdownAppPage() {
               </label>
 
               <div className="sm:col-span-2 flex flex-wrap gap-2">
-               
-
                 <button type="button" onClick={exportPdf} disabled={isExporting} className="relative w-44 h-11 disabled:opacity-70 disabled:cursor-not-allowed">
                   <HoverButton loading={isExporting} disabled={isExporting} text1="Create PDF" text2="Export now" />
                 </button>

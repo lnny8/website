@@ -5,14 +5,16 @@ export const projects = [
   {title: "Blob Shader", description: "A cool shader written in Three.js", imageUrl: "/projects/blob-shader.png", link: "/projects/blob-shader", date: "2025", category: "Website", color: "#2d2a25"},
   {title: "Maze Generator", description: "Visualization of maze generation algorithms", imageUrl: "/projects/maze.png", link: "/projects/maze", date: "2025", category: "Website", color: "#252d2c"},
   {title: "Bubble Shooter", description: "A fun and engaging bubble shooter game.", imageUrl: "/projects/bubble-shooter.png", link: "/files/bubbleShooter.exe", date: "2025", category: "Game", color: "#262d25"},
+  {title: "Asteroid Explorer", description: "A cool project visualizing real asteroid data using NASA's API", imageUrl: "/projects/asteroid.png", link: "https://rocket-navy.vercel.app/", date: "2026", category: "Website", color: "#2d2529"},
+  {title: "Hacked WebOS", description: "Cool webbased OS with hacker / ASCII theme and some cool apps", imageUrl: "/projects/webos.png", link: "https://webos-bice.vercel.app/", date: "2026", category: "Website", color: "#25282d"},
 ]
 export const projectCategories = ["Website", "Hardware", "Game"]
 
 export const socials = {
   github: "https://github.com/lnny8",
   linkedin: "https://www.linkedin.com/in/lennymuffler",
-  instagram: "https://www.instagram.com/lnny.8",
   email: "mailto:lenny.muffler@gmail.com",
+  instagram: "https://www.instagram.com/lnny.8",
 }
 
 export const applications = [
@@ -21,6 +23,8 @@ export const applications = [
   {title: "Markdown Exporter", description: "Convert Markdown files to PDF or PNG", imageUrl: "/applications/markdown.png", link: "/applications/markdown", date: "2025"},
   {title: "Wiki Route", description: "Find the shortest path between Wikipedia articles", imageUrl: "/applications/wiki.png", link: "/applications/wiki", date: "2026"},
   {title: "ASCII Generator", description: "Convert text to ASCII art", imageUrl: "/applications/ascii.png", link: "/applications/ascii", date: "2026"},
+  {title: "Procedural Art Generator", description: "Generate fractals, patterns, and noise-based artwork", imageUrl: "/applications/art-generation.png", link: "/applications/procedural-art-generator", date: "2026"},
+  {title: "Procedural World Generator", description: "Generate terrain, rivers, mountains, and cities", imageUrl: "/applications/world-generator.png", link: "/applications/procedural-world-generator", date: "2026"},
 ]
 
 export const tutorials = [

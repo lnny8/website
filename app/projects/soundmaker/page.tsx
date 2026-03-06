@@ -1,5 +1,6 @@
 ﻿"use client"
 
+import HoverButton from "@/lib/components/hoverButton"
 import React, {useCallback, useEffect, useMemo, useRef, useState} from "react"
 
 type Waveform = "sine" | "square" | "sawtooth" | "triangle" | "noise"
@@ -156,10 +157,13 @@ const sliderConfigs: SliderConfig[] = [
   },
 ]
 
-const sliderBounds = sliderConfigs.reduce((acc, config) => {
-  acc[config.key] = {min: config.min, max: config.max}
-  return acc
-}, {} as Record<NumericParamKey, {min: number; max: number}>)
+const sliderBounds = sliderConfigs.reduce(
+  (acc, config) => {
+    acc[config.key] = {min: config.min, max: config.max}
+    return acc
+  },
+  {} as Record<NumericParamKey, {min: number; max: number}>,
+)
 
 const waveforms: Waveform[] = ["square", "sawtooth", "triangle", "sine", "noise"]
 
@@ -250,6 +254,10 @@ const presets = {
   }),
 }
 
+type BrowserWindow = Window & {
+  webkitAudioContext?: typeof AudioContext
+}
+
 export default function Page() {
   const [params, setParams] = useState<SoundParams>(defaultParams)
   const [status, setStatus] = useState<string | null>(null)
@@ -336,7 +344,8 @@ export default function Page() {
 
   const playSound = useCallback(async () => {
     if (typeof window === "undefined") return
-    const AudioContextConstructor = window.AudioContext || (window as any).webkitAudioContext
+    const browserWindow = window as BrowserWindow
+    const AudioContextConstructor = browserWindow.AudioContext ?? browserWindow.webkitAudioContext
     if (!AudioContextConstructor) {
       setStatus("Web Audio not supported")
       return
@@ -437,55 +446,93 @@ export default function Page() {
       {label: "Duration", value: `${totalDuration.toFixed(2)} s`},
       {label: "Vibrato", value: `${params.vibratoDepth.toFixed(1)} st @ ${params.vibratoSpeed.toFixed(1)} Hz`},
     ],
-    [params.waveform, params.noise, params.vibratoDepth, params.vibratoSpeed, totalDuration]
+    [params.waveform, params.noise, params.vibratoDepth, params.vibratoSpeed, totalDuration],
   )
 
+  const presetButtons = [
+    {label: "Explosion", action: presets.explosion},
+    {label: "Laser", action: presets.laser},
+    {label: "Powerup", action: presets.powerup},
+    {label: "Pickup", action: presets.pickup},
+    {label: "Blip", action: presets.blip},
+  ] as const
+
   return (
-    <main className="relative min-h-screen overflow-hidden bg-black px-6 py-16 text-white sm:px-10">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(34,197,94,0.15),_transparent_55%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(59,130,246,0.12),_transparent_60%)]" />
+    <main className="relative min-h-screen max-w-7xl mx-auto md:px-0 px-6 pt-32 pb-16 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-x-0 top-0 h-112 opacity-80" style={{background: "radial-gradient(circle at top, rgba(34,197,94,0.12), transparent 55%)"}} />
+        <div className="absolute inset-x-0 bottom-0 h-96 opacity-70" style={{background: "radial-gradient(circle at bottom, rgba(59,130,246,0.1), transparent 60%)"}} />
       </div>
 
-      <div className="relative mx-auto flex max-w-6xl flex-col gap-10">
-        <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-[0.45em] text-white/50">Procedural Audio Lab</p>
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">Soundmaker</h1>
-            <p className="mt-3 max-w-xl text-sm text-white/60 sm:text-base">Shape retro game sounds with envelopes, pitch slides, and noise layers — a playground I (Lenny Muffler) use when crafting sonic feedback for WebGL experiences.</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <button type="button" onClick={() => setParams(defaultParams)} className="rounded-full border border-white/10 px-4 py-2 text-sm text-white/70 transition hover:border-white/40 hover:text-white">
-              Reset
-            </button>
-            <button type="button" onClick={playSound} className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-3 text-sm font-semibold text-black transition hover:bg-emerald-400">
-              <span className="h-2 w-2 rounded-full bg-black" />
-              Play Sound
-            </button>
-          </div>
+      <div className="relative flex flex-col gap-8">
+        <header className="max-w-4xl">
+          <p className="text-sm uppercase tracking-[0.24em] text-white/45 light:text-black/45">Procedural Audio Lab</p>
+          <h1 className="mt-4 text-6xl font-clash font-semibold leading-tight">Soundmaker</h1>
+          <p className="mt-4 max-w-3xl text-lg font-light text-white/70 light:text-black/70">Shape retro game sounds with envelopes, pitch slides, vibrato, filters, and noise layers in the same visual language as the rest of the portfolio.</p>
         </header>
 
-        <div className="grid gap-8 lg:grid-cols-[2fr_1fr]">
-          <section className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl shadow-emerald-500/5 backdrop-blur">
-            <div className="grid gap-6 md:grid-cols-2">
+        <section className="rounded-3xl bg-woodsmoke-light shadow-(--inset_shadow) p-6 light:bg-athensgray-light border border-white/10 light:border-black/10">
+          <div className="flex flex-col xl:flex-row xl:items-end xl:justify-between gap-6">
+            <div>
+              <div className="text-sm uppercase tracking-[0.24em] text-white/45 light:text-black/45">Current patch</div>
+              <div className="mt-2 text-4xl font-clash capitalize">{params.waveform}</div>
+              <p className="mt-3 max-w-2xl text-sm text-white/65 light:text-black/65">Built for quick UI feedback sounds, pickups, hits, and laser accents. The controls stay technical, but the page now sits in the same card system as the rest of the site.</p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => setParams(defaultParams)}
+                className="h-12 px-5 rounded-full border border-white/10 light:border-black/10 text-sm font-medium text-white/80 light:text-black/80 bg-white/5 light:bg-black/5 hover:bg-white/10 light:hover:bg-black/8 transition-colors">
+                Reset patch
+              </button>
+              <button type="button" onClick={playSound} className="w-44 h-12">
+                <HoverButton text1="Play Sound" text2="Preview patch" />
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-8 grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div className="rounded-2xl border border-white/10 light:border-black/10 bg-black/15 light:bg-white/45 p-4">
+              <div className="text-xs uppercase tracking-[0.22em] text-white/45 light:text-black/45">Blend</div>
+              <div className="mt-2 text-xl font-clash">{Math.round(params.noise * 100)}% noise</div>
+              <div className="mt-2 text-sm text-white/65 light:text-black/65">Oscillator plus noise mix for cleaner or dirtier hits.</div>
+            </div>
+            <div className="rounded-2xl border border-white/10 light:border-black/10 bg-black/15 light:bg-white/45 p-4">
+              <div className="text-xs uppercase tracking-[0.22em] text-white/45 light:text-black/45">Duration</div>
+              <div className="mt-2 text-xl font-clash">{totalDuration.toFixed(2)} s</div>
+              <div className="mt-2 text-sm text-white/65 light:text-black/65">Envelope time from attack through release.</div>
+            </div>
+            <div className="rounded-2xl border border-white/10 light:border-black/10 bg-black/15 light:bg-white/45 p-4">
+              <div className="text-xs uppercase tracking-[0.22em] text-white/45 light:text-black/45">Filter</div>
+              <div className="mt-2 text-xl font-clash">{Math.round(params.filterCutoff)} Hz</div>
+              <div className="mt-2 text-sm text-white/65 light:text-black/65">Low-pass shaping with resonance for sharper or softer tone.</div>
+            </div>
+            <div className="rounded-2xl border border-white/10 light:border-black/10 bg-black/15 light:bg-white/45 p-4">
+              <div className="text-xs uppercase tracking-[0.22em] text-white/45 light:text-black/45">Vibrato</div>
+              <div className="mt-2 text-xl font-clash">{params.vibratoDepth.toFixed(1)} st</div>
+              <div className="mt-2 text-sm text-white/65 light:text-black/65">Depth at {params.vibratoSpeed.toFixed(1)} Hz for movement and tension.</div>
+            </div>
+          </div>
+        </section>
+
+        <div className="grid gap-6 xl:grid-cols-[1.8fr_0.95fr]">
+          <section className="rounded-3xl bg-woodsmoke-light shadow-(--inset_shadow) p-6 light:bg-athensgray-light border border-white/10 light:border-black/10">
+            <div>
+              <div className="text-sm uppercase tracking-[0.24em] text-white/45 light:text-black/45">Synthesis controls</div>
+              <p className="mt-2 text-sm text-white/65 light:text-black/65">Tune pitch, envelope, modulation, filter, and noise directly.</p>
+            </div>
+
+            <div className="mt-6 grid gap-6 md:grid-cols-2">
               {sliderConfigs.map((config) => {
                 const value = params[config.key]
                 const formatted = config.format ? config.format(value) : value.toFixed(2)
                 return (
-                  <label key={config.key} className="group flex flex-col gap-3">
-                    <div className="flex items-center justify-between text-xs uppercase tracking-[0.2em] text-white/50">
+                  <label key={config.key} className="group flex flex-col gap-3 rounded-2xl border border-white/8 light:border-black/8 bg-black/15 light:bg-white/45 p-4">
+                    <div className="flex items-center justify-between gap-4 text-xs uppercase tracking-[0.2em] text-white/50 light:text-black/50">
                       <span>{config.label}</span>
-                      <span className="font-mono text-[0.7rem] text-white/60">{formatted}</span>
+                      <span className="font-mono text-[0.72rem] text-white/70 light:text-black/70">{formatted}</span>
                     </div>
-                    <input
-                      type="range"
-                      min={config.min}
-                      max={config.max}
-                      step={config.step}
-                      value={value}
-                      onChange={(event) => handleSliderChange(config.key, Number(event.target.value))}
-                      className="h-1.5 cursor-pointer appearance-none rounded-full bg-white/10 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-[0_0_0_6px_rgba(56,189,248,0.2)]"
-                    />
+                    <input type="range" min={config.min} max={config.max} step={config.step} value={value} onChange={(event) => handleSliderChange(config.key, Number(event.target.value))} className="ui-range" />
                   </label>
                 )
               })}
@@ -493,8 +540,8 @@ export default function Page() {
           </section>
 
           <aside className="flex flex-col gap-6">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
-              <span className="text-xs uppercase tracking-[0.3em] text-white/50">Waveform</span>
+            <div className="rounded-3xl bg-woodsmoke-light shadow-(--inset_shadow) p-6 light:bg-athensgray-light border border-white/10 light:border-black/10">
+              <span className="text-sm uppercase tracking-[0.24em] text-white/45 light:text-black/45">Waveform</span>
               <div className="mt-4 grid grid-cols-2 gap-2">
                 {waveforms.map((wave) => {
                   const selected = params.waveform === wave
@@ -503,7 +550,11 @@ export default function Page() {
                       key={wave}
                       type="button"
                       onClick={() => setParams((prev) => ({...prev, waveform: wave}))}
-                      className={`rounded-2xl border px-3 py-2 text-sm capitalize transition ${selected ? "border-white/80 bg-white/20 text-white" : "border-white/10 bg-white/5 text-white/70 hover:border-white/40 hover:text-white"}`}>
+                      className={`rounded-2xl border px-3 py-2 text-sm capitalize transition ${
+                        selected
+                          ? "border-white/60 light:border-black/50 bg-white/10 light:bg-black/8 text-white light:text-black"
+                          : "border-white/10 light:border-black/10 bg-black/15 light:bg-white/40 text-white/70 light:text-black/70 hover:border-white/30 light:hover:border-black/30 hover:text-white light:hover:text-black"
+                      }`}>
                       {wave}
                     </button>
                   )
@@ -511,46 +562,48 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
-              <span className="text-xs uppercase tracking-[0.3em] text-white/50">Presets</span>
+            <div className="rounded-3xl bg-woodsmoke-light shadow-(--inset_shadow) p-6 light:bg-athensgray-light border border-white/10 light:border-black/10">
+              <span className="text-sm uppercase tracking-[0.24em] text-white/45 light:text-black/45">Presets</span>
               <div className="mt-4 flex flex-wrap gap-2">
-                {(
-                  [
-                    {label: "Explosion", action: presets.explosion},
-                    {label: "Laser", action: presets.laser},
-                    {label: "Powerup", action: presets.powerup},
-                    {label: "Pickup", action: presets.pickup},
-                    {label: "Blip", action: presets.blip},
-                  ] as const
-                ).map(({label, action}) => (
-                  <button key={label} type="button" onClick={() => applyPreset(action)} className="rounded-full border border-white/10 px-3 py-1.5 text-xs uppercase tracking-[0.25em] text-white/60 transition hover:border-white/40 hover:text-white">
+                {presetButtons.map(({label, action}) => (
+                  <button
+                    key={label}
+                    type="button"
+                    onClick={() => applyPreset(action)}
+                    className="rounded-full border border-white/10 light:border-black/10 px-3 py-1.5 text-xs uppercase tracking-[0.25em] text-white/65 light:text-black/65 transition hover:border-white/35 light:hover:border-black/35 hover:text-white light:hover:text-black">
                     {label}
                   </button>
                 ))}
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
-                <button type="button" onClick={mutate} className="rounded-full border border-white/10 px-3 py-1.5 text-xs uppercase tracking-[0.25em] text-white/70 transition hover:border-white/40 hover:text-white">
+                <button
+                  type="button"
+                  onClick={mutate}
+                  className="rounded-full border border-white/10 light:border-black/10 px-3 py-1.5 text-xs uppercase tracking-[0.25em] text-white/75 light:text-black/75 transition hover:border-white/35 light:hover:border-black/35 hover:text-white light:hover:text-black">
                   Mutate
                 </button>
-                <button type="button" onClick={copyPreset} className="rounded-full border border-white/10 px-3 py-1.5 text-xs uppercase tracking-[0.25em] text-white/70 transition hover:border-white/40 hover:text-white">
+                <button
+                  type="button"
+                  onClick={copyPreset}
+                  className="rounded-full border border-white/10 light:border-black/10 px-3 py-1.5 text-xs uppercase tracking-[0.25em] text-white/75 light:text-black/75 transition hover:border-white/35 light:hover:border-black/35 hover:text-white light:hover:text-black">
                   Copy JSON
                 </button>
               </div>
             </div>
 
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
-              <span className="text-xs uppercase tracking-[0.3em] text-white/50">Snapshot</span>
+            <div className="rounded-3xl bg-woodsmoke-light shadow-(--inset_shadow) p-6 light:bg-athensgray-light border border-white/10 light:border-black/10">
+              <span className="text-sm uppercase tracking-[0.24em] text-white/45 light:text-black/45">Snapshot</span>
               <div className="mt-4 space-y-3">
                 {parameterCards.map((card) => (
-                  <div key={card.label} className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/30 px-4 py-3">
-                    <span className="text-xs uppercase tracking-[0.25em] text-white/40">{card.label}</span>
-                    <span className="font-mono text-sm text-white/80">{card.value}</span>
+                  <div key={card.label} className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 light:border-black/10 bg-black/15 light:bg-white/45 px-4 py-3">
+                    <span className="text-xs uppercase tracking-[0.25em] text-white/45 light:text-black/45">{card.label}</span>
+                    <span className="font-mono text-sm text-white/80 light:text-black/80 text-right">{card.value}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {status ? <div className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-center text-xs uppercase tracking-[0.25em] text-emerald-200">{status}</div> : null}
+            {status ? <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-center text-xs uppercase tracking-[0.25em] text-emerald-200 light:text-emerald-700">{status}</div> : null}
           </aside>
         </div>
       </div>
