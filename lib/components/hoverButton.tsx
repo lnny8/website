@@ -99,7 +99,7 @@ export default function HoverButton({text1, text2, className, disabled, loading}
       </svg>
       <span className="text1 relative font-medium">{text1}</span>
       <span className="text2 text-black light:text-white absolute font-medium">{text2}</span>
-      <div className={`loader-cover absolute bg-white light:bg-black inset-0 ${showLoading ? "flex" : "hidden"} w-full h-full items-center justify-center`}>
+      <div className={`loader-cover absolute bg-white light:bg-black  inset-0 ${showLoading ? "flex" : "hidden"} w-full h-full items-center justify-center`}>
         <div className="loader-wrapper">
           <Loader2 className="stroke-2 animate-spin text-black light:text-white" />
         </div>

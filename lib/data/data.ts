@@ -1,6 +1,7 @@
 export const projects = [
   {title: "Lonui", description: "A demo website", imageUrl: "/projects/lonui.png", link: "https://lonui.de", date: "2024", category: "Website", color: "#2d2527"},
-  // {title: "QUAD·IO", description: "A cool box, more description soon...", imageUrl: "/projects/quadio.png", link: "/projects/quadio", date: "2025", category: "Hardware", color: "#28252d"},
+  {title: "Interactive Robot", description: "Interactive 3D robot built for this portfolio", imageUrl: "/projects/robot.png", link: "/projects/robot", date: "2026", category: "Hardware", color: "#25282d"},
+  {title: "QUAD·IO", description: "A cool box designed with intent and capable of some cool things", imageUrl: "/projects/quadio.png", link: "/projects/quadio", date: "2025", category: "Hardware", color: "#28252d"},
   {title: "BlackJack in Java", description: "BlackJack written in Java", imageUrl: "/projects/blackjack.png", link: "/files/blackJack.jar", date: "2025", category: "Game", color: "#252a2d"},
   {title: "Blob Shader", description: "A cool shader written in Three.js", imageUrl: "/projects/blob-shader.png", link: "/projects/blob-shader", date: "2025", category: "Website", color: "#2d2a25"},
   {title: "Maze Generator", description: "Visualization of maze generation algorithms", imageUrl: "/projects/maze.png", link: "/projects/maze", date: "2025", category: "Website", color: "#252d2c"},
@@ -35,7 +36,7 @@ export const tutorials = [
   // {title: "Animated Theme Switcher", description: "Build an animated theme switcher with JavaScript and CSS", imageUrl: "/tutorials/animated-theme-switcher-tutorial.png", link: "/tutorials/animated-theme-switcher-tutorial", date: "2025", color: "#abafff"},
 ]
 
-export const selectedProjects = [projects[0], applications[0], applications[2], applications[1]]
+export const selectedProjects = [projects[0], projects[1], applications[2], applications[1]]
 
 export const knowledgeAreas = ["Web Development", "3D Modeling", "Automation", "Hardware Design", "PCB", "Server", "UI/UX", "Game Development"]
 

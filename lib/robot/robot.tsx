@@ -58,17 +58,9 @@ function RobotModel({mousePos}: {mousePos: MousePos}) {
   return (
     <Suspense fallback={null}>
     <group
-      onClick={() => {
-        if (!groupRef.current) return
-        gsap.to(groupRef.current.rotation, {
-          z: "+=6.28319",
-          duration: 2,
-          ease: "power2.inOut",
-        })
-      }}
       ref={groupRef}
-      scale={1.3}
-      position={[0, -2.8, 0]}>
+      scale={1}
+      position={[0, -2.4, 0]}>
       <Body />
       <Eyes mousePos={mousePos} />
     </group>

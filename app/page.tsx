@@ -5,18 +5,17 @@ import React, {Suspense, useRef} from "react"
 import HoverButton from "@/lib/components/hoverButton"
 import Marquee from "@/lib/components/marquee"
 import AnimationText from "@/lib/components/animationText"
-import Image from "next/image"
 import Accordion from "@/lib/components/accordion"
 import ShineText from "@/lib/components/shineText"
-import {projects, selectedProjects, socials} from "@/lib/data/data"
+import {selectedProjects, socials} from "@/lib/data/data"
 import Robot from "@/lib/robot/robot"
 import {useGSAP} from "@gsap/react"
 import gsap from "gsap"
 import {ScrollTrigger, SplitText} from "gsap/all"
 import Collection from "@/lib/pages/collection"
-import {image} from "motion/react-client"
 import ImageTrail from "@/lib/components/imageTrail"
 import {images} from "./art/page"
+import Image from "next/image"
 
 export default function Page() {
   const socialLinks = [
@@ -218,17 +217,9 @@ export default function Page() {
         </h1>
 
         {/* blobs */}
-        <div className="w-300 h-200 absolute top-0 right-0 -z-1 md:scale-100 scale-42" style={{transformOrigin: "top right"}}>
+        {/* <div className="w-300 h-200 absolute top-0 right-0 -z-1 md:scale-100 scale-42" style={{transformOrigin: "top right"}}>
           <Image src={"/graphics/top.svg"} alt="background graphic" fill className="object-contain light:hidden" />
           <Image src={"/graphics/top_light.svg"} alt="background graphic" fill className="object-contain hidden light:block" />
-        </div>
-        {/* <div className="w-300 h-200 absolute top-150 left-0 -z-1 md:scale-100 scale-42" style={{transformOrigin: "top left"}}>
-          <Image src={"/graphics/bottom.svg"} alt="background graphic" fill className="object-contain light:hidden" />
-          <Image src={"/graphics/bottom_light.svg"} alt="background graphic" fill className="object-contain hidden light:block" />
-        </div> */}
-        {/* <div className="w-300 h-200 absolute md:top-350 top-318 left-0 -z-1 md:scale-y-[-1] md:scale-100 scale-x-42 scale-y-[-0.42] scale-z-42" style={{transformOrigin: "top left"}}>
-          <Image src={"/graphics/bottom.svg"} alt="background graphic" fill className="object-contain light:hidden" />
-          <Image src={"/graphics/bottom_light.svg"} alt="background graphic" fill className="object-contain hidden light:block" />
         </div> */}
 
         <h2 className="relative md:text-7xl text-[42px] leading-10 md:leading-17 font-clash font-medium md:flex-row flex-col flex">
@@ -254,9 +245,9 @@ export default function Page() {
             to hardware
           </span>
 
-          <div className="flex-1 relative -z-1">
+          {/* <div className="flex-1 relative -z-1">
             <Robot />
-          </div>
+          </div> */}
         </h2>
 
         <div className="md:hidden -translate-y-20">
@@ -339,6 +330,7 @@ export default function Page() {
         </h2>
         <Accordion items={expertise} />
       </section>
+
     </main>
   )
 }
