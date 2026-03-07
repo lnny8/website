@@ -1,14 +1,13 @@
 "use client"
 import {experienceCategories, imageSections} from "@/lib/data/data"
-import React, { useRef } from "react"
+import React, {useRef} from "react"
 import Image from "next/image"
-import { useGSAP } from "@gsap/react"
+import {useGSAP} from "@gsap/react"
 import gsap from "gsap"
-import { SplitText } from "gsap/all"
-import { motion } from "motion/react"
+import {SplitText} from "gsap/all"
+import {motion} from "motion/react"
 
 export default function Page() {
-  
   const titleRef = useRef(null)
   const descriptionRef = useRef(null)
 
@@ -23,13 +22,21 @@ export default function Page() {
   }, [])
 
   return (
-    <main className="pt-32 max-w-7xl mx-auto px-6 md:px-0">
-      <h1 ref={titleRef} className="text-5xl leading-tight font-clash font-medium">Expertise</h1>
-      <h2 ref={descriptionRef} className="text-white/70 light:text-black/70 font-light text-lg">All of my knowledge in one place</h2>
+    <main className="pt-32 max-w-6xl mx-auto px-6 md:px-0">
+      <h1 ref={titleRef} className="text-5xl leading-tight font-clash font-medium">
+        Expertise
+      </h1>
+      <h2 ref={descriptionRef} className="text-white/70 light:text-black/70 font-light text-lg">
+        All of my knowledge in one place
+      </h2>
 
       <div className="grid grid-cols-2 gap-6 pt-10">
         {experienceCategories.map((category, index) => (
-          <motion.div  initial={{opacity: 0, y: 120}} animate={{opacity: 1, y: 0, transition: {duration: 1, type: "spring", delay: index * 0.1 + 0.4}}} className="shadow-(--inset_shadow) bg-woodsmoke-light light:bg-athensgray-light cursor-pointer rounded-3xl p-6" key={category.title}>
+          <motion.div
+            initial={{opacity: 0, y: 120}}
+            animate={{opacity: 1, y: 0, transition: {duration: 1, type: "spring", delay: index * 0.1 + 0.4}}}
+            className="shadow-(--inset_shadow) bg-woodsmoke-light light:bg-athensgray-light cursor-pointer rounded-3xl p-6"
+            key={category.title}>
             <h3 className="font-semibold font-clash text-2xl">{category.title}</h3>
             <p className="text-white/70 light:text-black/70 font-light pb-10">{category.description}</p>
             <div className="flex gap-x-2 gap-y-2 flex-wrap">
@@ -44,11 +51,7 @@ export default function Page() {
       </div>
 
       {imageSections.map((section, idx) => (
-        <section
-          key={section.title}
-          className="sticky top-24 z-10 px-6 md:px-0 mt-24 bg-woodsmoke-light light:bg-athensgray-light rounded-4xl shadow-(--inset_shadow) p-10!"
-          style={{ zIndex: idx + 1 }}
-        >
+        <section key={section.title} className="sticky top-24 z-10 px-6 md:px-0 mt-24 bg-woodsmoke-light light:bg-athensgray-light rounded-4xl shadow-(--inset_shadow) p-10!" style={{zIndex: idx + 1}}>
           <h2 className="text-4xl md:text-5xl font-clash font-semibold mb-4">{section.title}</h2>
           <p className="text-lg text-white/70 light:text-black/70 mb-8 max-w-2xl">{section.description}</p>
 

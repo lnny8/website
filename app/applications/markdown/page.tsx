@@ -196,7 +196,7 @@ export default function MarkdownAppPage() {
   }
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto md:px-0 px-6 pt-40 pb-10">
+    <main className="min-h-screen max-w-6xl mx-auto md:px-0 px-6 pt-40 pb-10">
       <section className="grid md:grid-cols-2 gap-10 mt-10 rounded-3xl bg-woodsmoke-light shadow-(--inset_shadow) p-6 light:bg-athensgray-light">
         <div>
           <h1 className="text-5xl font-clash font-medium">Markdown Exporter</h1>

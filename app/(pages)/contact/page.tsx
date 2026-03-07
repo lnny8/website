@@ -77,7 +77,7 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto md:px-0 px-6">
+    <main className="min-h-screen max-w-6xl mx-auto md:px-0 px-6">
       <span ref={badgeRef} className="text-lime pt-40 flex gap-3 text-sm tracking-wider items-center font-clash">
         <Sparkle className="size-4" />
         <ShineText text="CONNECT WITH ME" />

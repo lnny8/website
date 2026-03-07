@@ -670,7 +670,7 @@ export default function Page() {
   const activePalette = palettes[paletteIndex]
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto md:px-0 px-6 pt-32 pb-16">
+    <main className="min-h-screen max-w-6xl mx-auto md:px-0 px-6 pt-32 pb-16">
       <div className="max-w-4xl">
         <div className="text-sm uppercase tracking-[0.24em] text-white/45 light:text-black/45">Generative Lab</div>
         <h1 className="mt-4 text-6xl font-clash font-semibold leading-tight">Procedural Art Generator</h1>

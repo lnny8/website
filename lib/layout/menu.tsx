@@ -27,7 +27,7 @@ export default function Menu() {
   }, [])
 
   useEffect(() => {
-    if(theme) initScollAnimation(theme)
+    if (theme) initScollAnimation(theme)
   }, [theme])
 
   function initScollAnimation(theme: string) {
@@ -37,7 +37,7 @@ export default function Menu() {
     gsap.killTweensOf(backgroundRef.current)
     gsap.fromTo(
       containerRef.current,
-      {maxWidth: "80rem", paddingInline: "0rem"},
+      {maxWidth: "72rem", paddingInline: "0rem"},
       {
         maxWidth: "46rem",
         paddingInline: "1.5rem",
@@ -146,7 +146,7 @@ export default function Menu() {
 
   return (
     <nav className="w-full hidden md:flex fixed h-20 items-center justify-center z-10">
-      <div ref={containerRef} className="w-full max-w-7xl flex items-center justify-between py-3 relative">
+      <div ref={containerRef} className="w-full max-w-6xl flex items-center justify-between py-3 relative">
         <div ref={backgroundRef} className="bg-woodsmoke-light light:bg-athensgray-light rounded-2xl shadow-(--inset_shadow) opacity-0 absolute inset-0 -z-1" />
         <Link href="/" className="text-white font-clash light:text-black font-medium text-lg">
           LM

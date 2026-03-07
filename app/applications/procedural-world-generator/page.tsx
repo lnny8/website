@@ -245,7 +245,7 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto md:px-0 px-6 pt-32 pb-16">
+    <main className="min-h-screen max-w-6xl mx-auto md:px-0 px-6 pt-32 pb-16">
       <h1 className="text-6xl font-clash font-semibold leading-tight">Procedural World Generator</h1>
       <p className="mt-3 text-white/70 light:text-black/70 font-light max-w-3xl text-lg">Generate compact fantasy maps with adjustable terrain, coastlines, climate, rivers, and settlement density from a seeded height field.</p>
 

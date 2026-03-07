@@ -458,7 +458,7 @@ export default function Page() {
   ] as const
 
   return (
-    <main className="relative min-h-screen max-w-7xl mx-auto md:px-0 px-6 pt-32 pb-16 overflow-hidden">
+    <main className="relative min-h-screen max-w-6xl mx-auto md:px-0 px-6 pt-32 pb-16 overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-112 opacity-80" style={{background: "radial-gradient(circle at top, rgba(34,197,94,0.12), transparent 55%)"}} />
         <div className="absolute inset-x-0 bottom-0 h-96 opacity-70" style={{background: "radial-gradient(circle at bottom, rgba(59,130,246,0.1), transparent 60%)"}} />

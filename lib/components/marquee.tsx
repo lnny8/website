@@ -36,7 +36,7 @@ export default function Marquee({direction}: {direction?: "left" | "right"}) {
   )
 
   return (
-    <div ref={containerRef} style={{mask: "linear-gradient(to right, transparent 0%, black 50%, transparent 100%)"}} className="border-tf border-bf relative border-white/10 light:border-black/10 h-30 w-full overflow-hidden flex -z-2">
+    <div ref={containerRef} style={{mask: "linear-gradient(to right, transparent 10%, black 50%, transparent 90%)"}} className="border-tf border-bf relative border-white/10 light:border-black/10 h-30 w-full overflow-hidden flex -z-2">
       <div className="flow-track flex items-center whitespace-nowrap">
         {themes.map((theme, index) => (
           <span key={index} className="flow-item font-clash text-[#2c2c35] light:text-[#cbd5e1] font-medium md:text-5xl text-3xl flex items-center">

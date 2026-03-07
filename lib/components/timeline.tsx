@@ -93,7 +93,7 @@ export const Timeline = ({data}: {data: TimelineEntry[]}) => {
 
   return (
     <div className="w-full" ref={containerRef}>
-      <div className="max-w-7xl mx-auto py-20 px-4">
+      <div className="max-w-6xl mx-auto py-20 px-4">
         <h2 ref={headingRef} className="md:text-5xl text-3xl font-clash mb-4 font-medium light:text-black text-white">
           Changelog from my journey
         </h2>
@@ -102,7 +102,7 @@ export const Timeline = ({data}: {data: TimelineEntry[]}) => {
         </p>
       </div>
 
-      <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
+      <div ref={ref} className="relative max-w-6xl mx-auto pb-20">
         {data.map((item, index) => (
           <div key={index} className="timeline-item flex justify-start pt-10 md:pt-40 md:gap-10">
             <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">

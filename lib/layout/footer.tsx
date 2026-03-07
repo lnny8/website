@@ -43,7 +43,7 @@ export default function Footer() {
         stagger: 0.02,
         ease: "back.out",
         paused: true,
-      }
+      },
     )
 
     triggerRef.current = ScrollTrigger.create({
@@ -62,7 +62,7 @@ export default function Footer() {
 
   return (
     <footer ref={footerRef} className="w-full md:px-0 px-6 bg-woodsmoke light:bg-athensgray light:text-black pt-20">
-      <div className="rounded-4xl bg-woodsmoke-light shadow-(--inset_shadow) light:bg-white w-full max-w-7xl mx-auto py-20 flex flex-col items-center justify-center">
+      <div className="rounded-4xl bg-woodsmoke-light shadow-(--inset_shadow) light:bg-white w-full max-w-6xl mx-auto py-20 flex flex-col items-center justify-center">
         <div className="px-4 py-2 flex gap-3 items-center justify-center rounded-full bg-lime/10">
           <div className="rounded-full size-2 bg-lime relative">
             <div className="bg-lime rounded-full absolute inset-0 animate-[blink_1s_infinite]" />
@@ -77,7 +77,7 @@ export default function Footer() {
         </Link>
       </div>
 
-      <div className="flex items-center justify-between max-w-7xl mx-auto py-10">
+      <div className="flex items-center justify-between max-w-6xl mx-auto py-10">
         <span className="text-white/70 light:text-black/70 text-sm font-light">© 2025 Lenny Muffler. All rights reserved.</span>
         <SocialSpan />
       </div>

@@ -101,7 +101,7 @@ export default function Page() {
   }, [])
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto w-full pb-24">
+    <main className="min-h-screen max-w-6xl mx-auto w-full pb-24">
       <section className="pt-32 px-6 md:px-0">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-10 items-center">
           <div>

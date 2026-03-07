@@ -210,7 +210,7 @@ export default function Page() {
     <main className="min-h-screen w-full">
       <div className="fixed inset-0 -z-1"></div>
 
-      <section className="max-w-7xl mx-auto pt-40 px-6 md:px-0">
+      <section className="max-w-6xl mx-auto pt-40 px-6 md:px-0">
         <h1 className="pb-8 flex gap-3">
           <Hand className="text-lime animate-wave" style={{transformOrigin: "75% 75%"}} />
           Hey! I'm Lenny Muffler
@@ -282,7 +282,7 @@ export default function Page() {
         <Marquee />
       </div>
 
-      <section className="max-w-7xl md:px-0 px-6 mx-auto flex flex-col items-center mt-20">
+      <section className="max-w-6xl md:px-0 px-6 mx-auto flex flex-col items-center mt-20">
         {/* <span className="text-lime flex gap-3 text-sm tracking-wider items-center font-clash">
           <Sparkle className="size-4" />
           <ShineText text="ABOUT ME" />
@@ -290,7 +290,7 @@ export default function Page() {
         <AnimationText />
       </section>
 
-      <section className="max-w-7xl md:px-0 px-6 mx-auto flex flex-col mt-20">
+      <section className="max-w-6xl md:px-0 px-6 mx-auto flex flex-col mt-20">
         {/* <span className="text-lime flex gap-3 text-sm tracking-wider items-center font-clash">
           <Sparkle className="size-4" />
           <ShineText text="MY WORK" />
@@ -301,7 +301,7 @@ export default function Page() {
         </Link>
       </section>
 
-      <section className="max-w-7xl md:px-0 px-6 mx-auto items-center mt-20">
+      <section className="max-w-6xl md:px-0 px-6 mx-auto items-center mt-20">
         <h1 ref={aiArtTitleRef} className="text-5xl font-clash font-medium">
           AI Art
         </h1>
@@ -317,7 +317,7 @@ export default function Page() {
         </Link>
       </section>
 
-      <section className="max-w-7xl md:px-0 px-6 mx-auto flex flex-col mt-40">
+      <section className="max-w-6xl md:px-0 px-6 mx-auto flex flex-col mt-40">
         <span ref={specialityRef} className="text-lime flex gap-3 text-sm tracking-wider items-center font-clash">
           <Sparkle className="size-4" />
           <ShineText text="SPECIALITY" />
@@ -330,7 +330,6 @@ export default function Page() {
         </h2>
         <Accordion items={expertise} />
       </section>
-
     </main>
   )
 }

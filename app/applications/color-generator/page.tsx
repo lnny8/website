@@ -23,7 +23,7 @@ export default function Page() {
   }, [brightness, saturation, generate, showHash])
 
   return (
-    <main className="min-h-screen max-w-7xl pt-32 mx-auto flex flex-col">
+    <main className="min-h-screen max-w-6xl pt-32 mx-auto flex flex-col">
       <h1 className="text-6xl font-clash font-semibold leading-tight">Color Generator</h1>
       <p className="pt-10">Pick a brightness</p>
       <input type="range" value={brightness} onChange={(e) => setBrightness(Number(e.target.value))} className="ui-range w-32" />

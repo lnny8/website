@@ -58,7 +58,7 @@ export default function Page() {
   }, [])
 
   return (
-    <main className="max-w-7xl mx-auto px-6 md:px-0 pt-32 pb-20">
+    <main className="max-w-6xl mx-auto px-6 md:px-0 pt-32 pb-20">
       <h1 ref={titleRef} className="text-5xl font-clash font-medium">
         Services
       </h1>

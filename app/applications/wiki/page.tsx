@@ -172,7 +172,7 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto md:px-0 px-6">
+    <main className="min-h-screen max-w-6xl mx-auto md:px-0 px-6">
       <div className="pt-40">
         <h1 className="text-5xl font-clash font-medium">Wiki Route</h1>
         <p className="text-white/70 light:text-black/70 font-light text-lg mt-3 max-w-2xl">Enter two Wikipedia article titles to find the shortest click path between them.</p>
@@ -188,7 +188,11 @@ export default function Page() {
             <label className="text-sm font-medium" htmlFor="wiki-lang">
               Language
             </label>
-            <select id="wiki-lang" value={lang} onChange={(e) => setLang(e.target.value as "de" | "en")} className="bg-woodsmoke-light shadow-(--inset_shadow) border-white/10 light:border-black/10 rounded-xl light:border-black/10-xl mt-2 px-4 py-2 focus:outline-none focus:ring-2 ring-lime">
+            <select
+              id="wiki-lang"
+              value={lang}
+              onChange={(e) => setLang(e.target.value as "de" | "en")}
+              className="bg-woodsmoke-light shadow-(--inset_shadow) border-white/10 light:border-black/10 rounded-xl light:border-black/10-xl mt-2 px-4 py-2 focus:outline-none focus:ring-2 ring-lime">
               <option value="de">de.wikipedia.org</option>
               <option value="en">en.wikipedia.org</option>
             </select>

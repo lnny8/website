@@ -39,7 +39,7 @@ export default function Collection({title, description, data, categories}: {titl
   }, [])
 
   return (
-    <section className="max-w-7xl w-full md:px-0 px-6 mx-auto flex flex-col">
+    <section className="max-w-6xl w-full md:px-0 px-6 mx-auto flex flex-col">
       <div className="mt-32 mb-20 flex flex-col md:flex-row md:justify-between md:items-end">
         <div ref={headerRef}>
           <h1 ref={titleRef} className="text-5xl font-clash font-medium leading-tight">
