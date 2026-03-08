@@ -1,7 +1,7 @@
 "use client"
 import {ArrowUpRight, Code, Code2, Github, Hand, Instagram, Linkedin, Mail, Pen, PenTool, Sparkle, Split, SwatchBook} from "lucide-react"
 import Link from "next/link"
-import React, {Suspense, useRef} from "react"
+import React, {Suspense, useEffect, useRef, useState} from "react"
 import HoverButton from "@/lib/components/hoverButton"
 import Marquee from "@/lib/components/marquee"
 import AnimationText from "@/lib/components/animationText"
@@ -16,6 +16,7 @@ import Collection from "@/lib/pages/collection"
 import ImageTrail from "@/lib/components/imageTrail"
 import {images} from "./art/page"
 import Image from "next/image"
+import {motion, useScroll, useSpring} from "motion/react"
 
 export default function Page() {
   const socialLinks = [
@@ -206,9 +207,25 @@ export default function Page() {
     })
   }, [])
 
+  const {scrollYProgress} = useScroll()
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 180,
+    damping: 24,
+    mass: 0.2,
+  })
+
   return (
     <main className="min-h-screen w-full">
-      <div className="fixed inset-0 -z-1"></div>
+      <div className="hidden fixed top-10 bottom-10 right-5 w-1 overflow-hidden rounded-2xl bg-white/10 light:bg-black/10 shadow-(--inset-shadow) md:flex">
+        <motion.div
+          style={{
+            scaleY: progress,
+            transformOrigin: "top",
+            backgroundImage: "linear-gradient(to bottom, #0af 0%, #95F 50%, #f772c2 100%)",
+          }}
+          className="h-full w-full rounded-2xl"
+        />
+      </div>
 
       <section className="max-w-6xl mx-auto pt-40 px-6 md:px-0">
         <h1 className="pb-8 flex gap-3">
@@ -225,11 +242,11 @@ export default function Page() {
         <h2 className="relative md:text-7xl text-[42px] leading-10 md:leading-17 font-clash font-medium md:flex-row flex-col flex">
           <span className="hero-text-stroke opacity-0 [-webkit-text-stroke:0.3px_#fff] light:[-webkit-text-stroke:0.3px_#000] [-webkit-text-fill-color:transparent]">
             Building{" "}
-            <span className="bg-[linear-gradient(90deg,#0af,#65F)]f bg-clip-text text-transparent">
+            <span className="bg-[linear-gradient(90deg,#0af,#95F)]f bg-clip-text text-transparent">
               innovative
               <br />
             </span>
-            <span className="bg-[linear-gradient(90deg,#65F,#f772c2)]f bg-clip-text text-transparent">projects </span>
+            <span className="bg-[linear-gradient(90deg,#95F,#f772c2)]f bg-clip-text text-transparent">projects </span>
             from code <br />
             to hardware
           </span>
@@ -266,7 +283,10 @@ export default function Page() {
           <div className="hidden md:flex gap-2 font-light group mt-10">
             {socialLinks.map((link) => (
               <Link key={link.name} href={link.url} className="flex gap-2 items-center justify-center text-white/70 group-hover:opacity-50 hover:opacity-100 light:text-black/70 transition-opacity duration-300" target="_blank">
-                <span className="flex gap-1 items-center justify-center">{link.icon}{link.name.toUpperCase()}</span>
+                <span className="flex gap-1 items-center justify-center">
+                  {link.icon}
+                  {link.name.toUpperCase()}
+                </span>
                 <ArrowUpRight className="size-4" />
               </Link>
             ))}
