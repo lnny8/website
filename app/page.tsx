@@ -1,5 +1,5 @@
 "use client"
-import {ArrowUpRight, Code, Code2, Hand, Pen, PenTool, Sparkle, Split, SwatchBook} from "lucide-react"
+import {ArrowUpRight, Code, Code2, Github, Hand, Instagram, Linkedin, Mail, Pen, PenTool, Sparkle, Split, SwatchBook} from "lucide-react"
 import Link from "next/link"
 import React, {Suspense, useRef} from "react"
 import HoverButton from "@/lib/components/hoverButton"
@@ -19,10 +19,10 @@ import Image from "next/image"
 
 export default function Page() {
   const socialLinks = [
-    {name: "LinkedIn", url: socials.linkedin},
-    {name: "GitHub", url: socials.github},
-    {name: "Instagram", url: socials.instagram},
-    {name: "Email", url: socials.email},
+    {name: "LinkedIn", url: socials.linkedin, icon: <Linkedin className="size-4" />},
+    {name: "GitHub", url: socials.github, icon: <Github className="size-4" />},
+    {name: "Instagram", url: socials.instagram, icon: <Instagram className="size-4" />},
+    {name: "Email", url: socials.email, icon: <Mail className="size-4" />},
   ]
 
   const expertise = [
@@ -250,14 +250,14 @@ export default function Page() {
           </div> */}
         </h2>
 
-        <div className="md:hidden -translate-y-20">
+        <div className="md:hidden">
           <Marquee direction="right" />
         </div>
-        <div className="md:hidden -translate-y-35">
+        <div className="md:hidden -translate-y-15">
           <Marquee direction="left" />
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-center md:gap-15 gap-10 md:mt-10 -mt-40">
+        <div className="flex flex-col md:flex-row items-center justify-center md:gap-15 gap-10 md:mt-10 -mt-20">
           <div className="md:w-1/2 w-full bg-white/10 light:bg-black/10 h-px" />
           <div className="md:w-1/2 h-full text-right text-white/60 light:text-black/60 about-text">17-year-old student from Stuttgart with a passion for technology. Building web apps, designing hardware, and bringing ideas to life through code.</div>
         </div>
@@ -266,7 +266,7 @@ export default function Page() {
           <div className="hidden md:flex gap-2 font-light group mt-10">
             {socialLinks.map((link) => (
               <Link key={link.name} href={link.url} className="flex gap-2 items-center justify-center text-white/70 group-hover:opacity-50 hover:opacity-100 light:text-black/70 transition-opacity duration-300" target="_blank">
-                <span>{link.name.toUpperCase()}</span>
+                <span className="flex gap-1 items-center justify-center">{link.icon}{link.name.toUpperCase()}</span>
                 <ArrowUpRight className="size-4" />
               </Link>
             ))}

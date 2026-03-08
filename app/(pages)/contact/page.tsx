@@ -23,7 +23,7 @@ export default function Page() {
     if (!badgeRef.current || !titleRef.current) return
 
     const badgeSplit = new SplitText(badgeRef.current, {type: "words", mask: "words"})
-    const titleSplit = new SplitText(titleRef.current, {type: "words, chars", mask: "chars"})
+    const titleSplit = new SplitText(titleRef.current, {type: "words", mask: "words"})
 
     gsap.from(badgeSplit.words, {
       opacity: 0,
@@ -35,11 +35,13 @@ export default function Page() {
       delay: 0.1,
     })
 
-    gsap.from(titleSplit.chars, {
+    gsap.from(titleSplit.words, {
       opacity: 0,
-      yPercent: 100,
-      stagger: 0.02,
-      ease: "back.inOut",
+      y: 12,
+      filter: "blur(10px)",
+      stagger: 0.06,
+      duration: 0.5,
+      ease: "power3.out",
       delay: 0.2,
     })
   }, [])
@@ -78,8 +80,7 @@ export default function Page() {
 
   return (
     <main className="min-h-screen max-w-6xl mx-auto md:px-0 px-6">
-      <span ref={badgeRef} className="text-lime pt-40 flex gap-3 text-sm tracking-wider items-center font-clash">
-        <Sparkle className="size-4" />
+      <span ref={badgeRef} className="pt-40 flex gap-3 text-sm tracking-wider items-center font-clash">
         <ShineText text="CONNECT WITH ME" />
       </span>
       <h1 ref={titleRef} className="text-5xl font-clash font-medium mt-5 md:max-w-lg">
@@ -148,10 +149,10 @@ export default function Page() {
             <span className="text-sm">Available for work</span>
           </motion.span>
 
-          <motion.div initial={{opacity: 0, scale: 0.9}} whileInView={{opacity: 1, scale: 1}} className="bg-red-500f" transition={{duration: 0.55, delay: 0.25}} viewport={{once: true, amount: 0.8}}>
+          <div className="">
             <Image src="/images/lenny_q.png" alt="Lenny Muffler Logo" width={100} height={100} className="light:hidden bg-whitef border border-white/10 light:border-black/10 p-2 rounded-full bg-whitef" />
             <Image src="/images/lenny_q_white.png" alt="Lenny Muffler Logo" width={100} height={100} className="hidden light:block border border-white/10 light:border-black/10 p-2 rounded-full" />
-          </motion.div>
+          </div>
 
           <motion.p initial={{opacity: 0, y: 10}} whileInView={{opacity: 1, y: 0}} transition={{duration: 0.55, delay: 0.35}} viewport={{once: true, amount: 0.8}} className="text-white/70 light:text-black/70 font-light">
             My inbox is always open, Whether you have a project or just want to say Hi. I would love to hear from you. Feel free to contact me and I&apos;ll get back to you.

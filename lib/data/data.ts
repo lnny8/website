@@ -36,7 +36,7 @@ export const tutorials = [
   // {title: "Animated Theme Switcher", description: "Build an animated theme switcher with JavaScript and CSS", imageUrl: "/tutorials/animated-theme-switcher-tutorial.png", link: "/tutorials/animated-theme-switcher-tutorial", date: "2025", color: "#abafff"},
 ]
 
-export const selectedProjects = [projects[0], projects[1], applications[2], applications[1]]
+export const selectedProjects = [applications[0], projects[2], projects[0], projects[1]]
 
 export const knowledgeAreas = ["Web Development", "3D Modeling", "Automation", "Hardware Design", "PCB", "Server", "UI/UX", "Game Development"]
 
